@@ -183,7 +183,39 @@ function formatarLead() {
 
     }
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nNome da empresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\npróximo da fila é o @`;
+    let informacoes = "";
+
+    // Definindo as expressões regulares para cada tipo de informação
+    const cnpjRegex = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
+    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
+    const numeroFuncionariosRegex = /Quantidade de Funcionários(.*?)icone like/s;
+    const faturamentoAnualRegex = /Faturamento Anual(.*?)icone like/s;
+
+    // Procurando pelas informações no texto
+    const cnpjMatch = texto.match(cnpjRegex);
+    const porteMatch = texto.match(porteRegex);
+    const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
+    const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
+
+    // Adicionando as informações encontradas na string de informacoes
+    if (cnpjMatch) informacoes += `Dados da Empresa\nCNPJ: ${cnpjMatch[1]};\n`;
+    if (porteMatch) {
+        const porteTexto = porteMatch[1].replace("Porte", "").trim();
+        informacoes += `Porte da Empresa: ${porteTexto};\n`;
+    }
+    if (numeroFuncionariosMatch) {
+        // Removendo a frase indesejada e espaços extras
+        let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
+        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto};\n`;
+    }
+    if (faturamentoAnualMatch) {
+        // Removendo a frase indesejada e espaços extras
+        let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
+        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.\n\n`;
+    }
+
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nNome da empresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n\n${informacoes}Perfil linkedin:\n\n--------------------------------------------------------
+próximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
 
