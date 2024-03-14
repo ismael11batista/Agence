@@ -4,6 +4,7 @@ let EmailDoContato = "";
 let TextoEspecial = ""; // Variável global para armazenar o texto especial
 let TelefoneDoContato = '';
 let EmailFormatado = '';
+let InteresseDoLead = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
@@ -142,8 +143,10 @@ function identificarInformacoesAutomaticamente() {
 
     if (necessidadeMatch) {
         interesse = "Interesse: " + necessidadeMatch[1];
+        InteresseDoLead = interesse;
     } else if (interesseMatch) {
         interesse = "Interesse: " + interesseMatch[1];
+        InteresseDoLead = interesse;
     }
 
     document.getElementById('origemLead').textContent = origem;
@@ -326,6 +329,12 @@ function formatarTextoEspecial() {
     // Suponha que você queira incluir informações similares, mas com um formato diferente
     const emailRegex = /E-mail: (.+)|Email: (.+)/i;
     const emailMatch = texto.match(emailRegex);
+
+    /* const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
+     const interesseMatch = texto.match(interesseRegex); */
+
+
+
     let EmailFormatado = "";
     if (emailMatch) {
         // Captura o e-mail do match encontrado e converte para minúsculas
@@ -357,7 +366,7 @@ function formatarTextoEspecial() {
     }
 
 
-    TextoEspecial = `Chegou lead para você por fora da fila. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você por fora da fila. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
 }
 
 
