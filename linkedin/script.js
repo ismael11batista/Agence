@@ -229,27 +229,23 @@ Agradeço a oportunidade de potencialmente trabalhar com você e aguardo ansiosa
     // Speech Email 1 Lean 
     document.getElementById('copiarTextoLean1').addEventListener('click', function () {
         copiarParaClipboard(`Agence & ${company_name} - Melhoria contínua
-Olá ${first_name}, 
+${first_name}, 
           
-Você como ${position} sabe da importância de manter a melhora contínua dentro da sua empresa. 
-       
-Analisando o modelo de melhoria contínua que a ${company_name} possui, acredito que nós da Agence podemos te ajudar a continuar melhorando seus processos, aumentando a produtividade e reduzindo seus custos através de Automação de processos repetitivos (RPA).
-       
-Para isso, gostaria de saber:
-       
-Qual a sua disponibilidade para marcarmos uma bate papo sobre isso?`);
+Como ${position}, você deve valorizar a inovação e a eficiência operacional. Em nossa análise, notamos que ${company_name} já implementa estratégias de melhoria contínua, o que é ótimo. Contudo, percebemos uma oportunidade de elevar ainda mais o êxito da sua operação: a Automação de Processos Robóticos (RPA) para otimizar as operações repetitivas e desenvolvimento de sistemas Web/Mobile sob medida.
+
+Esses serviços podem não só acelerar a execução de tarefas mas também liberar sua equipe para focar em atividades de maior valor agregado, aumentando a produtividade e reduzindo custos operacionais de forma significativa.
+
+Qual a sua disponibilidade para marcarmos um bate papo a respeito?`);
     });
 
 
     // Speech Email 2 Lean 
     document.getElementById('copiarTextoLean2').addEventListener('click', function () {
-        copiarParaClipboard(`Olá ${first_name},      
-       
-Sei que sua agenda está corrida, por isso acredito que não conseguiu ler meu último e-mail, então vamos direto ao ponto:
-       
-O motivo do meu contato é sobre melhoria contínua na ${company_name} e como podemos automatizar processos repetitivos com o objetivo de reduzir o tempo no dia a dia da sua equipe. 
-       
-Qual a sua disponibilidade para analisarmos seus processos e quais  processos podemos automatizar através de RPA?`);
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler o e-mail abaixo?
+
+Entendo que o desafio de manter a competitividade no mercado atual exige soluções inovadoras e eficientes. É aqui que a Agence pode se tornar seu braço de tecnologia.
+        
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
     });
 
 
