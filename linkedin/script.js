@@ -22,37 +22,114 @@ function mostrarPopUp(mensagem) {
     }, 3000);
 }
 
+// Função auxiliar para tentar múltiplos regex
+function tentarRegex(texto, regexes, valorPadrao) {
+    for (let i = 0; i < regexes.length; i++) {
+        const match = texto.match(regexes[i]);
+        if (match && match[1]) {
+            return match[1].trim();
+        }
+    }
+    return valorPadrao;
+}
+
+// Função auxiliar para ajustar strings duplicadas
+function ajustarStringDuplicada(str) {
+    // Divide a string ao meio
+    const metade = Math.floor(str.length / 2);
+    const primeiraMetade = str.substr(0, metade);
+    const segundaMetade = str.substr(metade);
+
+    // Verifica se as duas metades são iguais
+    if (primeiraMetade === segundaMetade) {
+        return primeiraMetade.trim(); // Retorna apenas uma das metades se forem iguais
+    }
+    return str.trim(); // Retorna a string original se não houver duplicação
+}
+
+// Função auxiliar para remover termos de tempo de trabalho da string
+function removerTermosTempoTrabalho(str) {
+    // Lista de termos a serem removidos
+    const termosParaRemover = [" · Tempo integral", " · Tempo parcial", "Tempo integral · ", " - o momento · "];
+
+    // Remove termos da string
+    termosParaRemover.forEach(termo => {
+        str = str.replace(termo, "");
+    });
+
+    return str.trim(); // Retorna a string ajustada
+}
+
+
+// Função auxiliar para remover termos indesejados do nome
+function removerTermosIndesejadosDoNome(str) {
+    // Lista de termos a serem removidos do nome
+    const termosParaRemover = [
+        ", #OPEN_TO_WORK",
+        // Adicione mais termos indesejados aqui conforme necessário
+        ", #DISPONÍVEL_PARA_TRABALHO",
+        ", #PROCURANDO_OPORTUNIDADES",
+        ", #DISPONIVEL"
+    ];
+
+    // Remove cada termo da string
+    termosParaRemover.forEach(termo => {
+        str = str.replace(termo, "");
+    });
+
+    return str.trim(); // Retorna a string ajustada
+}
+
+
 function extrairInformacoes() {
     const textoPerfil = document.getElementById('inputText').value;
-    const nomeRegex = /^\s*(.{3,})\r?\n\s*\1/m;
-    const nomeMatch = textoPerfil.match(nomeRegex);
-    const nomeContato = nomeMatch ? nomeMatch[1].trim() : "NOME_DO_CONTATO";
-    document.getElementById('nomeContato').textContent = `Nome do Contato: ${nomeContato}`;
 
-    // Adicionando lógica para extrair o primeiro nome do nomeContato
-    const primeiroNomeRegex = /^\w+/; // Esta regex extrai a primeira palavra da string
-    const primeiroNomeMatch = nomeContato.match(primeiroNomeRegex);
-    first_name = primeiroNomeMatch ? primeiroNomeMatch[0] : "FIRST_NAME";
-    document.getElementById('nomeContato').textContent = `Nome do Contato: ${nomeContato}`;
+    // Extração e ajustes com base nas funções tentarRegex e ajustarStringDuplicada
+    const nomeRegexes = [
+        /^\s*(.{3,})\r?\n\s*\1/m,
+        /Imagem de fundo\n(.+?)\n/,
+        /\n(.+?) \n.+?\n\s * Conexão de \dº grau /
 
-    const cargoRegex = /Conexão de \dº grau\dº\n(.+?)\n/;
-    const cargoMatch = textoPerfil.match(cargoRegex);
-    let ultimoCargo = cargoMatch ? cargoMatch[1].trim() : "CARGO_DO_CONTATO";
-    position = ultimoCargo
-    document.getElementById('ultimoCargo').textContent = `Último Cargo: ${ultimoCargo}`;
+    ];
 
-    let empresaRegex = /Conexão de \dº grau\dº\n.+\n\n(.+?)\n/;
-    let empresaMatch = textoPerfil.match(empresaRegex);
-    let ultimaEmpresa = empresaMatch ? empresaMatch[1].trim() : "COMPANY_NAME";
-    company_name = ultimaEmpresa;
-    document.getElementById('ultimaEmpresa').textContent = `Última Empresa: ${ultimaEmpresa}`;
+    let nomeCompleto = tentarRegex(textoPerfil, nomeRegexes, "NOME_DO_CONTATO");
+    nomeCompleto = removerTermosIndesejadosDoNome(nomeCompleto); // Aplica a remoção de termos indesejados
+    document.getElementById('nomeContato').textContent = `Nome do Contato: ${nomeCompleto}`;
 
-    const duracaoRegex = /- o momento · (\d+ anos? \d+ meses?|\d+ meses?|\d+ anos?)/;
-    const duracaoMatch = textoPerfil.match(duracaoRegex);
-    const duracao = duracaoMatch ? duracaoMatch[1] : "TIME_IN_POSITION";
-    time_in_position = duracao
-    document.getElementById('duracaoExperiencia').textContent = `Duração da Última Experiência: ${duracao}`;
+    // Extração do primeiro nome a partir do nome completo
+    const primeiroNomeRegex = /^\w+/;
+    const primeiroNomeMatch = nomeCompleto.match(primeiroNomeRegex);
+    first_name = primeiroNomeMatch ? primeiroNomeMatch[0] : "PRIMEIRO_NOME";
+
+
+    const cargoRegexes = [
+        /Experiência\n.+?\n(.+?)\n/,
+        /\n\s*Conexão de \dº grau\dº\n(.+?)\n\n/,
+        /Experiência\n.+?\n(.+?)\n/
+    ];
+    position = ajustarStringDuplicada(tentarRegex(textoPerfil, cargoRegexes, "CARGO_DO_CONTATO"));
+    document.getElementById('ultimoCargo').textContent = `Último Cargo: ${position}`;
+
+    const empresaRegexes = [
+        /Conexão de \dº grau\dº\n.+\n\n(.+?)\n/,
+        /\n\s*Conexão de \dº grau\dº\n.+?\n\n(.+?)\n/,
+        /Experiência\n.+?\n.+?\n(.+?)\n/
+    ];
+
+    company_name = ajustarStringDuplicada(tentarRegex(textoPerfil, empresaRegexes, "EMPRESA_DO_CONTATO"));
+    company_name = removerTermosTempoTrabalho(company_name); // Aplica a remoção dos termos especificados
+    document.getElementById('ultimaEmpresa').textContent = `Última Empresa: ${company_name}`;
+
+    const duracaoRegexes = [
+        /- o momento · (\d+ anos? \d+ meses?|\d+ meses?|\d+ anos?)/,
+        /(\d+ anos? \d+ meses?|\d+ meses?|\d+ anos?)\s+/,
+        /Experiência\n.+?\n.+?\n.+?\n(\d+ anos? \d+ meses?|\d+ meses?|\d+ anos?)/,
+        /- o momento · (\d+ anos? \d+ meses?|\d+ meses?|\d+ anos?)/
+    ];
+    time_in_position = tentarRegex(textoPerfil, duracaoRegexes, "DURAÇÃO_NÃO_ENCONTRADA");
+    document.getElementById('duracaoExperiencia').textContent = `Duração da Última Experiência: ${time_in_position}`;
 }
+
 
 function copiarParaClipboard(texto) {
     navigator.clipboard.writeText(texto).then(() => {
