@@ -182,9 +182,9 @@ function formatarLead() {
     } else if (telefone.length >= 10 && telefone.length <= 11) {
         telefone = '55' + telefone;
         telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
-        TelefoneDoContato = telefone
-
     }
+
+    TelefoneDoContato = telefone
 
     let informacoes = "";
 
