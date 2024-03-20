@@ -7,6 +7,7 @@ let first_name = ''; // Variável global para armazenar o primeiro nome do conta
 let company_name = ''; // Variável global para armazenar o nome da empresa
 let time_in_position = '';
 let position = '';
+let NomeCompletoDoContato = '';
 
 function mostrarPopUp(mensagem) {
     let popUp = document.querySelector('.pop-up');
@@ -96,6 +97,8 @@ function extrairInformacoes() {
     nomeCompleto = removerTermosIndesejadosDoNome(nomeCompleto); // Aplica a remoção de termos indesejados
     document.getElementById('nomeContato').textContent = `Nome do Contato: ${nomeCompleto}`;
 
+    NomeCompletoDoContato = nomeCompleto
+
     // Extração do primeiro nome a partir do nome completo
     const primeiroNomeRegex = /^\w+/;
     const primeiroNomeMatch = nomeCompleto.match(primeiroNomeRegex);
@@ -169,12 +172,21 @@ function copiarTudo() {
     copiarParaClipboard(todasInformacoes);
 }
 
+
+function copiarLead() {
+    copiarParaClipboard(`Chegou lead na fila BR para o \nNome da empresa: ${company_name}\nWhatsapp: Não informado\nContato: ${NomeCompletoDoContato}\nEmail: \nOrigem: Outbound Linkedin\n\nPerfil linkedin:\n\n--------------------------------------------------------
+próximo da fila é o @`);
+}
+
+
 function configurarBotoes() {
     document.getElementById('copiarNome').addEventListener('click', copiarNome);
     document.getElementById('copiarCargo').addEventListener('click', copiarCargo);
     document.getElementById('copiarEmpresa').addEventListener('click', copiarEmpresa);
     document.getElementById('copiarDuracao').addEventListener('click', copiarDuracao);
     document.getElementById('copiarTudo').addEventListener('click', copiarTudo);
+    document.getElementById('copiarLead').addEventListener('click', copiarLead);
+
 
     var selectField = document.getElementById("selectField");
     var list = document.getElementById("list");
@@ -574,4 +586,6 @@ Atenciosamente,`);
 
 
 }
+
+
 
