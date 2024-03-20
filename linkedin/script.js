@@ -200,10 +200,14 @@ function configurarBotoes() {
         var RSButtons = document.getElementById("RSButtons");
         var LeanButtons = document.getElementById("LeanButtons");
         var FabricaButtons = document.getElementById("FabricaButtons");
+        var OtherButtons = document.getElementById("OtherButtons");
+
 
         RSButtons.classList.add("hide");
         LeanButtons.classList.add("hide");
         FabricaButtons.classList.add("hide");
+        OtherButtons.classList.add("hide");
+
 
         if (selection === "R&S") {
             RSButtons.classList.remove("hide");
@@ -211,7 +215,10 @@ function configurarBotoes() {
             LeanButtons.classList.remove("hide");
         } else if (selection === "Fábrica") {
             FabricaButtons.classList.remove("hide");
+        } else if (selection === "Outros") {
+            OtherButtons.classList.remove("hide");
         }
+
     }
 
     configurarBotoesEspecificos();
@@ -436,6 +443,132 @@ Entendo que o desafio de manter a competitividade no mercado atual exige soluç�
         
 Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
     });
+
+
+
+    //INICIO DOS BOTÕES PARA O CAMPO "OUTROS"
+    // Speech Pediu nosso Portfólio
+    document.getElementById('copiarTextoPediuPortfólio').addEventListener('click', function () {
+        copiarParaClipboard(`Olá, ${first_name}.
+
+Agradeço por ter dedicado um momento para considerar nossa proposta. Aqui está um breve resumo dos serviços que a Agence oferece.
+        
+1. Consultoria de Requisitos com Prototipagem High Definition (HTML5);
+2. Desenvolvimento de Sistemas Web:
+    a. PHP
+    b. Ruby on Rails
+    c. Python
+    d. Java
+    e. Node.JS
+        f. .Net C#
+3. Desenvolvimento de Apps Mobile:
+        a. iOS Object C / Swift
+        b. Android Java / Kotlin
+        c. Google Flutter
+4. Outsourcing de profissionais de TI;
+5. Headhunting de profissionais de TI;
+6. RPA;
+7. Plataforma de Assinatura Digital (https://www.e-digital.global/pt/)
+
+Estou à disposição para agendar uma apresentação remota, onde podemos discutir mais profundamente como a Agence pode contribuir com o sucesso da sua organização.`);
+    });
+
+
+
+    // Speech Contato Sem Interesse
+    document.getElementById('copiarTextoSemInteresse').addEventListener('click', function () {
+        copiarParaClipboard(`Certo ${first_name}, sem problemas.
+
+Entendo completamente, ${first_name}. Agradeço por ter dedicado um momento para considerar nossa proposta.
+
+Apenas para sua referência futura, aqui está um breve resumo dos serviços que a Agence oferece. Ficaríamos felizes em ajudar caso surja uma necessidade:
+
+    1. Consultoria de Requisitos com Prototipagem High Definition (HTML5);
+    2. Desenvolvimento de Sistemas Web:
+        a. PHP
+        b. Ruby on Rails
+        c. Python
+        d. Java
+        e. Node.JS
+            f. .Net C#
+    3. Desenvolvimento de Apps Mobile:
+            a. iOS Object C / Swift
+            b. Android Java / Kotlin
+            c. Google Flutter
+    4. Outsourcing de profissionais de TI;
+    5. Headhunting de profissionais de TI;
+    6. RPA;
+    7. Plataforma de Assinatura Digital (https://www.e-digital.global/pt/)
+
+Agradeço novamente pelo seu tempo e esteja à vontade para entrar em contato conosco no futuro, caso veja uma oportunidade para trabalharmos juntos.
+
+Atenciosamente,`);
+    });
+
+
+    // Speech Texto Material Apresentação
+    document.getElementById('copiarTextoMaterialApresentação').addEventListener('click', function () {
+        copiarParaClipboard(`Olá, ${first_name},
+
+Como mencionei durante nossa conversa no LinkedIn, gostaria de compartilhar com você uma introdução aos serviços e soluções que a Agence oferece. Para facilitar, anexei a este e-mail uma versão enxuta de nossa apresentação, ideal para uma visualização rápida e compartilhamento por e-mail.
+
+Entretanto, nossa apresentação completa é mais interativa e detalhada, sendo idealmente conduzida de forma remota, com o compartilhamento de tela, para que possamos explorar juntos as nuances de nossas soluções e como elas podem se alinhar às suas necessidades específicas.
+
+Aqui está um resumo do nosso portfólio de serviços, que visa abordar diversos desafios de TI e promover a inovação dentro das organizações:
+
+    1. Consultoria de Requisitos com Prototipagem High Definition(HTML5);
+    2. Desenvolvimento de Sistemas Web, abrangendo:
+        a. PHP
+        b. Ruby on Rails
+        c. Python
+        d. Java
+        e. Node.JS
+        f. .Net C#
+    3. Desenvolvimento de Apps Mobile, incluindo:
+        a. iOS (Object C / Swift)
+        b. Android (Java / Kotlin)
+        c. Google Flutter
+    4. Outsourcing de Profissionais de TI;
+    5. Headhunting de Profissionais de TI;
+    6. Automação de Processos Robóticos (RPA);
+    7. Plataforma de Assinatura Digital (https://www.e-digital.global/pt/).
+
+Para mais informações, convido você a visitar nosso site: www.agence.global ou www.agence.com.br.
+
+Estou à disposição para agendar uma apresentação remota, onde podemos discutir mais profundamente como a Agence pode contribuir com o sucesso da sua organização. 
+
+Agradeço o seu tempo e fico no aguardo do seu retorno.
+
+Atenciosamente,`);
+    });
+
+
+    // Speech Texto Conectou Pessoa Aderente
+    document.getElementById('copiarTextoConectouPessoaAderente').addEventListener('click', function () {
+        copiarParaClipboard(`Prezado ${first_name},
+
+Agradeço o rápido retorno e a atenção em encaminhar nosso interesse ao responsável pelo departamento de TI, NOME_DO_RESPONSÁVEL.
+
+Ficamos à disposição para fornecer quaisquer informações adicionais que possam ser necessárias e ansiosos pela oportunidade de discutir como nossas soluções de Automação de Processos Robóticos (RPA) e desenvolvimento de sistemas Web/Mobile sob medida podem contribuir para ampliar ainda mais a eficiência operacional da Latina Têxtil.
+
+Por favor, poderia nos informar um horário conveniente para o NOME_DO_RESPONSÁVEL ou para ${first_name}, para que possamos agendar uma conversa mais detalhada sobre nossas soluções e como elas se alinham às necessidades da Latina Têxtil?
+
+Atenciosamente,`);
+    });
+
+
+    // Speech Texto Como Pegaram meu E-mail?
+    document.getElementById('copiarComoPegaramMeuEmail').addEventListener('click', function () {
+        copiarParaClipboard(`${first_name}, 
+
+No processo de pesquisa para entender melhor como poderíamos colaborar e trazer valor à sua organização, identificamos seu endereço de e-mail em fontes públicas associadas à ${company_name}. Nosso objetivo é sempre estabelecer conexões significativas e respeitosas, visando explorar possíveis sinergias.
+
+Caso prefira não receber comunicações futuras, por favor, informe-nos, e garantiremos o respeito à sua escolha.
+        
+Atenciosamente,`);
+    });
+
+
 
 
 
