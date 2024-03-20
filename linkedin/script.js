@@ -272,26 +272,30 @@ Agradeço a oportunidade de potencialmente trabalhar com você e aguardo ansiosa
     });
 
 
-
     // Speech Pedido Reuniao RS
     document.getElementById('copiarPedidoReuniaoRS').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
-    });
+        copiarParaClipboard(`Boa tarde, ${first_name}. Tudo bem? Obrigado pela conexão!
 
+Sou Carlos, CEO da Agence Consultoria. Vi que você atua na ${company_name} e resolvi chamar, vejo uma oportunidade para otimizarmos seus processos de RH através de nossa tecnologia. Que tal uma breve reunião para discutir possibilidades?
+
+Aguardo seu retorno.`);
+    });
 
 
     // Speech Follow Up 1 Lean
     document.getElementById('copiarFollowUp1RS').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`${first_name}, entendo que todos temos agendas cheias, mas acredito sinceramente no valor que podemos trazer para sua empresa. Você teria disponibilidade para uma conversa rápida nos próximos dias?`);
     });
 
 
     // Speech Follow Up 2 Lean
     document.getElementById('copiarFollowUp2RS').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler minhas mensagens anteriores?
+
+Entendo que o desafio de manter a competitividade no mercado atual exige soluções inovadoras e eficientes. É aqui que a Agence pode se tornar seu braço de tecnologia.
+
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
     });
-
-
 
 
 
@@ -329,37 +333,29 @@ Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos a
 
     // Speech Pedido Reuniao Lean
     document.getElementById('copiarPedidoReuniaoLean').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`Boa tarde, ${first_name}. Tudo bem? Obrigado pela conexão!
+
+Sou Carlos, CEO da Agence Consultoria. Vi que você atua na ${company_name} e resolvi chamar, vejo uma oportunidade para otimizarmos seus processos através de nossa tecnologia. Que tal uma breve reunião para discutir possibilidades?
+        
+Aguardo seu retorno.`);
     });
 
 
 
     // Speech Follow Up 1 Lean
     document.getElementById('copiarFollowUp1Lean').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`Olá, ${first_name}, espero que esteja tendo um bom dia. Notei que talvez não tenha visto minha última mensagem sobre como a Agence pode auxiliar a ${company_name} a otimizar seus processos. Posso agendar alguns minutos para conversarmos sobre isso?`);
     });
 
 
     // Speech Follow Up 2 Lean
     document.getElementById('copiarFollowUp2Lean').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler as minhas mensagens anteriores?
+
+Entendo que o desafio de manter a competitividade no mercado atual exige soluções inovadoras e eficientes. É aqui que a Agence pode se tornar seu braço de tecnologia.
+        
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // Configuração para os botões de Fábrica
@@ -415,20 +411,30 @@ Atenciosamente,`);
 
     // Speech Pedido Reuniao Fabrica
     document.getElementById('copiarPedidoReuniaoFabrica').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`Boa tarde, ${first_name}. Tudo bem? Obrigado pela conexão!
+
+Sou Carlos, CEO da Agence Consultoria. Vi que você atua na ${company_name} e resolvi chamar, vejo uma oportunidade para otimizarmos seus processos através de nossa tecnologia. Que tal uma breve reunião para discutir possibilidades?
+                
+Aguardo seu retorno.`);
     });
 
 
 
     // Speech Follow Up 1
     document.getElementById('copiarFollowUp1').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`Olá, ${first_name}, espero que esteja tendo um bom dia. Notei que talvez não tenha visto minha última mensagem sobre como a Agence pode auxiliar a ${company_name} a otimizar seus processos. 
+        
+Posso agendar alguns minutos para conversarmos sobre isso?`);
     });
 
 
     // Speech Follow Up 2
     document.getElementById('copiarFollowUp2').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name},`);
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler minhas mensagens anteriores?
+
+Entendo que o desafio de manter a competitividade no mercado atual exige soluções inovadoras e eficientes. É aqui que a Agence pode se tornar seu braço de tecnologia.
+        
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
     });
 
 
