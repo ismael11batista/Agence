@@ -557,13 +557,15 @@ Atenciosamente,`);
 
     // Speech Texto Conectou Pessoa Aderente
     document.getElementById('copiarTextoConectouPessoaAderente').addEventListener('click', function () {
-        copiarParaClipboard(`Prezado ${first_name},
+        copiarParaClipboard(`Olá NOME_DO_RESPONSÁVEL,
 
-Agradeço o rápido retorno e a atenção em encaminhar nosso interesse ao responsável pelo departamento de TI, NOME_DO_RESPONSÁVEL.
+Sou Felipe Santos da Agence. Recebi sua indicação através do NOME_DE_QUEM_INDICOU para discutir possíveis colaborações entre a Agence e a COMPANY_NAME, especialmente em áreas relacionadas à melhoria contínua e inovação tecnológica.
 
-Ficamos à disposição para fornecer quaisquer informações adicionais que possam ser necessárias e ansiosos pela oportunidade de discutir como nossas soluções de Automação de Processos Robóticos (RPA) e desenvolvimento de sistemas Web/Mobile sob medida podem contribuir para ampliar ainda mais a eficiência operacional da Latina Têxtil.
+Na Agence, temos um histórico robusto de ajudar empresas a maximizar sua eficiência operacional e inovar em seus processos através de soluções tecnológicas personalizadas, incluindo Automação de Processos Robóticos (RPA) e desenvolvimento de sistemas Web/Mobile.
 
-Por favor, poderia nos informar um horário conveniente para o NOME_DO_RESPONSÁVEL ou para ${first_name}, para que possamos agendar uma conversa mais detalhada sobre nossas soluções e como elas se alinham às necessidades da ${company_name}?
+Estou ansioso para explorar como podemos colaborar e trazer valor à COMPANY_NAME.
+
+Podemos marcar uma conversa sobre isso?
 
 Atenciosamente,`);
     });
