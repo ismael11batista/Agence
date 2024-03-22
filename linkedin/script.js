@@ -563,7 +563,7 @@ Agradeço o rápido retorno e a atenção em encaminhar nosso interesse ao respo
 
 Ficamos à disposição para fornecer quaisquer informações adicionais que possam ser necessárias e ansiosos pela oportunidade de discutir como nossas soluções de Automação de Processos Robóticos (RPA) e desenvolvimento de sistemas Web/Mobile sob medida podem contribuir para ampliar ainda mais a eficiência operacional da Latina Têxtil.
 
-Por favor, poderia nos informar um horário conveniente para o NOME_DO_RESPONSÁVEL ou para ${first_name}, para que possamos agendar uma conversa mais detalhada sobre nossas soluções e como elas se alinham às necessidades da Latina Têxtil?
+Por favor, poderia nos informar um horário conveniente para o NOME_DO_RESPONSÁVEL ou para ${first_name}, para que possamos agendar uma conversa mais detalhada sobre nossas soluções e como elas se alinham às necessidades da ${company_name}?
 
 Atenciosamente,`);
     });
@@ -577,6 +577,19 @@ No processo de pesquisa para entender melhor como poderíamos colaborar e trazer
 
 Caso prefira não receber comunicações futuras, por favor, informe-nos, e garantiremos o respeito à sua escolha.
         
+Atenciosamente,`);
+    });
+
+
+
+    // Speech Texto Como Pegaram meu E-mail?
+    document.getElementById('copiarConfirmaçãoDeReunião').addEventListener('click', function () {
+        copiarParaClipboard(`Perfeito,
+
+Enviei o convite para nosso encontro no dia DIA_DA_REUNIÃO, das HORÁRIO_DE_INÍCIO às HORÁRIO_DE_TÉRMINO, via Google Meet. Além disso, coloquei em cópia o nosso especialista NOME_DO_CONSULTOR (    ), que também participará da conversa, trazendo insights valiosos para a discussão.
+
+Estou à disposição para qualquer dúvida ou informação adicional que precise antes da nossa reunião. Até lá.
+
 Atenciosamente,`);
     });
 
