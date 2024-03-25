@@ -118,7 +118,9 @@ function formatarTelefone() {
             copiarParaClipboard(formatado);
             mostrarPopUp("Número de telefone formatado e copiado com sucesso!");
         } else {
-            mostrarPopUp("Número de telefone parece estar incompleto ou incorreto.");
+            // Ajuste: se não for possível formatar corretamente, copia o número na forma crua.
+            copiarParaClipboard(telefoneMatch[1]);
+            mostrarPopUp("Formato de telefone inválido. Número copiado na forma original.");
         }
     } else {
         mostrarPopUp("Telefone não encontrado.");
