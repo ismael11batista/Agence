@@ -24,6 +24,9 @@ function formatarNome() {
         const nomeFormatado = nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
         NomeDoContato = nomeFormatado
         copiarParaClipboard(nomeFormatado);
+    } else {
+        copiarParaClipboard('Nome nao identificado');
+        mostrarPopUp("Nome nao identificado");
     }
 }
 
@@ -36,6 +39,9 @@ function formatarEmpresa() {
         const empresaFormatada = empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
         NomeDaEmpresa = empresaFormatada
         copiarParaClipboard(empresaFormatada);
+    } else {
+        copiarParaClipboard('Sem informação');
+        mostrarPopUp("Empresa não identificada.");
     }
 }
 
@@ -45,6 +51,7 @@ function formatarAssunto() {
 
     if (éChatbot) {
         copiarParaClipboard("Nao ha campo de assunto nos leads do chatbot.");
+        mostrarPopUp("Nao ha campo de assunto nos leads do chatbot.");
         return;
     }
 
@@ -58,6 +65,7 @@ function formatarAssunto() {
         copiarParaClipboard(assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1));
         mostrarPopUp("Assunto formatado e copiado para a área de transferência: " + assuntoFormatado);
     } else {
+        copiarParaClipboard("Campo de assunto não encontrado.");
         mostrarPopUp("Campo de assunto não encontrado.");
     }
 }
@@ -97,6 +105,7 @@ function formatarEmail() {
         EmailFormatado = email; // Mantém esta linha se precisar do email formatado em minúsculas em outra parte do código
         copiarParaClipboard(email);
     } else {
+        copiarParaClipboard('email@email.com');
         mostrarPopUp("E-mail não encontrado.");
     }
 }
