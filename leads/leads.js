@@ -123,6 +123,7 @@ function formatarTelefone() {
             mostrarPopUp("Formato de telefone inválido. Número copiado na forma original.");
         }
     } else {
+        copiarParaClipboard('0000000000000')
         mostrarPopUp("Telefone não encontrado.");
     }
 }
