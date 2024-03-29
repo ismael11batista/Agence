@@ -114,6 +114,21 @@ function ajustarTexto() {
         'qua., ',
         'qui., ',
         'sex., ',
+        'From: Felipe H. Santos ',
+        'Como usar o E-mail de Os.agence.com.br com leitores de tela',
+        'Já foi Respondida',
+        'Resposta Positiva',
+        'www.agence.com.br  |  agence.global',
+        'Tel.: +55 (11) 3554-2187',
+        'Marketing & Vendas',
+        'Ismael Borges Batista',
+        'Esta mensagem e seus anexos podem conter informações confidenciais ou privilegiadas,',
+        'https://www.agence.com.br/  |  https://www.agence.global/',
+        '1 anexo',
+        'Anexos',
+        'Brasil – São Paulo • Brasil – Campo Grande • Colombia – Bogotá • USA – New York',
+        'Novos Negócios • Nuevos Negocios • Business Development',
+        'para Ismael',
 
     ];
 
@@ -130,6 +145,8 @@ function ajustarTexto() {
         'ZjQcmQRYFpfptBannerEnd',
         'Book time',
         'From: Felipe Santos <>',
+        'Diretora de Expansão e Novos Negócios',
+
 
 
         // Adicione mais termos conforme necessário
