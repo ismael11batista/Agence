@@ -378,7 +378,7 @@ function formatarTextoEspecial() {
     }
 
 
-    TextoEspecial = `Chegou lead para você por fora da fila. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
 }
 
 
