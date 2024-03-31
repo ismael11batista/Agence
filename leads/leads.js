@@ -553,7 +553,7 @@ function FormatarLeadFaleCom(texto) {
     }
 
     // Construção do texto formatado
-    let textoFormatado = `Nome: ${nomeFormatado}\nEmail: ${emailFormatado}\nTelefone: ${telefoneFormatado}\nComentários: ${assuntoFormatado}\nAgence`;
+    let textoFormatado = `Nome: ${nomeFormatado}\nEmpresa: \nEmail: ${emailFormatado}\nEstou interessado em: \nServiços de consultoria – Prototipagem\nDesenvolvimento de aplicativos móveis\nDesenvolvimento Web\ne-Commerce\nProfissionais de TI – Outsourcing\nProfissionais de TI – Headhunting\nRPA – Robotic Process Automation\n\nTelefone: ${telefoneFormatado}\nComentários: ${assuntoFormatado}\nAgence - Fale Conosco`;
 
     // Exibição do resultado e/ou outras ações
     textoFormatadoGlobal = textoFormatado; // Armazena o texto formatado na variável global
