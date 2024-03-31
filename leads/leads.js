@@ -5,15 +5,27 @@ let TextoEspecial = ""; // Variável global para armazenar o texto especial
 let TelefoneDoContato = '';
 let EmailFormatado = '';
 let InteresseDoLead = '';
+var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
+
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
         identificarInformacoesAutomaticamente(); // Função existente
         identificarInformacoesAdicionais();
-        document.getElementById('copiarTextoEspecial').addEventListener('click', copiarTextoEspecial);
-        // Nova função
     });
+
+    document.getElementById('copiarTextoEspecial').addEventListener('click', copiarTextoEspecial);
+    // Nova função
+    document.getElementById('copiarLeadFaleCom').addEventListener('click', copiarLeadFaleComParaClipboard);
+
+
+
 });
+
+
+
+
+
 
 function formatarNome() {
     const texto = document.getElementById('inputText').value;
@@ -390,4 +402,182 @@ function copiarTextoEspecial() {
         console.error('Erro ao copiar o texto especial: ', err);
         mostrarPopUp('Falha ao copiar o texto especial.');
     });
+}
+
+
+function removerLinhasPorInicio(texto, iniciosParaRemover) {
+    // Divide o texto em linhas para processamento
+    let linhas = texto.split('\n');
+    // Filtra as linhas, removendo aquelas que começam com algum dos inícios especificados
+    linhas = linhas.filter(linha => !iniciosParaRemover.some(inicio => linha.startsWith(inicio)));
+    // Reconstitui o texto com as linhas restantes
+    return linhas.join('\n');
+}
+
+function removerTermosEspecificos(texto, termosParaRemover) {
+    termosParaRemover.forEach(termo => {
+        // Usando expressão regular para substituir o termo por uma string vazia globalmente, ignorando maiúsculas e minúsculas
+        texto = texto.replace(new RegExp(termo, 'gi'), '');
+    });
+    return texto;
+}
+
+function ajustarQuebrasDeLinha(texto) {
+    // Primeiro, substitui múltiplas quebras de linha por uma única quebra de linha
+    // Segundo, remove linhas que contêm somente espaços ou são totalmente vazias
+    return texto.replace(/\n+/g, '\n').replace(/^\s*$(?:\r\n?|\n)/gm, '');
+}
+
+function removerTextoAposTermos(texto, termos) {
+    let indiceMinimo = texto.length;
+    termos.forEach(termo => {
+        const indice = texto.indexOf(termo);
+        if (indice !== -1 && indice < indiceMinimo) {
+            indiceMinimo = indice;
+        }
+    });
+    return indiceMinimo !== texto.length ? texto.substring(0, indiceMinimo) : texto;
+}
+
+
+function FormatarLeadFaleCom(texto) {
+    // Regexes e listas de exclusão para cada categoria
+    const nomeRegexes = [
+        /(?<=para:\s)(.*?)(?=\s<)/,
+        /(?<=From: ')(.*?)(?=' via Falecom)/,
+        /(?<=From: falecom@agence.com.br <falecom@agence.com.br> On Behalf Of )(.*?)(?=\r?\nSent:)/,
+        /(?<=From: falecom@agence.com.br <falecom@agence.com.br> On Behalf Of )(.*?)(?=\nSent:)/,
+    ];
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+    const emailsIgnorados = [
+        "carlos.arruda@agence.cl",
+        "ismael.batista@sp.agence.com.br",
+        "falecom@agence.com.br",
+        "pedro.catini@agence.com.br",
+        "daniel.silva@sp.agence.com.br",
+        "carlos.carvalho@agence.com.br",
+        "danilo.camargo@sp.agence.com.br",
+    ];
+    const telefoneRegexes = [
+        /\b(?:\+?(\d{1,3}))?[-. ]?(\d{2,3})[-. ]?(\d{4,5})[-. ]?(\d{4})\b/g,
+        /\+\d{1,3}\s?\(\d{1,3}\)\s?\d{4,5}-\d{4}/g,
+        /\+\d{1,3}\s?\(\d{1,3}\)\s?\d{3,4}-\d{4}/g,
+    ];
+    const telefonesIgnorados = [
+        "+5512992117495",
+        "+551121577514",
+        "11987654321",
+        "+56227998951",
+        "+56974529257",
+        "+551135542187",
+    ];
+    const assuntoRegexes = [
+        /(?<=Subject: )([\s\S]*?)(?=\d{1,2} de \w+\. de \d{4}, \d{1,2}:\d{2})/,
+        /(?<=Subject: )([\s\S]*?)(?=\n\n\n)/,
+    ];
+
+    // Variáveis de resultado
+    let nomeFormatado = 'Nome não identificado';
+    let emailFormatado = 'E-mail válido não encontrado';
+    let telefoneFormatado = 'Telefone válido não encontrado';
+    let assuntoFormatado = 'Campo de assunto não encontrado';
+
+    // Processamento de nome
+    for (const regex of nomeRegexes) {
+        const nomeMatch = texto.match(regex);
+        if (nomeMatch) {
+            nomeFormatado = nomeMatch[0].split(' ')
+                .map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase())
+                .join(' ');
+            break;
+        }
+    }
+
+    // Processamento de email
+    const todosEmails = texto.match(emailRegex) || [];
+    const emailsValidos = todosEmails.filter(email => !emailsIgnorados.includes(email.toLowerCase()));
+
+    if (emailsValidos.length > 0) {
+        emailFormatado = emailsValidos[0].toLowerCase();
+    }
+
+    // Processamento de telefone
+    let todosTelefones = [];
+    telefoneRegexes.forEach(regex => {
+        const telefonesEncontrados = [...texto.matchAll(regex)].map(match => match[0]);
+        todosTelefones = [...todosTelefones, ...telefonesEncontrados];
+    });
+    const telefonesValidos = todosTelefones.filter(telefone =>
+        !telefonesIgnorados.includes(telefone.replace(/[-. ()]/g, ''))
+    );
+    if (telefonesValidos.length > 0) {
+        telefoneFormatado = telefonesValidos[0];
+    }
+
+    // Processamento de assunto com lógica específica
+    const iniciosParaRemoverAssunto = [
+        "Ismael Borges Batista",
+        // Adicione mais inícios para remover conforme necessário
+    ];
+
+    const termosParaRemoverAssunto = [
+        // Adicione mais termos para remover conforme necessário
+    ];
+
+    const termosParaCorteAssunto = [
+        "Atenciosamente",
+        "Obrigado",
+        "Obrigada",
+        "obrigado",
+        "obrigada",
+        "[Mensagem cortada]",
+        "Exibir toda a mensagem",
+        // Adicione mais termos conforme necessário
+    ];
+
+
+    for (const regex of assuntoRegexes) {
+        const assuntoMatch = texto.match(regex);
+        if (assuntoMatch) {
+            let assunto = assuntoMatch[0].trim();
+
+            // Processamento adicional do assunto com lógica específica
+            assunto = removerLinhasPorInicio(assunto, iniciosParaRemoverAssunto);
+            assunto = removerTermosEspecificos(assunto, termosParaRemoverAssunto);
+            assunto = ajustarQuebrasDeLinha(assunto);
+            assunto = removerTextoAposTermos(assunto, termosParaCorteAssunto);
+
+            assuntoFormatado = assunto.charAt(0).toUpperCase() + assunto.slice(1);
+            break; // Garante que apenas o último assunto seja processado e formatado
+        }
+    }
+
+    // Construção do texto formatado
+    let textoFormatado = `Nome: ${nomeFormatado}\nEmail: ${emailFormatado}\nTelefone: ${telefoneFormatado}\nComentários: ${assuntoFormatado}\nAgence`;
+
+    // Exibição do resultado e/ou outras ações
+    textoFormatadoGlobal = textoFormatado; // Armazena o texto formatado na variável global
+
+    // Retorno do texto formatado, caso necessário
+    return textoFormatado;
+
+}
+
+
+
+function copiarLeadFaleComParaClipboard() {
+    const texto = document.getElementById('inputText').value; // Obtém o texto de entrada
+    FormatarLeadFaleCom(texto); // Formata o texto e atualiza a variável global
+
+    // Verifica se o textoFormatadoGlobal não está vazio
+    if (textoFormatadoGlobal !== "") {
+        navigator.clipboard.writeText(textoFormatadoGlobal).then(() => {
+            mostrarPopUp('Texto copiado para a área de transferência!');
+        }).catch(err => {
+            console.error('Erro ao copiar o texto do Lead FaleCom: ', err);
+            mostrarPopUp('Falha ao copiar o texto do Lead FaleCom.');
+        });
+    } else {
+        mostrarPopUp('Nenhum texto disponível para copiar.');
+    }
 }
