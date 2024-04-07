@@ -129,6 +129,8 @@ function ajustarTexto() {
         'Brasil – São Paulo • Brasil – Campo Grande • Colombia – Bogotá • USA – New York',
         'Novos Negócios • Nuevos Negocios • Business Development',
         'para Ismael',
+        'De: Ismael B. Batista - ismael.batista@os.agence.com.br',
+        'Esta mensagem contém informações de propriedade',
 
     ];
 
