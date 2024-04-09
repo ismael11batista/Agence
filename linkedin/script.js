@@ -209,19 +209,23 @@ function configurarBotoes() {
     });
 
     function displayButtons(selection) {
+        var CFButtons = document.getElementById("CFButtons");
         var RSButtons = document.getElementById("RSButtons");
         var LeanButtons = document.getElementById("LeanButtons");
         var FabricaButtons = document.getElementById("FabricaButtons");
         var OtherButtons = document.getElementById("OtherButtons");
 
 
+        CFButtons.classList.add("hide");
         RSButtons.classList.add("hide");
         LeanButtons.classList.add("hide");
         FabricaButtons.classList.add("hide");
         OtherButtons.classList.add("hide");
 
 
-        if (selection === "R&S") {
+        if (selection === "Carlos Flávio R&S") {
+            CFButtons.classList.remove("hide");
+        } else if (selection === "R&S") {
             RSButtons.classList.remove("hide");
         } else if (selection === "Lean") {
             LeanButtons.classList.remove("hide");
@@ -241,6 +245,86 @@ function configurarBotoes() {
 function configurarBotoesEspecificos() {
     // Adicione aqui a configuração específica de botões para R&S, Lean, Fábrica, etc.
     // Exemplo: Configuração para os botões de R&S
+
+    // Speech Conexão RS CARLOS FLAVIO
+    document.getElementById('copiarTextoRSConexaoCF').addEventListener('click', function () {
+        copiarParaClipboard(`Olá ${first_name}, vi que você já atua no cargo ${position} há ${time_in_position}. Parabéns! Meu nome é Carlos, sou CEO da Agence e acredito que uma parceria entre nossas empresas seria ótimo. O que acha de conversarmos sobre como a Agence pode ajudar vocês na área de tecnologia?`);
+    });
+
+
+    //Speech do Email 1 para CARLOS FLAVIO Recrutamento e Seleção
+    document.getElementById('copiarTextoRSCF1').addEventListener('click', function () {
+        copiarParaClipboard(`Transforme Sua Equipe de TI com os Melhores Talentos do Mercado
+${first_name},
+
+Meu nome é Carlos Flávio, CEO na Agence. Percebemos que o sucesso de equipes de TI, especialmente em empresas como a ${company_name}, depende da habilidade de atrair talentos. Por isso, gostaria de compartilhar como nosso serviço especializado de headhunting pode ser um diferencial para vocês.
+
+Nosso Processo Único:
+
+🔹Entendimento Aprofundado: Iniciamos com uma análise detalhada das necessidades de TI e da cultura da sua empresa.
+🔹Rede Exclusiva de Talentos: Acessamos uma rede diversificada de profissionais de TI, muitos dos quais estão exclusivamente conosco (mais de 15 mil profissionais avaliados em nossa base de dados).
+🔹Seleção Rigorosa: Combinamos técnicas avançadas de avaliação e entrevistas profundas, além de muita tecnologia aplicada aos processos, para garantir não só competência técnica, mas também alinhamento cultural.
+🔹Acompanhamento Contínuo: Após a contratação, oferecemos suporte para garantir uma integração bem - sucedida.
+        
+Estamos confiantes de que podemos ajudar a ${company_name} a alcançar novos patamares em inovação e desempenho de TI. 
+        
+Seria possível agendar uma breve reunião para discutir como podemos contribuir especificamente para seus objetivos ?
+
+Agradeço pela atenção e aguardo a oportunidade de conversarmos mais.
+
+Atenciosamente,`);
+
+    });
+
+
+    // Speech Email 2 RS  CARLOS FLAVIO 
+    document.getElementById('copiarTextoRSCF2').addEventListener('click', function () {
+        copiarParaClipboard(`${first_name},
+
+Espero que tenha encontrado nossa introdução ao serviço de headhunting da Agence útil. Acredito que uma parceria entre nossas organizações pode trazer resultados significativos para a ${company_name}, especialmente em um momento tão crucial para a inovação tecnológica.
+
+Gostaria de oferecer um resumo conciso de como podemos trabalhar juntos para atender às suas necessidades específicas:
+
+🔹Análise Competitiva do Mercado: Insights essenciais sobre tendências de recrutamento e remuneração no setor de TI;
+🔹Processo Ágil: Adaptação rápida para atender às suas necessidades urgentes, mantendo o foco na qualidade;
+🔹Parceria Estratégica: Comprometemo-nos a ser mais do que um fornecedor, mas um verdadeiro parceiro para o crescimento contínuo da sua equipe de TI.
+            
+Entendo que escolher o parceiro certo para headhunting é uma decisão importante. Por isso, gostaria de sugerir um bate-papo rápido de 20 minutos para discutir como a Agence pode ajudar especificamente a ${company_name}. Na próxima semana, terça-feira às 10h ou quinta-feira às 15h seriam convenientes para você?
+
+Agradeço a oportunidade de potencialmente trabalhar com você e aguardo ansiosamente a chance de discutir como podemos contribuir para o sucesso contínuo da ${company_name}.`);
+    });
+
+
+    // Speech Pedido Reuniao RS CARLOS FLAVIO 
+    document.getElementById('copiarPedidoReuniaoRSCF').addEventListener('click', function () {
+        copiarParaClipboard(`${first_name}. Obrigado pela conexão!
+
+Vi que você atua na ${company_name} e resolvi chamar, vejo uma oportunidade para otimizarmos seus processos através de nossa tecnologia. Que tal uma breve reunião para discutir possibilidades?
+
+Aguardo seu retorno.`);
+    });
+
+
+    // Speech Follow Up 1 RS CARLOS FLAVIO  
+    document.getElementById('copiarFollowUp1RSCF').addEventListener('click', function () {
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler as minhas mensagens anteriores?
+        
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
+    });
+
+
+    // Speech Follow Up 2 RS CARLOS FLAVIO  
+    document.getElementById('copiarFollowUp2RSCF').addEventListener('click', function () {
+        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler minhas mensagens anteriores?
+
+Entendo que o desafio de manter a competitividade no mercado atual exige soluções inovadoras e eficientes. É aqui que a Agence pode se tornar seu braço de tecnologia.
+
+Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
+    });
+
+
+
+
 
     // Speech Conexão RS 
     document.getElementById('copiarTextoRSConexao').addEventListener('click', function () {
