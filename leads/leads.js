@@ -297,7 +297,7 @@ function identificarInformacoesAdicionais() {
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
         let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.\n\n`;
+        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.`;
     }
 
     // Exibindo as informações
