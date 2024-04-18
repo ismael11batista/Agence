@@ -39,11 +39,11 @@ textarea {
     background-color: transparent;
     font-size: xx-large;
     color: rgba(255, 255, 255, 0.605);
-    width: 90%;
+    width: 95%;
     padding: 10px;
     margin: 20px;
     border: 1px solid rgba(255, 255, 255, 0.605);
-    border-radius: 30px;
+    border-radius: 10px;
     resize: none;
     height: 280px;
 }
