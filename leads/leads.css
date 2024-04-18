@@ -173,12 +173,6 @@ button:hover {
     background: linear-gradient(45deg, #00043a, #001170);
 }
 
-.resultado {
-    background-color: transparent;
-    height: 165px;
-    align-items: center;
-    text-align: center;
-}
 
 
 
@@ -216,82 +210,97 @@ button:hover {
 }
 
 
+/* Layout principal */
+.info-principal {
+    display: flex;
+    justify-content: space-around;
+    /* Espaçamento uniforme */
+    width: 100%;
+    padding: 0px 0;
+
+    /* Padding superior e inferior */
+
+}
+
+
+
 .resultado,
+.info-adicional,
+.containerLeadAutomatico,
+.detalhes-lead {
+    background-color: transparent;
+    height: 180px;
+    align-items: center;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.605);
+    border-radius: 10px;
+    /* Padding uniforme */
+    text-align: center;
+    /* Centraliza o texto horizontalmente */
+    width: calc(100%);
+    /* Largura total */
+
+}
+
+
+/* Estilos para caixas de texto */
 .info-div,
-.info-div2,
-.info-adicional {
+.info-div2 {
     color: rgba(255, 255, 255, 0.605);
     border-radius: 10px;
     padding: 10px;
-    /*ALTURA DOS BOTÕES ORIGEM E INTERESSE */
+    /* Padding uniforme */
     text-align: center;
+    /* Centraliza o texto horizontalmente */
     width: calc(100%);
-    /* LARGURA DOS BOTÕES ORIGEM E INTERESSE*/
-
-}
-
-.info-div,
-.info-div2 {
+    /* Largura total */
     background: linear-gradient(45deg, #00021d, #000a42);
     border: 1px solid rgba(255, 255, 255, 0.605);
-    ;
-}
-
-
-/* Ajustes para o posicionamento das caixas de informações principais e adicionais */
-.info-principal {
-    display: flex;
-    justify-content: center;
-    /* Centraliza os itens horizontalmente */
-    gap: 0px;
-    /* Espaçamento entre as caixas */
-    width: 100%;
-    /* Garante que a div ocupe a largura total disponível */
-    padding: 20px;
-    /* Espaçamento interno para evitar que o conteúdo toque as bordas */
-    margin-left: 39%;
-}
-
-.info-adicional {
-    margin-right: 39%;
 }
 
 
 
+
+
+/* Ajuste para caixas de detalhes do lead, informações adicionais e info-principal */
 .containerLeadAutomatico,
-.info-adicional {
+.info-adicional,
+.detalhes-lead {
     display: flex;
-    /* Utiliza Flexbox para alinhamento */
+    text-align: center;
     justify-content: center;
     /* Centraliza o conteúdo horizontalmente */
     align-items: center;
     /* Centraliza o conteúdo verticalmente */
     flex: 1;
-    /* Distribui o espaço igualmente */
+    /* Distribuição igual do espaço */
     min-width: 300px;
-    /* Largura mínima para cada caixa */
+    /* Largura mínima */
     max-width: 100%;
-    /* Largura máxima para evitar sobreposição */
-    padding: 0px;
-    /* Espaçamento interno */
+    /* Evita sobreposição */
+    padding: 0px 0px;
+    /* Ajuste para igualar o padding superior */
     border: 0px solid #02112e;
     border-radius: 0px;
     white-space: pre-wrap;
 
 }
 
+/* Media query para ajustes em telas menores */
 @media (max-width: 768px) {
     .info-principal {
         flex-direction: column;
-        /* Empilha as caixas verticalmente em telas menores */
     }
+}
 
-    .containerLeadAutomatico,
-    .info-adicional {
-        max-width: 90%;
-        /* Ajusta a largura máxima para telas menores */
+.detalhes-lead {
+    padding-top: 19px;
+    padding-left: 10.5%;
+}
 
 
-    }
+.info-principal {
+
+    padding-right: 10%;
 
 }

@@ -12,18 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
         identificarInformacoesAutomaticamente(); // Função existente
         identificarInformacoesAdicionais();
+        formatarTextoEspecial(); // Chamada da função para formatar e exibir detalhes do lead
     });
 
     document.getElementById('copiarTextoEspecial').addEventListener('click', copiarTextoEspecial);
-    // Nova função
     document.getElementById('copiarLeadFaleCom').addEventListener('click', copiarLeadFaleComParaClipboard);
-
-
-
 });
-
-
-
 
 
 
@@ -401,6 +395,9 @@ function formatarTextoEspecial() {
 
 
     TextoEspecial = `Chegou lead para você. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
+
+    // Atualizando o elemento HTML com o texto especial
+    document.getElementById('detalhesLead').textContent = TextoEspecial;
 }
 
 
