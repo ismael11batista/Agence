@@ -174,6 +174,8 @@ function identificarInformacoesAutomaticamente() {
         porte = `Porte da Empresa: ${porteTexto}`; // Atribui o porte encontrado à variável
     }
 
+    InteresseDoLead = interesse
+
     // Exibe as informações capturadas nos elementos HTML correspondentes
     document.getElementById('origemLead').textContent = origem;
     document.getElementById('interesseLead').textContent = interesse;
