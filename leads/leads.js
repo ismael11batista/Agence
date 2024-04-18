@@ -149,10 +149,12 @@ function formatarTelefone() {
     }
 }
 
+
 function identificarInformacoesAutomaticamente() {
     const texto = document.getElementById('inputText').value;
-    let origem = "";
-    let interesse = "";
+    let origem = "Origem: Não identificada";
+    let interesse = "Interesse: Não encontrado";
+    let porte = "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
 
     if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
         origem = "Origem: Inbound Whatsapp";
@@ -162,20 +164,28 @@ function identificarInformacoesAutomaticamente() {
 
     const necessidadeRegex = /Necessidade: (.+)/i;
     const interesseRegex = /Estou interessado em: (.+)/i;
+    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
     const necessidadeMatch = texto.match(necessidadeRegex);
     const interesseMatch = texto.match(interesseRegex);
+    const porteMatch = texto.match(porteRegex); // Tenta encontrar o porte da empresa no texto
 
     if (necessidadeMatch) {
         interesse = "Interesse: " + necessidadeMatch[1];
-        InteresseDoLead = interesse;
     } else if (interesseMatch) {
         interesse = "Interesse: " + interesseMatch[1];
-        InteresseDoLead = interesse;
     }
 
+    if (porteMatch && porteMatch[1]) {
+        let porteTexto = porteMatch[1].replace("Porte", "").trim();
+        porte = `Porte da Empresa: ${porteTexto}`; // Atribui o porte encontrado à variável
+    }
+
+    // Exibe as informações capturadas nos elementos HTML correspondentes
     document.getElementById('origemLead').textContent = origem;
     document.getElementById('interesseLead').textContent = interesse;
+    document.getElementById('porteLead').textContent = porte; // Exibe o porte da empresa
 }
+
 
 function formatarLead() {
     const texto = document.getElementById('inputText').value;
