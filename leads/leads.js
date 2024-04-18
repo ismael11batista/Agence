@@ -112,7 +112,7 @@ function formatarEmail() {
         copiarParaClipboard(email);
     } else {
         copiarParaClipboard('email@email.com');
-        mostrarPopUp("E-mail não encontrado.");
+        mostrarPopUp("e-mail não encontrado.");
     }
 }
 
@@ -146,8 +146,8 @@ function formatarTelefone() {
 
 function identificarInformacoesAutomaticamente() {
     const texto = document.getElementById('inputText').value;
-    let origem = "Origem: Não identificada";
-    let interesse = "Interesse: Não encontrado";
+    let origem = "Origem: não identificada";
+    let interesse = "Interesse: não identificado";
     let porte = "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
 
     if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
@@ -195,17 +195,17 @@ function formatarLead() {
     const telefoneMatch = texto.match(telefoneRegex);
     const interesseMatch = texto.match(interesseRegex);
 
-    const nome = nomeMatch ? nomeMatch[1] || nomeMatch[2] : "Não informado";
+    const nome = nomeMatch ? nomeMatch[1] || nomeMatch[2] : "não informado";
     const nomeFormatado = nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
     NomeDoContato = nomeFormatado
 
-    const empresa = empresaMatch ? empresaMatch[1] || empresaMatch[2] : "Não informado";
+    const empresa = empresaMatch ? empresaMatch[1] || empresaMatch[2] : "não informado";
     const empresaFormatada = empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
     NomeDaEmpresa = empresaFormatada
 
-    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "Não informado";
+    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
 
-    const interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "Não informado";
+    const interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "não informado";
 
     if (telefone.startsWith('55') && (telefone.length === 12 || telefone.length === 13)) {
         telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
@@ -364,14 +364,13 @@ function formatarTextoEspecial() {
      const interesseMatch = texto.match(interesseRegex); */
 
 
-
     let EmailFormatado = "";
     if (emailMatch) {
         // Captura o e-mail do match encontrado e converte para minúsculas
         EmailFormatado = (emailMatch[1] || emailMatch[2]).toLowerCase();
     } else {
-        console.log("E-mail não encontrado.");
-        EmailFormatado = "E-mail não encontrado.";
+        console.log("não informado.");
+        EmailFormatado = "não informado";
     }
 
 
@@ -390,13 +389,13 @@ function formatarTextoEspecial() {
             assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
             assuntoFormatado = assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
         } else {
-            console.log("Campo de assunto não encontrado.");
-            assuntoFormatado = "Campo de assunto não encontrado.";
+            console.log("não encontrado.");
+            assuntoFormatado = "não encontrado";
         }
     }
 
 
-    TextoEspecial = `Chegou lead para você. \n\nInformações do lead:\n\nNome do Contato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você. \n\nInformações do lead:\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoEspecial;
@@ -487,8 +486,8 @@ function FormatarLeadFaleCom(texto) {
 
     // Variáveis de resultado
     let nomeFormatado = 'Nome não identificado';
-    let emailFormatado = 'E-mail válido não encontrado';
-    let telefoneFormatado = 'Telefone válido não encontrado';
+    let emailFormatado = 'E-mail não informado';
+    let telefoneFormatado = 'Telefone não informado';
     let assuntoFormatado = 'Campo de assunto não encontrado';
 
     // Processamento de nome
