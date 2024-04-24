@@ -307,9 +307,11 @@ Aguardo seu retorno.`);
 
     // Speech Follow Up 1 RS CARLOS FLAVIO  
     document.getElementById('copiarFollowUp1RSCF').addEventListener('click', function () {
-        copiarParaClipboard(`${first_name}, você teve a oportunidade de ler as minhas mensagens anteriores?
-        
-Qual a sua disponibilidade para analisarmos seus processos e o que poderíamos automatizar e/ou sistematizar na sua empresa?`);
+        copiarParaClipboard(`${first_name}. Obrigado pela conexão!
+
+Vi que você atua na ${company_name} e resolvi chamar, vejo uma oportunidade para otimizarmos seus processos através de nossa tecnologia. Que tal uma breve reunião para discutir possibilidades?
+
+Aguardo seu retorno.`);
     });
 
 
