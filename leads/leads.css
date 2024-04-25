@@ -104,7 +104,7 @@ textarea {
     justify-content: space-around;
     gap: 30px;
     width: 90%;
-    margin-top: 170px;
+    margin-top: 50px;
 }
 
 /* Estilo para o botão de Voltar à Homepage */
@@ -229,7 +229,7 @@ button:hover {
 .containerLeadAutomatico,
 .detalhes-lead {
     background-color: transparent;
-    height: 180px;
+    height: 350px;
     align-items: center;
     text-align: center;
     color: rgba(255, 255, 255, 0.605);
@@ -239,6 +239,7 @@ button:hover {
     /* Centraliza o texto horizontalmente */
     width: calc(100%);
     /* Largura total */
+    align-items: first baseline;
 
 }
 
@@ -270,11 +271,11 @@ button:hover {
     text-align: center;
     justify-content: center;
     /* Centraliza o conteúdo horizontalmente */
-    align-items: center;
+    align-items: first baseline;
     /* Centraliza o conteúdo verticalmente */
     flex: 1;
     /* Distribuição igual do espaço */
-    min-width: 300px;
+    min-width: 500px;
     /* Largura mínima */
     max-width: 100%;
     /* Evita sobreposição */
@@ -294,8 +295,12 @@ button:hover {
 }
 
 .detalhes-lead {
-    padding-top: 19px;
+    padding-top: 0px;
     padding-left: 10.5%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+
 }
 
 
