@@ -30,6 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     document.getElementById('LinkedinBtn').addEventListener('click', function () {
-        window.location.href = 'linkedin/index.html';
+        window.location.href = 'bdr/index.html';
     });
 });
