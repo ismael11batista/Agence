@@ -78,7 +78,7 @@ html {
     }
 
     li {
-        background-color: #414e68;
+        background-color: #304163;
         padding: 10px 15px;
         margin-bottom: 10px;
         border-radius: 6px;
@@ -99,13 +99,13 @@ html {
 
     /* Estilos do campo de entrada e botão de adicionar */
     textarea {
-        background-color: #414e68;
+        background-color: #304163;
         color: rgba(255, 255, 255, 0.605);
         width: 100%;
         padding: 10px;
         margin-top: 10px;
         margin-bottom: 10px;
-        border: 1px solid rgba(255, 255, 255, 0.605);
+        border: none;
         border-radius: 6px;
         resize: none;
         font-family: 'Roboto', sans-serif;
