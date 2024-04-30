@@ -229,7 +229,7 @@ button:hover {
 .containerLeadAutomatico,
 .detalhes-lead {
     background-color: transparent;
-    height: 350px;
+    height: 250px;
     align-items: center;
     text-align: center;
     color: rgba(255, 255, 255, 0.605);
