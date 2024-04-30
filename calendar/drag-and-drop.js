@@ -1,36 +1,44 @@
 let elementoArrastado = null;
-let cloneElemento = null; // Vamos criar um clone do elemento para o arrasto
+let cloneElemento = null;
 let offsetX = 0, offsetY = 0;
+let listaAtividades = null;
 
 document.addEventListener('mousedown', (e) => {
     if (e.target.classList.contains('tarefa-arrastavel')) {
         elementoArrastado = e.target;
+        listaAtividades = elementoArrastado.parentNode;
 
-        // Cria um clone do elemento para ser arrastado
         cloneElemento = elementoArrastado.cloneNode(true);
-        cloneElemento.classList.add('arrastando'); // Podemos adicionar uma classe para estilizar o clone durante o arrasto
+        cloneElemento.classList.add('arrastando');
         document.body.appendChild(cloneElemento);
 
-        // Calcula o offset do mouse relativo ao elemento arrastado
-        offsetX = e.clientX - elementoArrastado.getBoundingClientRect().left;
-        offsetY = e.clientY - elementoArrastado.getBoundingClientRect().top; // Ajuste feito aqui
+        const retanguloElemento = elementoArrastado.getBoundingClientRect();
+        offsetX = e.clientX - retanguloElemento.left;
+        offsetY = e.clientY - retanguloElemento.top;
 
-        // Posiciona o clone no mesmo lugar que o elemento original
         cloneElemento.style.position = 'absolute';
-        cloneElemento.style.left = elementoArrastado.getBoundingClientRect().left + 'px';
-        cloneElemento.style.top = elementoArrastado.getBoundingClientRect().top + 'px';
-        cloneElemento.style.width = elementoArrastado.offsetWidth + 'px'; // Garante que o clone tenha a mesma largura do original
+        cloneElemento.style.width = retanguloElemento.width + 'px';
+        cloneElemento.style.height = retanguloElemento.height + 'px';
+        cloneElemento.style.pointerEvents = 'none';
+
+        atualizarPosicaoClone(e.clientX, e.clientY);
+
+        elementoArrastado.style.opacity = '0.5';
 
         document.addEventListener('mousemove', eventoMouseMove);
         document.addEventListener('mouseup', eventoMouseUp);
     }
 });
 
+function atualizarPosicaoClone(x, y) {
+    cloneElemento.style.left = (x - offsetX) + 'px';
+    cloneElemento.style.top = (y - offsetY) + 'px';
+}
+
 function eventoMouseMove(e) {
     if (!cloneElemento) return;
 
-    cloneElemento.style.left = e.clientX - offsetX + 'px';
-    cloneElemento.style.top = e.clientY - offsetY + 'px';
+    atualizarPosicaoClone(e.clientX, e.clientY);
 }
 
 function eventoMouseUp(e) {
@@ -39,29 +47,34 @@ function eventoMouseUp(e) {
     document.removeEventListener('mousemove', eventoMouseMove);
     document.removeEventListener('mouseup', eventoMouseUp);
 
-    let elementoAlvo = document.elementFromPoint(e.clientX, e.clientY);
-
-    // Remove o clone após o arrasto
     document.body.removeChild(cloneElemento);
     cloneElemento = null;
 
-    // Verifica se o elemento alvo é uma tarefa válida e diferente do elemento arrastado
-    if (elementoAlvo && elementoAlvo !== elementoArrastado && elementoAlvo.classList.contains('tarefa-arrastavel')) {
-        trocaElementos(elementoArrastado, elementoAlvo);
-    }
+    elementoArrastado.style.opacity = '1';
 
     elementoArrastado = null;
+    listaAtividades = null;
 }
 
-function trocaElementos(elem1, elem2) {
-    const parent1 = elem1.parentNode;
-    const parent2 = elem2.parentNode;
+listaAtividades.addEventListener('dragover', (e) => {
+    e.preventDefault();
 
-    // Troca os elementos de lugar
-    if (parent1.isSameNode(parent2)) {
-        parent1.insertBefore(elem1, elem2);
-    } else {
-        parent1.insertBefore(elem2, elem1.nextSibling);
-        parent2.insertBefore(elem1, elem2.nextSibling);
+    const elementoAlvo = e.target.closest('.tarefa-arrastavel');
+
+    if (elementoAlvo && elementoAlvo !== elementoArrastado) {
+        const retanguloAlvo = elementoAlvo.getBoundingClientRect();
+        const metadeAltura = retanguloAlvo.height / 2;
+
+        if (e.clientY < retanguloAlvo.top + metadeAltura) {
+            listaAtividades.insertBefore(elementoArrastado, elementoAlvo);
+        } else {
+            listaAtividades.insertBefore(elementoArrastado, elementoAlvo.nextSibling);
+        }
+    } else if (!elementoAlvo) {
+        listaAtividades.appendChild(elementoArrastado);
     }
-}
+});
+
+listaAtividades.addEventListener('drop', (e) => {
+    e.preventDefault();
+});
