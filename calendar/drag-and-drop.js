@@ -1,86 +1,114 @@
-let elementoArrastado = null;
-let cloneElemento = null;
-let offsetX = 0, offsetY = 0;
-let listaAtividades = null;
-let ultimaPosicao = null;
-let espacoVazio = null;
+// Referências globais
+let draggedElement;
+let placeholder;
+let prevX;
+let prevY;
+let newIndex;
 
-document.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('tarefa-arrastavel')) {
-        elementoArrastado = e.target;
-        listaAtividades = elementoArrastado.parentNode;
-
-        cloneElemento = elementoArrastado.cloneNode(true);
-        cloneElemento.classList.add('arrastando');
-        document.body.appendChild(cloneElemento);
-
-        offsetX = e.clientX - elementoArrastado.getBoundingClientRect().left;
-        offsetY = e.clientY - elementoArrastado.getBoundingClientRect().top;
-
-        cloneElemento.style.position = 'absolute';
-        cloneElemento.style.left = (e.clientX - offsetX) + 'px';
-        cloneElemento.style.top = (e.clientY - offsetY) + 'px';
-        cloneElemento.style.width = elementoArrastado.offsetWidth + 'px';
-        cloneElemento.style.pointerEvents = 'none';
-
-        elementoArrastado.style.opacity = '0.5';
-
-        espacoVazio = document.createElement('div');
-        espacoVazio.classList.add('espaco-vazio');
-        espacoVazio.style.height = elementoArrastado.offsetHeight + 'px';
-        listaAtividades.insertBefore(espacoVazio, elementoArrastado);
-
-        document.addEventListener('mousemove', eventoMouseMove);
-        document.addEventListener('mouseup', eventoMouseUp);
-    }
-});
-
-function eventoMouseMove(e) {
-    if (!cloneElemento) return;
-
-    cloneElemento.style.left = (e.clientX - offsetX) + 'px';
-    cloneElemento.style.top = (e.clientY - offsetY) + 'px';
-
-    let elementoAlvo = document.elementFromPoint(e.clientX, e.clientY);
-
-    if (elementoAlvo && elementoAlvo !== elementoArrastado && elementoAlvo.classList.contains('tarefa-arrastavel')) {
-        const retanguloAlvo = elementoAlvo.getBoundingClientRect();
-        const metadeAltura = retanguloAlvo.height / 2;
-
-        if (e.clientY < retanguloAlvo.top + metadeAltura) {
-            if (elementoAlvo !== ultimaPosicao) {
-                listaAtividades.insertBefore(espacoVazio, elementoAlvo);
-                ultimaPosicao = elementoAlvo;
-            }
-        } else {
-            if (elementoAlvo.nextSibling !== ultimaPosicao) {
-                listaAtividades.insertBefore(espacoVazio, elementoAlvo.nextSibling);
-                ultimaPosicao = elementoAlvo.nextSibling;
-            }
-        }
-    } else if (elementoAlvo && elementoAlvo.classList.contains('lista-atividades')) {
-        if (elementoAlvo.lastChild !== ultimaPosicao) {
-            listaAtividades.appendChild(espacoVazio);
-            ultimaPosicao = elementoAlvo.lastChild;
-        }
-    }
+// Obtem elementos irmãos arrastáveis
+const getDraggableSiblings = (element) => {
+    return Array.from(element.parentNode.children).filter(child => {
+        return child.draggable;
+    });
 }
 
-function eventoMouseUp(e) {
-    if (!cloneElemento) return;
+// Cria placeholder
+const createPlaceholder = () => {
+    const placeholder = document.createElement('div');
+    placeholder.className = 'placeholder';
+    return placeholder;
+}
 
-    document.removeEventListener('mousemove', eventoMouseMove);
-    document.removeEventListener('mouseup', eventoMouseUp);
+// Atualiza posição do placeholder  
+const updatePlaceholderPosition = () => {
+    placeholder.style.transform = `translate(${prevX}px, ${prevY}px)`;
+}
 
-    document.body.removeChild(cloneElemento);
-    cloneElemento = null;
+// Calcula novo índice com busca binária
+const calculateNewIndex = (siblings, cursorY) => {
 
-    elementoArrastado.style.opacity = '1';
-    listaAtividades.insertBefore(elementoArrastado, espacoVazio);
-    listaAtividades.removeChild(espacoVazio);
+    // Implementação busca binária  
+    // Retorna novo índice  
+    return newIndex;
+}
 
-    elementoArrastado = null;
-    listaAtividades = null;
-    ultimaPosicao = null;
-    espacoVazio = null;
+// Atualiza índice no DOM
+const updateElementIndex = (element, newIndex) => {
+
+    // Remove elemento
+    element.parentNode.removeChild(element);
+
+    // Infere elemento anterior novo índice  
+    const prevElement = siblings[newIndex - 1];
+
+    // Insere no novo índice
+    if (prevElement) {
+        prevElement.parentNode.insertBefore(element, prevElement.nextSibling);
+    } else {
+        element.parentNode.prepend(element);
+    }
+
+}
+
+// Eventos
+document.addEventListener('touchstart', handleInteractionStart);
+
+document.addEventListener('touchmove', handleInteractionMove);
+
+document.addEventListener('touchend', handleInteractionEnd);
+
+// Funções de interação
+function handleInteractionStart(e) {
+
+    if (!e.target.draggable) return;
+
+    draggedElement = e.target;
+
+    prevX = e.touches[0].clientX;
+
+    prevY = e.touches[0].clientY;
+
+    placeholder = createPlaceholder();
+
+    draggedElement.parentNode.insertBefore(placeholder, draggedElement);
+
+    draggedElement.style.transition = 'none';
+
+}
+
+function handleInteractionMove(e) {
+
+    const newX = e.touches[0].clientX;
+    const newY = e.touches[0].clientY;
+
+    const distX = newX - prevX;
+    const distY = newY - prevY;
+
+    draggedElement.style.transform = `translate(${distX}px, ${distY}px)`;
+
+    const siblings = getDraggableSiblings(draggedElement);
+
+    newIndex = calculateNewIndex(siblings, newY);
+
+    updatePlaceholderPosition();
+
+    prevX = newX;
+    prevY = newY;
+
+}
+
+function handleInteractionEnd(e) {
+
+    draggedElement.style.removeProperty('transform');
+    draggedElement.style.removeProperty('transition');
+
+    draggedElement.parentNode.removeChild(placeholder);
+
+    updateElementIndex(draggedElement, newIndex);
+
+    draggedElement = null;
+    placeholder = null;
+    prevX = null;
+    prevY = null;
+    newIndex = null;
 }
