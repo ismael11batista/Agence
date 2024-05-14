@@ -6,7 +6,7 @@ let TelefoneDoContato = '';
 let EmailFormatado = '';
 let InteresseDoLead = '';
 var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
-
+let origemGlobal = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
@@ -156,6 +156,8 @@ function identificarInformacoesAutomaticamente() {
         origem = "Origem: Inbound E-mail";
     }
 
+
+
     const necessidadeRegex = /Necessidade: (.+)/i;
     const interesseRegex = /Estou interessado em: (.+)/i;
     const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
@@ -175,6 +177,8 @@ function identificarInformacoesAutomaticamente() {
     }
 
     InteresseDoLead = interesse
+    origemGlobal = origem
+
 
     // Exibe as informações capturadas nos elementos HTML correspondentes
     document.getElementById('origemLead').textContent = origem;
@@ -184,6 +188,7 @@ function identificarInformacoesAutomaticamente() {
 
 
 function formatarLead() {
+    let origem = "Origem: não identificada";
     const texto = document.getElementById('inputText').value;
     const nomeRegex = /Nome: (.+)|Name: (.+)/i;
     const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
@@ -230,6 +235,12 @@ function formatarLead() {
     const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
     const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
+    if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
+        origem = "Origem: Inbound Whatsapp";
+    } else if (texto.includes("Fale Conosco") || texto.includes("Inbound E-mail")) {
+        origem = "Origem: Inbound E-mail";
+    }
+
     // Adicionando as informações encontradas na string de informacoes
     if (cnpjMatch) informacoes += `Dados da Empresa\nCNPJ: ${cnpjMatch[1]};\n`;
     if (porteMatch) {
@@ -247,7 +258,8 @@ function formatarLead() {
         informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.\n\n`;
     }
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n\n${informacoes}Perfil linkedin:\n\n--------------------------------------------------------
+
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n ${origem} \n\n${informacoes}Perfil linkedin:\n\n--------------------------------------------------------
 próximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
@@ -395,7 +407,7 @@ function formatarTextoEspecial() {
     }
 
 
-    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\n${origemGlobal}\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoEspecial;
