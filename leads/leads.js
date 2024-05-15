@@ -391,7 +391,7 @@ function formatarTextoEspecial() {
     let assuntoFormatado = "";
 
     if (éChatbot) {
-        assuntoFormatado = "Não há campo de assunto nos leads do chatbot.";
+        assuntoFormatado = "Não há campo de assunto no chatbot.";
     } else {
         const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
         const assuntoMatch = texto.match(assuntoRegex);
