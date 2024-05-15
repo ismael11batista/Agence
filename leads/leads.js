@@ -56,8 +56,8 @@ function formatarAssunto() {
     const éChatbot = /ChatBot <agencechatbot76@gmail.com>/i.test(texto);
 
     if (éChatbot) {
-        copiarParaClipboard("Nao ha campo de assunto nos leads do chatbot.");
-        mostrarPopUp("Nao ha campo de assunto nos leads do chatbot.");
+        copiarParaClipboard("Nao ha campo de assunto no chatbot.");
+        mostrarPopUp("Nao ha campo de assunto no chatbot.");
         return;
     }
 
