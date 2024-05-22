@@ -194,11 +194,15 @@ function formatarLead() {
     const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
+    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?]+/i;
+
 
     const nomeMatch = texto.match(nomeRegex);
     const empresaMatch = texto.match(empresaRegex);
     const telefoneMatch = texto.match(telefoneRegex);
     const interesseMatch = texto.match(interesseRegex);
+    const linkedinMatch = texto.match(linkedinRegex);
+
 
     const nome = nomeMatch ? nomeMatch[1] || nomeMatch[2] : "não informado";
     const nomeFormatado = nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
@@ -258,8 +262,10 @@ function formatarLead() {
         informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.\n\n`;
     }
 
+    let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n ${origem} \n\n${informacoes}Perfil linkedin:\n\n--------------------------------------------------------
+
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n\n--------------------------------------------------------
 próximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
