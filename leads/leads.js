@@ -257,18 +257,18 @@ function formatarLead() {
     }
 
     // Adicionando as informações encontradas na string de informacoes
+    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
+
     if (porteMatch) {
         const porteTexto = porteMatch[1].replace("Porte", "").trim();
         informacoes += `Porte da Empresa: ${porteTexto}\n`;
     }
 
-    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
-
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
         numeroFuncionariosTexto = numeroFuncionariosTexto.replace(" funcionários", "").trim();
-        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto}\n`;
+        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
@@ -320,19 +320,19 @@ function identificarInformacoesAdicionais() {
     const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
     const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
+    // Adicionando as informações encontradas na string de informacoes
+    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
+
     if (porteMatch) {
         const porteTexto = porteMatch[1].replace("Porte", "").trim();
         informacoes += `Porte da Empresa: ${porteTexto}\n`;
     }
 
-    // Adicionando as informações encontradas na string de informacoes
-    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
-
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
         numeroFuncionariosTexto = numeroFuncionariosTexto.replace("funcionários", "").trim();
-        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto}\n`;
+        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
