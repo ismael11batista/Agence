@@ -171,6 +171,12 @@ function identificarInformacoesAutomaticamente() {
         interesse = "Interesse: " + interesseMatch[1];
     }
 
+    // Verifica se o interesse contém o termo "rpa" em letras minúsculas
+    if (interesse.toLowerCase().includes("rpa")) {
+        interesse = "Interesse: RPA - Robotic Process Automation";
+    }
+
+
     if (porteMatch && porteMatch[1]) {
         let porteTexto = porteMatch[1].replace("Porte", "").trim();
         porte = `Porte da Empresa: ${porteTexto}`; // Atribui o porte encontrado à variável
