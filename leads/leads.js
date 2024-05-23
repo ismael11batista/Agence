@@ -126,16 +126,16 @@ function formatarTelefone() {
         if (numeros.startsWith('55') && (numeros.length === 12 || numeros.length === 13)) {
             const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
             copiarParaClipboard(formatado);
-            mostrarPopUp("Número de telefone formatado e copiado com sucesso!");
+            mostrarPopUp("Telefone formatado e copiado com sucesso!");
         } else if (numeros.length >= 10 && numeros.length <= 11) {
             numeros = '55' + numeros;
             const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
             copiarParaClipboard(formatado);
-            mostrarPopUp("Número de telefone formatado e copiado com sucesso!");
+            mostrarPopUp("Telefone formatado e copiado com sucesso!");
         } else {
             // Ajuste: se não for possível formatar corretamente, copia o número na forma crua.
             copiarParaClipboard(telefoneMatch[1]);
-            mostrarPopUp("Formato de telefone inválido. Número copiado na forma original.");
+            mostrarPopUp("Telefone inválido. Número copiado na forma original.");
         }
     } else {
         copiarParaClipboard('0000000000000')
@@ -200,7 +200,7 @@ function formatarLead() {
     const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
-    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?]+/i;
+    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
 
 
     const nomeMatch = texto.match(nomeRegex);
@@ -265,7 +265,7 @@ function formatarLead() {
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto};\n`;
+        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto};\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
@@ -276,8 +276,7 @@ function formatarLead() {
     let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
 
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n\n--------------------------------------------------------
-próximo da fila é o @`;
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
 
@@ -327,7 +326,7 @@ function identificarInformacoesAdicionais() {
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto};\n`;
+        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto};\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
