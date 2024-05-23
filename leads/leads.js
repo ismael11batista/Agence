@@ -220,7 +220,12 @@ function formatarLead() {
 
     let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
 
-    const interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "não informado";
+    let interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "não informado";
+
+    // Verifica se o interesse contém o termo "rpa" em letras minúsculas
+    if (interesse.toLowerCase().includes("rpa")) {
+        interesse = "RPA - Robotic Process Automation";
+    }
 
     if (telefone.startsWith('55') && (telefone.length === 12 || telefone.length === 13)) {
         telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
