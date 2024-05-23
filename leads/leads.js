@@ -257,20 +257,23 @@ function formatarLead() {
     }
 
     // Adicionando as informações encontradas na string de informacoes
-    if (cnpjMatch) informacoes += `Dados da Empresa\nCNPJ: ${cnpjMatch[1]};\n`;
     if (porteMatch) {
         const porteTexto = porteMatch[1].replace("Porte", "").trim();
-        informacoes += `Porte da Empresa: ${porteTexto};\n`;
+        informacoes += `Porte da Empresa: ${porteTexto}\n`;
     }
+
+    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
+
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto};\n`;
+        numeroFuncionariosTexto = numeroFuncionariosTexto.replace(" funcionários", "").trim();
+        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto}\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
         let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.\n\n`;
+        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}\n\n`;
     }
 
     let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
@@ -317,21 +320,24 @@ function identificarInformacoesAdicionais() {
     const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
     const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
-    // Adicionando as informações encontradas na string de informacoes
-    if (cnpjMatch) informacoes += `Dados da Empresa\nCNPJ: ${cnpjMatch[1]};\n`;
     if (porteMatch) {
         const porteTexto = porteMatch[1].replace("Porte", "").trim();
-        informacoes += `Porte da Empresa: ${porteTexto};\n`;
+        informacoes += `Porte da Empresa: ${porteTexto}\n`;
     }
+
+    // Adicionando as informações encontradas na string de informacoes
+    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
+
     if (numeroFuncionariosMatch) {
         // Removendo a frase indesejada e espaços extras
         let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto};\n`;
+        numeroFuncionariosTexto = numeroFuncionariosTexto.replace("funcionários", "").trim();
+        informacoes += `Nº de Funcionários: ${numeroFuncionariosTexto}\n`;
     }
     if (faturamentoAnualMatch) {
         // Removendo a frase indesejada e espaços extras
         let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}.`;
+        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}`;
     }
 
     // Exibindo as informações
