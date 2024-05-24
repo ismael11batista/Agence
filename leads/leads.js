@@ -67,6 +67,8 @@ function formatarAssunto() {
         let assunto = assuntoMatch[1].trim();
         assunto = assunto.toLowerCase();
         let assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
+        assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim()
+
 
         copiarParaClipboard(assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1));
         mostrarPopUp("Assunto formatado e copiado para a área de transferência: " + assuntoFormatado);
@@ -169,6 +171,8 @@ function identificarInformacoesAutomaticamente() {
         interesse = "Interesse: " + necessidadeMatch[1];
     } else if (interesseMatch) {
         interesse = "Interesse: " + interesseMatch[1];
+    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+        interesse = "Interesse: Desenvolvimento Mobile"
     }
 
     // Verifica se o interesse contém o termo "rpa" em letras minúsculas
@@ -225,6 +229,8 @@ function formatarLead() {
     // Verifica se o interesse contém o termo "rpa" em letras minúsculas
     if (interesse.toLowerCase().includes("rpa")) {
         interesse = "RPA - Robotic Process Automation";
+    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+        interesse = "Desenvolvimento Mobile"
     }
 
     if (telefone.startsWith('55') && (telefone.length === 12 || telefone.length === 13)) {
@@ -422,6 +428,7 @@ function formatarTextoEspecial() {
             assunto = assunto.toLowerCase();
             assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
             assuntoFormatado = assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
+            assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim()
         } else {
             console.log("não encontrado.");
             assuntoFormatado = "não encontrado";
