@@ -180,6 +180,14 @@ function identificarInformacoesAutomaticamente() {
         interesse = "Interesse: RPA - Robotic Process Automation";
     }
 
+    // Nova etapa de revisão do interesse
+    if (interesse.toLowerCase().includes("consultoria")) {
+        interesse = "Interesse: Consultoria de TI";
+    } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
+        interesse = "Interesse: Desenvolvimento Mobile";
+    }
+
+
 
     if (porteMatch && porteMatch[1]) {
         let porteTexto = porteMatch[1].replace("Porte", "").trim();
@@ -232,6 +240,14 @@ function formatarLead() {
     } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
         interesse = "Desenvolvimento Mobile"
     }
+
+    // Nova etapa de revisão do interesse
+    if (interesse.toLowerCase().includes("consultoria")) {
+        interesse = "Consultoria de TI";
+    } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
+        interesse = "Desenvolvimento Mobile";
+    }
+
 
     if (telefone.startsWith('55') && (telefone.length === 12 || telefone.length === 13)) {
         telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
