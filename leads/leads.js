@@ -136,7 +136,7 @@ function formatarTelefone() {
             mostrarPopUp("Telefone formatado e copiado com sucesso!");
         } else {
             // Ajuste: se não for possível formatar corretamente, copia o número na forma crua.
-            copiarParaClipboard(telefoneMatch[1]);
+            copiarParaClipboard(telefoneMatch[1].trim());
             mostrarPopUp("Telefone inválido. Número copiado na forma original.");
         }
     } else {
