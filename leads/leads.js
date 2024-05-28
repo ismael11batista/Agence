@@ -51,6 +51,21 @@ function formatarEmpresa() {
     }
 }
 
+function formatarLinkedin() {
+    const texto = document.getElementById('inputText').value;
+    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
+    const linkedinMatch = texto.match(linkedinRegex);
+
+    if (linkedinMatch) {
+        let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
+        copiarParaClipboard(perfilLinkedin);
+    } else {
+        copiarParaClipboard('Linkedin não identificado.');
+        mostrarPopUp("Linkedin não identificado");
+    }
+}
+
+
 function formatarAssunto() {
     const texto = document.getElementById('inputText').value;
     const éChatbot = /ChatBot <agencechatbot76@gmail.com>/i.test(texto);
@@ -71,7 +86,7 @@ function formatarAssunto() {
 
 
         copiarParaClipboard(assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1));
-        mostrarPopUp("Assunto formatado e copiado para a área de transferência: " + assuntoFormatado);
+        mostrarPopUp("Assunto formatado e copiado para a área de transferência");
     } else {
         copiarParaClipboard("Campo de assunto não encontrado.");
         mostrarPopUp("Campo de assunto não encontrado.");
@@ -141,7 +156,7 @@ function formatarTelefone() {
         }
     } else {
         copiarParaClipboard('0000000000000')
-        mostrarPopUp("Telefone não encontrado.");
+        mostrarPopUp("Telefone não encontrado");
     }
 }
 
@@ -401,11 +416,12 @@ function SiteDaEmpresa() {
         if (!dominiosPessoais.includes(dominio.toLowerCase())) {
             const url = `http://${dominio}`;
             window.open(url, '_blank');
+            copiarParaClipboard("cnpj da " + dominio)
         } else {
-            mostrarPopUp("O e-mail fornecido é pessoal.");
+            mostrarPopUp("O e-mail fornecido é pessoal");
         }
     } else {
-        mostrarPopUp("E-mail do contato não identificado.");
+        mostrarPopUp("E-mail do contato não identificado");
     }
 }
 
