@@ -173,8 +173,6 @@ function identificarInformacoesAutomaticamente() {
         origem = "Origem: Inbound E-mail";
     }
 
-
-
     const necessidadeRegex = /Necessidade: (.+)/i;
     const interesseRegex = /Estou interessado em: (.+)/i;
     const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;

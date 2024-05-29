@@ -229,7 +229,7 @@ button:hover {
 .containerLeadAutomatico,
 .detalhes-lead {
     background-color: transparent;
-    height: 250px;
+    height: 240px;
     align-items: center;
     text-align: center;
     color: rgba(255, 255, 255, 0.605);
@@ -308,4 +308,49 @@ button:hover {
 
     padding-right: 10%;
 
+}
+
+
+
+.consultores {
+    display: flex;
+    max-width: 2500px;
+    flex-direction: line;
+    justify-content: space-around;
+    gap: 10%;
+    margin-top: 20px;
+    align-items: first baseline;
+    /* Centraliza o conteúdo verticalmente */
+    flex: 1;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 30px;
+    /* Adicionado para aumentar o tamanho da fonte */
+
+}
+
+
+/* Adicione isso ao seu arquivo leads.css ou dentro de uma tag <style> no <head> */
+.column {
+    flex: 1;
+    padding: 0px;
+    margin: 0 10px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
+    border-radius: 10px;
+    text-align: center;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: pre-wrap;
+}
+
+.column:first-child {
+    margin-left: 0;
+}
+
+.column:last-child {
+    margin-right: 0;
 }
