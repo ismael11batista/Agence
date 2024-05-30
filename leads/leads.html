@@ -14,7 +14,7 @@
 
     <!-- Adicione este bloco dentro do <body> da sua página complexa -->
     <div class="consultores">
-        <div id="column1" class="column">Carregando...</div>
+        <div id="column1" class="column">🔍 Buscando CN da vez...</div>
         <div id="column2" class="column">Carregando...</div>
         <div id="column3" class="column">Carregando...</div>
     </div>
@@ -131,9 +131,9 @@
                     console.log('Próximo na Fila B:', ProximoFilaB);
                     console.log('Próximo na Fila de Licitação:', ProximoFilaLicitacao);
 
-                    document.getElementById('column1').innerHTML = `<p>Fila A: ${ProximoFilaA}</p>`;
+                    document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
                     document.getElementById('column2').innerHTML = `<p>Fila B: ${ProximoFilaB}</p>`;
-                    document.getElementById('column3').innerHTML = `<p>Licitação: ${ProximoFilaLicitacao}</p>`;
+                    document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}</p>`;
                 }).catch(function (error) {
                     console.error('Erro ao buscar dados da planilha:', error);
                     document.getElementById('column1').textContent = 'Erro ao carregar dados.';
