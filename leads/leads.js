@@ -169,8 +169,6 @@ function identificarInformacoesAutomaticamente() {
 
     if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
         origem = "Origem: Inbound Whatsapp / Chatbot";
-    } else if (texto.includes("Fale Conosco") || texto.includes("Inbound E-mail")) {
-        origem = "Origem: Inbound E-mail";
     } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
         origem = "Origem: Formulário LP Mobile";
     } else if (texto.includes("falecom@agence.com.br")) {
