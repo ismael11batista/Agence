@@ -173,6 +173,8 @@ function identificarInformacoesAutomaticamente() {
         origem = "Origem: Formulário LP Mobile";
     } else if (texto.includes("falecom@agence.com.br")) {
         origem = "Origem: Inbound E-mail";
+    } else if (texto.includes("FALE CONOSCO - AGENCE")) {
+        origem = "Origem: Formulário Fale Conosco";
     }
 
 
@@ -292,6 +294,8 @@ function formatarLead() {
         origem = "Origem: Formulário LP Mobile";
     } else if (texto.includes("falecom@agence.com.br")) {
         origem = "Origem: Inbound E-mail";
+    } else if (texto.includes("FALE CONOSCO - AGENCE")) {
+        origem = "Origem: Formulário Fale Conosco";
     }
 
     // Adicionando as informações encontradas na string de informacoes
