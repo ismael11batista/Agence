@@ -168,10 +168,15 @@ function identificarInformacoesAutomaticamente() {
     let porte = "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
 
     if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
-        origem = "Origem: Inbound Whatsapp";
+        origem = "Origem: Inbound Whatsapp / Chatbot";
     } else if (texto.includes("Fale Conosco") || texto.includes("Inbound E-mail")) {
         origem = "Origem: Inbound E-mail";
+    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+        origem = "Origem: Formulário LP Mobile";
+    } else if (texto.includes("falecom@agence.com.br")) {
+        origem = "Origem: Inbound E-mail";
     }
+
 
     const necessidadeRegex = /Necessidade: (.+)/i;
     const interesseRegex = /Estou interessado em: (.+)/i;
@@ -199,8 +204,6 @@ function identificarInformacoesAutomaticamente() {
     } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
         interesse = "Interesse: Desenvolvimento Mobile";
     }
-
-
 
     if (porteMatch && porteMatch[1]) {
         let porteTexto = porteMatch[1].replace("Porte", "").trim();
@@ -286,8 +289,12 @@ function formatarLead() {
     const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
     if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
-        origem = "Origem: Inbound Whatsapp";
+        origem = "Origem: Inbound Whatsapp / Chatbot";
     } else if (texto.includes("Fale Conosco") || texto.includes("Inbound E-mail")) {
+        origem = "Origem: Inbound E-mail";
+    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+        origem = "Origem: Formulário LP Mobile";
+    } else if (texto.includes("falecom@agence.com.br")) {
         origem = "Origem: Inbound E-mail";
     }
 
@@ -632,7 +639,7 @@ function FormatarLeadFaleCom(texto) {
     }
 
     // Construção do texto formatado
-    let textoFormatado = `Nome: ${nomeFormatado}\nEmpresa: \nEmail: ${emailFormatado}\nEstou interessado em: \nServiços de consultoria – Prototipagem\nDesenvolvimento de aplicativos móveis\nDesenvolvimento Web\ne-Commerce\nProfissionais de TI – Outsourcing\nProfissionais de TI – Headhunting\nRPA – Robotic Process Automation\n\nTelefone: ${telefoneFormatado}\nComentários: ${assuntoFormatado}\nAgence - Fale Conosco`;
+    let textoFormatado = `Nome: ${nomeFormatado}\nEmpresa: \nEmail: ${emailFormatado}\nEstou interessado em: \nTelefone: ${telefoneFormatado}\nComentários: ${assuntoFormatado}\nAgence - falecom@agence.com.br`;
 
     // Exibição do resultado e/ou outras ações
     textoFormatadoGlobal = textoFormatado; // Armazena o texto formatado na variável global
