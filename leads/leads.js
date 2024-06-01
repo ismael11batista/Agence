@@ -167,14 +167,27 @@ function identificarInformacoesAutomaticamente() {
     let interesse = "Interesse: não identificado";
     let porte = "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
 
-    if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
+    // Converte o texto para minúsculas
+    let textoMinusculo = texto.toLowerCase();
+
+    // Verifica a origem do texto usando a versão minúscula
+    if (textoMinusculo.includes("chatbot") || textoMinusculo.includes("inbound chatbot")) {
         origem = "Origem: Inbound Whatsapp / Chatbot";
-    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+    } else if (textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")) {
         origem = "Origem: Formulário LP Mobile";
-    } else if (texto.includes("falecom@agence.com.br")) {
+    } else if (textoMinusculo.includes("falecom@agence.com.br")) {
         origem = "Origem: Inbound E-mail";
-    } else if (texto.includes("FALE CONOSCO - AGENCE")) {
+    } else if (textoMinusculo.includes("fale conosco - agence")) {
         origem = "Origem: Formulário Fale Conosco";
+    }
+
+    // Verifica a origem do texto para outbound
+    if (textoMinusculo.includes("origem: outbound e-mail") || textoMinusculo.includes("origem: outbound email")) {
+        origem = "Origem: Outbound E-mail";
+    } else if (textoMinusculo.includes("origem: outbound linkedin")) {
+        origem = "Origem: Outbound Linkedin";
+    } else if (textoMinusculo.includes("origem: outbound bdr")) {
+        origem = "Origem: Outbound BDR";
     }
 
 
@@ -288,15 +301,29 @@ function formatarLead() {
     const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
     const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
-    if (texto.includes("ChatBot") || texto.includes("Inbound Chatbot")) {
+    // Converte o texto para minúsculas
+    let textoMinusculo = texto.toLowerCase();
+
+    // Verifica a origem do texto usando a versão minúscula
+    if (textoMinusculo.includes("chatbot") || textoMinusculo.includes("inbound chatbot")) {
         origem = "Origem: Inbound Whatsapp / Chatbot";
-    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
+    } else if (textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")) {
         origem = "Origem: Formulário LP Mobile";
-    } else if (texto.includes("falecom@agence.com.br")) {
+    } else if (textoMinusculo.includes("falecom@agence.com.br")) {
         origem = "Origem: Inbound E-mail";
-    } else if (texto.includes("FALE CONOSCO - AGENCE")) {
+    } else if (textoMinusculo.includes("fale conosco - agence")) {
         origem = "Origem: Formulário Fale Conosco";
     }
+
+    // Verifica a origem do texto para outbound
+    if (textoMinusculo.includes("origem: outbound e-mail") || textoMinusculo.includes("origem: outbound email")) {
+        origem = "Origem: Outbound E-mail";
+    } else if (textoMinusculo.includes("origem: outbound linkedin")) {
+        origem = "Origem: Outbound Linkedin";
+    } else if (textoMinusculo.includes("origem: outbound bdr")) {
+        origem = "Origem: Outbound BDR";
+    }
+
 
     // Adicionando as informações encontradas na string de informacoes
     if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
