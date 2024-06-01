@@ -51,6 +51,29 @@ function formatarEmpresa() {
     }
 }
 
+
+function formatarLocalidade() {
+    const texto = document.getElementById('inputText').value;
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
+
+    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
+    const telefoneFormatado = formatarTelefoneInterno(telefone);
+    const localidade = telefoneFormatado.localidade;
+    const ddd = telefoneFormatado.ddd;
+
+    const localidadeTexto = ddd ? `${localidade}` : `${localidade}`;
+
+    if (localidadeTexto) {
+        copiarParaClipboard(localidadeTexto);
+        mostrarPopUp("Localidade copiada com sucesso!");
+    } else {
+        copiarParaClipboard('Localidade não identificada.');
+        mostrarPopUp("Localidade não identificada");
+    }
+}
+
+
 function formatarLinkedin() {
     const texto = document.getElementById('inputText').value;
     const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
@@ -133,32 +156,210 @@ function formatarEmail() {
     }
 }
 
+
 function formatarTelefone() {
     const texto = document.getElementById('inputText').value;
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const telefoneMatch = texto.match(telefoneRegex);
+    const dddsBrasil = {
+        "11": "São Paulo - SP",
+        "12": "São José dos Campos - SP",
+        "13": "Santos - SP",
+        "14": "Bauru - SP",
+        "15": "Sorocaba - SP",
+        "16": "Ribeirão Preto - SP",
+        "17": "São José do Rio Preto - SP",
+        "18": "Presidente Prudente - SP",
+        "19": "Campinas - SP",
+        "21": "Rio de Janeiro - RJ",
+        "22": "Campos dos Goytacazes - RJ",
+        "24": "Volta Redonda - RJ",
+        "27": "Vila Velha/Vitória - ES",
+        "28": "Cachoeiro de Itapemirim - ES",
+        "31": "Belo Horizonte - MG",
+        "32": "Juiz de Fora - MG",
+        "33": "Governador Valadares - MG",
+        "34": "Uberlândia - MG",
+        "35": "Poços de Caldas - MG",
+        "37": "Divinópolis - MG",
+        "38": "Montes Claros - MG",
+        "41": "Curitiba - PR",
+        "42": "Ponta Grossa - PR",
+        "43": "Londrina - PR",
+        "44": "Maringá - PR",
+        "45": "Foz do Iguaçú - PR",
+        "46": "Francisco Beltrão/Pato Branco - PR",
+        "47": "Joinville - SC",
+        "48": "Florianópolis - SC",
+        "49": "Chapecó - SC",
+        "51": "Porto Alegre - RS",
+        "53": "Pelotas - RS",
+        "54": "Caxias do Sul - RS",
+        "55": "Santa Maria - RS",
+        "61": "Brasília - DF",
+        "62": "Goiânia - GO",
+        "63": "Palmas - TO",
+        "64": "Rio Verde - GO",
+        "65": "Cuiabá - MT",
+        "66": "Rondonópolis - MT",
+        "67": "Campo Grande - MS",
+        "68": "Rio Branco - AC",
+        "69": "Porto Velho - RO",
+        "71": "Salvador - BA",
+        "73": "Ilhéus - BA",
+        "74": "Juazeiro - BA",
+        "75": "Feira de Santana - BA",
+        "77": "Barreiras - BA",
+        "79": "Aracaju - SE",
+        "81": "Recife - PE",
+        "82": "Maceió - AL",
+        "83": "João Pessoa - PB",
+        "84": "Natal - RN",
+        "85": "Fortaleza - CE",
+        "86": "Teresina - PI",
+        "87": "Petrolina - PE",
+        "88": "Juazeiro do Norte - CE",
+        "89": "Picos - PI",
+        "91": "Belém - PA",
+        "92": "Manaus - AM",
+        "93": "Santarém - PA",
+        "94": "Marabá - PA",
+        "95": "Boa Vista - RR",
+        "96": "Macapá - AP",
+        "97": "Coari - AM",
+        "98": "São Luís - MA",
+        "99": "Imperatriz - MA"
+    };
+
     if (telefoneMatch) {
         let numeros = telefoneMatch[1].replace(/\D/g, '');
 
-        if (numeros.startsWith('55') && (numeros.length === 12 || numeros.length === 13)) {
-            const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
-            copiarParaClipboard(formatado);
-            mostrarPopUp("Telefone formatado e copiado com sucesso!");
-        } else if (numeros.length >= 10 && numeros.length <= 11) {
-            numeros = '55' + numeros;
-            const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
-            copiarParaClipboard(formatado);
-            mostrarPopUp("Telefone formatado e copiado com sucesso!");
+        // Remover zeros à esquerda
+        numeros = numeros.replace(/^0+/, '');
+
+        // Remover o prefixo "55" se presente
+        if (numeros.startsWith('55')) {
+            numeros = numeros.substring(2);
+        }
+
+        // Verificar se os dois primeiros dígitos são um DDD válido
+        const ddd = numeros.substring(0, 2);
+        if (dddsBrasil.hasOwnProperty(ddd)) {
+            const localidade = dddsBrasil[ddd];
+            if (numeros.length === 10 || numeros.length === 11) {
+                numeros = '55' + numeros;
+                const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
+                copiarParaClipboard(formatado);
+                mostrarPopUp(`Telefone formatado e copiado com sucesso! Localidade: ${localidade}`);
+            } else {
+                copiarParaClipboard(telefoneMatch[1].trim());
+                mostrarPopUp("Telefone inválido. Número copiado na forma original.");
+            }
         } else {
-            // Ajuste: se não for possível formatar corretamente, copia o número na forma crua.
             copiarParaClipboard(telefoneMatch[1].trim());
-            mostrarPopUp("Telefone inválido. Número copiado na forma original.");
+            mostrarPopUp("Número copiado na forma original. DDD não reconhecido.");
         }
     } else {
-        copiarParaClipboard('0000000000000')
+        copiarParaClipboard('0000000000000');
         mostrarPopUp("Telefone não encontrado");
     }
 }
+
+function formatarTelefoneInterno(numeros) {
+    const dddsBrasil = {
+        "11": "São Paulo - SP",
+        "12": "São José dos Campos - SP",
+        "13": "Santos - SP",
+        "14": "Bauru - SP",
+        "15": "Sorocaba - SP",
+        "16": "Ribeirão Preto - SP",
+        "17": "São José do Rio Preto - SP",
+        "18": "Presidente Prudente - SP",
+        "19": "Campinas - SP",
+        "21": "Rio de Janeiro - RJ",
+        "22": "Campos dos Goytacazes - RJ",
+        "24": "Volta Redonda - RJ",
+        "27": "Vila Velha/Vitória - ES",
+        "28": "Cachoeiro de Itapemirim - ES",
+        "31": "Belo Horizonte - MG",
+        "32": "Juiz de Fora - MG",
+        "33": "Governador Valadares - MG",
+        "34": "Uberlândia - MG",
+        "35": "Poços de Caldas - MG",
+        "37": "Divinópolis - MG",
+        "38": "Montes Claros - MG",
+        "41": "Curitiba - PR",
+        "42": "Ponta Grossa - PR",
+        "43": "Londrina - PR",
+        "44": "Maringá - PR",
+        "45": "Foz do Iguaçú - PR",
+        "46": "Francisco Beltrão/Pato Branco - PR",
+        "47": "Joinville - SC",
+        "48": "Florianópolis - SC",
+        "49": "Chapecó - SC",
+        "51": "Porto Alegre - RS",
+        "53": "Pelotas - RS",
+        "54": "Caxias do Sul - RS",
+        "55": "Santa Maria - RS",
+        "61": "Brasília - DF",
+        "62": "Goiânia - GO",
+        "63": "Palmas - TO",
+        "64": "Rio Verde - GO",
+        "65": "Cuiabá - MT",
+        "66": "Rondonópolis - MT",
+        "67": "Campo Grande - MS",
+        "68": "Rio Branco - AC",
+        "69": "Porto Velho - RO",
+        "71": "Salvador - BA",
+        "73": "Ilhéus - BA",
+        "74": "Juazeiro - BA",
+        "75": "Feira de Santana - BA",
+        "77": "Barreiras - BA",
+        "79": "Aracaju - SE",
+        "81": "Recife - PE",
+        "82": "Maceió - AL",
+        "83": "João Pessoa - PB",
+        "84": "Natal - RN",
+        "85": "Fortaleza - CE",
+        "86": "Teresina - PI",
+        "87": "Petrolina - PE",
+        "88": "Juazeiro do Norte - CE",
+        "89": "Picos - PI",
+        "91": "Belém - PA",
+        "92": "Manaus - AM",
+        "93": "Santarém - PA",
+        "94": "Marabá - PA",
+        "95": "Boa Vista - RR",
+        "96": "Macapá - AP",
+        "97": "Coari - AM",
+        "98": "São Luís - MA",
+        "99": "Imperatriz - MA"
+    };
+
+    // Remover zeros à esquerda
+    numeros = numeros.replace(/^0+/, '');
+
+    // Remover o prefixo "55" se presente
+    if (numeros.startsWith('55')) {
+        numeros = numeros.substring(2);
+    }
+
+    // Verificar se os dois primeiros dígitos são um DDD válido
+    const ddd = numeros.substring(0, 2);
+    if (dddsBrasil.hasOwnProperty(ddd)) {
+        const localidade = dddsBrasil[ddd];
+        if (numeros.length === 10 || numeros.length === 11) {
+            numeros = '55' + numeros;
+            const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
+            return { formatado, localidade, ddd };
+        } else {
+            return { formatado: numeros, localidade: "Número inválido", ddd: null };
+        }
+    } else {
+        return { formatado: numeros, localidade: "DDD não reconhecido", ddd: null };
+    }
+}
+
 
 
 function identificarInformacoesAutomaticamente() {
@@ -260,6 +461,10 @@ function formatarLead() {
     NomeDaEmpresa = empresaFormatada
 
     let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
+    const telefoneFormatado = formatarTelefoneInterno(telefone);
+    telefone = telefoneFormatado.formatado;
+    const localidade = telefoneFormatado.localidade;
+    const ddd = telefoneFormatado.ddd;
 
     let interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "não informado";
 
@@ -275,14 +480,6 @@ function formatarLead() {
         interesse = "Consultoria de TI";
     } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
         interesse = "Desenvolvimento Mobile";
-    }
-
-
-    if (telefone.startsWith('55') && (telefone.length === 12 || telefone.length === 13)) {
-        telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
-    } else if (telefone.length >= 10 && telefone.length <= 11) {
-        telefone = '55' + telefone;
-        telefone = '+' + telefone.substring(0, 2) + ' ' + telefone.substring(2, 4) + ' ' + telefone.substring(4);
     }
 
     TelefoneDoContato = telefone
@@ -347,9 +544,11 @@ function formatarLead() {
 
     let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
 
+    const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nEmpresa: ${NomeDaEmpresa}\nWhatsapp: ${telefone}\nContato: ${NomeDoContato}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
+
 }
 
 function copiarTexto() {
