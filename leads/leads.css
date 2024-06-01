@@ -158,7 +158,6 @@ textarea {
 
 
 button {
-    padding: 10px 250px;
     background: linear-gradient(45deg, #00021d, #000a42);
     color: rgba(255, 255, 255, 0.605);
     border: none;
@@ -231,7 +230,7 @@ button:hover {
 .containerLeadAutomatico,
 .detalhes-lead {
     background-color: transparent;
-    height: 240px;
+    height: 250px;
     align-items: center;
     text-align: center;
     color: rgba(255, 255, 255, 0.605);
