@@ -237,6 +237,8 @@ function formatarTelefone() {
         // Remover zeros à esquerda
         numeros = numeros.replace(/^0+/, '');
 
+        let telefone_formatado = numeros
+
         // Remover o prefixo "55" se presente
         if (numeros.startsWith('55')) {
             numeros = numeros.substring(2);
@@ -252,11 +254,11 @@ function formatarTelefone() {
                 copiarParaClipboard(formatado);
                 mostrarPopUp(`Telefone formatado e copiado com sucesso! Localidade: ${localidade}`);
             } else {
-                copiarParaClipboard(telefoneMatch[1].trim());
+                copiarParaClipboard(telefone_formatado);
                 mostrarPopUp("Telefone inválido. Número copiado na forma original.");
             }
         } else {
-            copiarParaClipboard(telefoneMatch[1].trim());
+            copiarParaClipboard(telefone_formatado);
             mostrarPopUp("Número copiado na forma original. DDD não reconhecido.");
         }
     } else {
