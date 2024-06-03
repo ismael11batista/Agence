@@ -91,13 +91,6 @@ function formatarLinkedin() {
 
 function formatarAssunto() {
     const texto = document.getElementById('inputText').value;
-    const éChatbot = /ChatBot <agencechatbot76@gmail.com>/i.test(texto);
-
-    if (éChatbot) {
-        copiarParaClipboard("Nao ha campo de assunto no chatbot.");
-        mostrarPopUp("Nao ha campo de assunto no chatbot.");
-        return;
-    }
 
     const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
     const assuntoMatch = texto.match(assuntoRegex);
@@ -665,9 +658,11 @@ function formatarTextoEspecial() {
     const emailRegex = /E-mail: (.+)|Email: (.+)/i;
     const emailMatch = texto.match(emailRegex);
 
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
+
     /* const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
      const interesseMatch = texto.match(interesseRegex); */
-
 
     let EmailFormatado = "";
     if (emailMatch) {
@@ -678,14 +673,10 @@ function formatarTextoEspecial() {
         EmailFormatado = "não informado";
     }
 
-
     // Identificação e formatação do assunto
-    const éChatbot = /ChatBot <agencechatbot76@gmail.com>/i.test(texto);
     let assuntoFormatado = "";
 
-    if (éChatbot) {
-        assuntoFormatado = "Não há campo de assunto no chatbot.";
-    } else {
+    try {
         const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
         const assuntoMatch = texto.match(assuntoRegex);
         if (assuntoMatch) {
@@ -693,15 +684,24 @@ function formatarTextoEspecial() {
             assunto = assunto.toLowerCase();
             assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
             assuntoFormatado = assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
-            assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim()
+            assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
         } else {
-            console.log("não encontrado.");
+            console.log("Assunto não encontrado.");
             assuntoFormatado = "não encontrado";
         }
+    } catch (error) {
+        console.error("Erro ao formatar o assunto:", error);
     }
 
+    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
+    const telefoneFormatado = formatarTelefoneInterno(telefone);
+    telefone = telefoneFormatado.formatado;
+    const localidade = telefoneFormatado.localidade;
+    const ddd = telefoneFormatado.ddd;
 
-    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${TelefoneDoContato}\n${InteresseDoLead}\n${origemGlobal}\n\nAssunto: ${assuntoFormatado}`;
+    const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
+
+    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${InteresseDoLead}\n${origemGlobal}\n\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoEspecial;
