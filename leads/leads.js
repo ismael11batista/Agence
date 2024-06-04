@@ -518,9 +518,9 @@ function copiarInformacoesAdicionais() {
 
 
 function PesquisarLinkedin() {
-    // Garante que os nomes estejam formatados antes da pesquisa
-    formatarNome();
-    formatarEmpresa();
+    const texto = document.getElementById('inputText').value;
+    NomeDoContato = obterNomeDoContato(texto)
+    NomeDaEmpresa = obterEmpresa(texto);
 
     if (NomeDoContato && NomeDaEmpresa) {
         const query = `${NomeDoContato} ${NomeDaEmpresa} Linkedin`;
@@ -532,7 +532,8 @@ function PesquisarLinkedin() {
 }
 
 function SiteDaEmpresa() {
-    formatarEmail(); // Isso garantirá que EmailDoContato esteja atualizado
+    const texto = document.getElementById('inputText').value;
+    EmailDoContato = obterEmail(texto); // Isso garantirá que EmailDoContato esteja atualizado
 
     if (EmailDoContato) {
         const dominio = EmailDoContato.split('@')[1];
