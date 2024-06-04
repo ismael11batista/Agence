@@ -662,10 +662,10 @@ function FormatarLeadFaleCom(texto) {
     ];
 
     // Variáveis de resultado
-    let nomeFormatado = 'Nome não identificado';
-    let emailFormatado = 'E-mail não informado';
-    let telefoneFormatado = 'Telefone não informado';
-    let assuntoFormatado = 'Campo de assunto não encontrado';
+    let nomeFormatado = '';
+    let emailFormatado = '';
+    let telefoneFormatado = '';
+    let assuntoFormatado = `\n\nASSUNTO_FORMATADO\n`;
 
     // Processamento de nome
     for (const regex of nomeRegexes) {
