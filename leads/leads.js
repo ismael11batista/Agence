@@ -2,7 +2,6 @@ let NomeDoContato = "";
 let NomeDaEmpresa = "";
 let EmailDoContato = "";
 let TextoEspecial = ""; // Variável global para armazenar o texto especial
-let TelefoneDoContato = '';
 let EmailFormatado = '';
 let InteresseDoLead = '';
 var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
@@ -21,14 +20,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-function formatarNome() {
-    const texto = document.getElementById('inputText').value;
+// Função interna para extrair e formatar o nome
+function obterNomeDoContato(texto) {
     const nomeRegex = /Nome: (.+)|Name: (.+)/i;
     const nomeMatch = texto.match(nomeRegex);
     if (nomeMatch) {
         const nome = nomeMatch[1] || nomeMatch[2];
-        const nomeFormatado = nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
-        NomeDoContato = nomeFormatado
+        return nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
+    } else {
+        return 'não informado';
+    }
+}
+
+// Função interna para extrair e formatar a empresa
+function obterEmpresa(texto) {
+    const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
+    const empresaMatch = texto.match(empresaRegex);
+    if (empresaMatch) {
+        const empresa = empresaMatch[1] || empresaMatch[2];
+        return empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
+    } else {
+        return 'não informado';
+    }
+}
+
+// Função interna para extrair e formatar a localidade a partir do telefone
+function obterLocalidade(texto) {
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
+
+    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : null;
+    if (telefone) {
+        const telefoneFormatado = formatarTelefone(telefone);
+        const localidade = telefoneFormatado.localidade;
+        const ddd = telefoneFormatado.ddd;
+        return ddd ? `${localidade}` : `${localidade}`;
+    } else {
+        return null;
+    }
+}
+
+// Função interna para extrair o perfil do LinkedIn
+function obterLinkedin(texto) {
+    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
+    const linkedinMatch = texto.match(linkedinRegex);
+    if (linkedinMatch) {
+        return linkedinMatch[0].split('?')[0];
+    } else {
+        return "ainda não identificado";
+    }
+}
+
+// Função principal que formata o nome
+function copiarNome() {
+    const texto = document.getElementById('inputText').value;
+    const nomeFormatado = obterNomeDoContato(texto);
+    if (nomeFormatado) {
+        NomeDoContato = nomeFormatado;
         copiarParaClipboard(nomeFormatado);
     } else {
         copiarParaClipboard('Nome nao identificado');
@@ -36,14 +84,12 @@ function formatarNome() {
     }
 }
 
-function formatarEmpresa() {
+// Função principal que formata a empresa
+function copiarEmpresa() {
     const texto = document.getElementById('inputText').value;
-    const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
-    const empresaMatch = texto.match(empresaRegex);
-    if (empresaMatch) {
-        const empresa = empresaMatch[1] || empresaMatch[2];
-        const empresaFormatada = empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
-        NomeDaEmpresa = empresaFormatada
+    const empresaFormatada = obterEmpresa(texto);
+    if (empresaFormatada) {
+        NomeDaEmpresa = empresaFormatada;
         copiarParaClipboard(empresaFormatada);
     } else {
         copiarParaClipboard('Sem informação');
@@ -51,19 +97,10 @@ function formatarEmpresa() {
     }
 }
 
-
-function formatarLocalidade() {
+// Função principal que formata a localidade
+function copiarLocalidade() {
     const texto = document.getElementById('inputText').value;
-    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const telefoneMatch = texto.match(telefoneRegex);
-
-    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
-    const telefoneFormatado = formatarTelefoneInterno(telefone);
-    const localidade = telefoneFormatado.localidade;
-    const ddd = telefoneFormatado.ddd;
-
-    const localidadeTexto = ddd ? `${localidade}` : `${localidade}`;
-
+    const localidadeTexto = obterLocalidade(texto);
     if (localidadeTexto) {
         copiarParaClipboard(localidadeTexto);
         mostrarPopUp("Localidade copiada com sucesso!");
@@ -73,14 +110,11 @@ function formatarLocalidade() {
     }
 }
 
-
-function formatarLinkedin() {
+// Função principal que formata o perfil do LinkedIn
+function copiarLinkedin() {
     const texto = document.getElementById('inputText').value;
-    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
-    const linkedinMatch = texto.match(linkedinRegex);
-
-    if (linkedinMatch) {
-        let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
+    const perfilLinkedin = obterLinkedin(texto);
+    if (perfilLinkedin) {
         copiarParaClipboard(perfilLinkedin);
     } else {
         copiarParaClipboard('Linkedin não identificado.');
@@ -89,25 +123,34 @@ function formatarLinkedin() {
 }
 
 
-function formatarAssunto() {
-    const texto = document.getElementById('inputText').value;
-
+// Função para formatar o assunto internamente
+function obterAssunto(texto) {
     const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
     const assuntoMatch = texto.match(assuntoRegex);
     if (assuntoMatch) {
         let assunto = assuntoMatch[1].trim();
         assunto = assunto.toLowerCase();
         let assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
-        assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim()
+        assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
+        return assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
+    } else {
+        return 'não encontrado';
+    }
+}
 
-
-        copiarParaClipboard(assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1));
+// Função principal que usa a função interna para formatar o assunto
+function copiarAssunto() {
+    const texto = document.getElementById('inputText').value;
+    const assuntoFormatado = obterAssunto(texto);
+    if (assuntoFormatado) {
+        copiarParaClipboard(assuntoFormatado);
         mostrarPopUp("Assunto formatado e copiado para a área de transferência");
     } else {
         copiarParaClipboard("Campo de assunto não encontrado.");
         mostrarPopUp("Campo de assunto não encontrado.");
     }
 }
+
 
 
 function copiarParaClipboard(texto) {
@@ -134,15 +177,25 @@ function mostrarPopUp(mensagem) {
     }, 1000);
 }
 
-function formatarEmail() {
-    const texto = document.getElementById('inputText').value;
+// Função interna para extrair e formatar o e-mail
+function obterEmail(texto) {
     const emailRegex = /E-mail: (.+)|Email: (.+)/i;
     const emailMatch = texto.match(emailRegex);
     if (emailMatch) {
-        const email = (emailMatch[1] || emailMatch[2]).toLowerCase();
-        EmailDoContato = email; // Atualiza a variável global corretamente
-        EmailFormatado = email; // Mantém esta linha se precisar do email formatado em minúsculas em outra parte do código
-        copiarParaClipboard(email);
+        return (emailMatch[1] || emailMatch[2]).toLowerCase();
+    } else {
+        return 'não informado';
+    }
+}
+
+// Função principal que formata o e-mail
+function copiarEmail() {
+    const texto = document.getElementById('inputText').value;
+    const emailFormatado = obterEmail(texto);
+    if (emailFormatado) {
+        EmailDoContato = emailFormatado; // Atualiza a variável global corretamente
+        EmailFormatado = emailFormatado; // Mantém esta linha se precisar do email formatado em minúsculas em outra parte do código
+        copiarParaClipboard(emailFormatado);
     } else {
         copiarParaClipboard('email@email.com');
         mostrarPopUp("e-mail não encontrado.");
@@ -150,117 +203,8 @@ function formatarEmail() {
 }
 
 
-function formatarTelefone() {
-    const texto = document.getElementById('inputText').value;
-    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const telefoneMatch = texto.match(telefoneRegex);
-    const dddsBrasil = {
-        "11": "São Paulo - SP",
-        "12": "São José dos Campos - SP",
-        "13": "Santos - SP",
-        "14": "Bauru - SP",
-        "15": "Sorocaba - SP",
-        "16": "Ribeirão Preto - SP",
-        "17": "São José do Rio Preto - SP",
-        "18": "Presidente Prudente - SP",
-        "19": "Campinas - SP",
-        "21": "Rio de Janeiro - RJ",
-        "22": "Campos dos Goytacazes - RJ",
-        "24": "Volta Redonda - RJ",
-        "27": "Vila Velha/Vitória - ES",
-        "28": "Cachoeiro de Itapemirim - ES",
-        "31": "Belo Horizonte - MG",
-        "32": "Juiz de Fora - MG",
-        "33": "Governador Valadares - MG",
-        "34": "Uberlândia - MG",
-        "35": "Poços de Caldas - MG",
-        "37": "Divinópolis - MG",
-        "38": "Montes Claros - MG",
-        "41": "Curitiba - PR",
-        "42": "Ponta Grossa - PR",
-        "43": "Londrina - PR",
-        "44": "Maringá - PR",
-        "45": "Foz do Iguaçú - PR",
-        "46": "Francisco Beltrão/Pato Branco - PR",
-        "47": "Joinville - SC",
-        "48": "Florianópolis - SC",
-        "49": "Chapecó - SC",
-        "51": "Porto Alegre - RS",
-        "53": "Pelotas - RS",
-        "54": "Caxias do Sul - RS",
-        "55": "Santa Maria - RS",
-        "61": "Brasília - DF",
-        "62": "Goiânia - GO",
-        "63": "Palmas - TO",
-        "64": "Rio Verde - GO",
-        "65": "Cuiabá - MT",
-        "66": "Rondonópolis - MT",
-        "67": "Campo Grande - MS",
-        "68": "Rio Branco - AC",
-        "69": "Porto Velho - RO",
-        "71": "Salvador - BA",
-        "73": "Ilhéus - BA",
-        "74": "Juazeiro - BA",
-        "75": "Feira de Santana - BA",
-        "77": "Barreiras - BA",
-        "79": "Aracaju - SE",
-        "81": "Recife - PE",
-        "82": "Maceió - AL",
-        "83": "João Pessoa - PB",
-        "84": "Natal - RN",
-        "85": "Fortaleza - CE",
-        "86": "Teresina - PI",
-        "87": "Petrolina - PE",
-        "88": "Juazeiro do Norte - CE",
-        "89": "Picos - PI",
-        "91": "Belém - PA",
-        "92": "Manaus - AM",
-        "93": "Santarém - PA",
-        "94": "Marabá - PA",
-        "95": "Boa Vista - RR",
-        "96": "Macapá - AP",
-        "97": "Coari - AM",
-        "98": "São Luís - MA",
-        "99": "Imperatriz - MA"
-    };
 
-    if (telefoneMatch) {
-        let numeros = telefoneMatch[1].replace(/\D/g, '');
-
-        // Remover zeros à esquerda
-        numeros = numeros.replace(/^0+/, '');
-
-        let telefone_formatado = numeros
-
-        // Remover o prefixo "55" se presente
-        if (numeros.startsWith('55')) {
-            numeros = numeros.substring(2);
-        }
-
-        // Verificar se os dois primeiros dígitos são um DDD válido
-        const ddd = numeros.substring(0, 2);
-        if (dddsBrasil.hasOwnProperty(ddd)) {
-            const localidade = dddsBrasil[ddd];
-            if (numeros.length === 10 || numeros.length === 11) {
-                numeros = '55' + numeros;
-                const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
-                copiarParaClipboard(formatado);
-                mostrarPopUp(`Telefone formatado e copiado com sucesso! Localidade: ${localidade}`);
-            } else {
-                copiarParaClipboard(telefone_formatado);
-                mostrarPopUp("Telefone inválido. Número copiado na forma original.");
-            }
-        } else {
-            copiarParaClipboard(telefone_formatado);
-            mostrarPopUp("Número copiado na forma original. DDD não reconhecido.");
-        }
-    } else {
-        copiarParaClipboard('0000000000000');
-        mostrarPopUp("Telefone não encontrado");
-    }
-}
-
-function formatarTelefoneInterno(numeros) {
+function formatarTelefone(numeros) {
     const dddsBrasil = {
         "11": "São Paulo - SP",
         "12": "São José dos Campos - SP",
@@ -355,196 +299,143 @@ function formatarTelefoneInterno(numeros) {
     }
 }
 
-
-
-function identificarInformacoesAutomaticamente() {
+// Função principal que usa a função interna para formatar o telefone
+function copiarTelefone() {
     const texto = document.getElementById('inputText').value;
-    let origem = "Origem: não identificada";
-    let interesse = "Interesse: não identificado";
-    let porte = "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
 
-    // Converte o texto para minúsculas
-    let textoMinusculo = texto.toLowerCase();
+    if (telefoneMatch) {
+        let numeros = telefoneMatch[1].replace(/\D/g, '');
+        const resultado = formatarTelefone(numeros);
 
-    // Verifica a origem do texto usando a versão minúscula
+        copiarParaClipboard(resultado.formatado);
+        mostrarPopUp(`Telefone formatado e copiado com sucesso! Localidade: ${resultado.localidade}`);
+    } else {
+        copiarParaClipboard('0000000000000');
+        mostrarPopUp("Telefone não encontrado");
+    }
+}
+
+
+
+// Função interna para identificar a origem
+function obterOrigem(textoMinusculo) {
     if (textoMinusculo.includes("chatbot") || textoMinusculo.includes("inbound chatbot")) {
-        origem = "Origem: Inbound Whatsapp / Chatbot";
+        return "Origem: Inbound Whatsapp / Chatbot";
     } else if (textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")) {
-        origem = "Origem: Formulário LP Mobile";
+        return "Origem: Formulário LP Mobile";
     } else if (textoMinusculo.includes("falecom@agence.com.br")) {
-        origem = "Origem: Inbound E-mail";
+        return "Origem: Inbound E-mail";
     } else if (textoMinusculo.includes("fale conosco - agence")) {
-        origem = "Origem: Formulário Fale Conosco";
-    }
-
-    // Verifica a origem do texto para outbound
-    if (textoMinusculo.includes("origem: outbound e-mail") || textoMinusculo.includes("origem: outbound email")) {
-        origem = "Origem: Outbound E-mail";
+        return "Origem: Formulário Fale Conosco";
+    } else if (textoMinusculo.includes("origem: outbound e-mail") || textoMinusculo.includes("origem: outbound email")) {
+        return "Origem: Outbound E-mail";
     } else if (textoMinusculo.includes("origem: outbound linkedin")) {
-        origem = "Origem: Outbound Linkedin";
+        return "Origem: Outbound Linkedin";
     } else if (textoMinusculo.includes("origem: outbound bdr")) {
-        origem = "Origem: Outbound BDR";
+        return "Origem: Outbound BDR";
+    } else {
+        return "Origem: não identificada";
     }
+}
 
-
+// Função interna para identificar o interesse
+function obterInteresse(texto) {
     const necessidadeRegex = /Necessidade: (.+)/i;
     const interesseRegex = /Estou interessado em: (.+)/i;
-    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
     const necessidadeMatch = texto.match(necessidadeRegex);
     const interesseMatch = texto.match(interesseRegex);
-    const porteMatch = texto.match(porteRegex); // Tenta encontrar o porte da empresa no texto
+
+    let interesse = "Interesse: não informado";
 
     if (necessidadeMatch) {
         interesse = "Interesse: " + necessidadeMatch[1];
     } else if (interesseMatch) {
         interesse = "Interesse: " + interesseMatch[1];
     } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
-        interesse = "Interesse: Desenvolvimento Mobile"
+        interesse = "Interesse: Desenvolvimento Mobile";
     }
 
-    // Verifica se o interesse contém o termo "rpa" em letras minúsculas
+    // Verifica se o interesse contém termos específicos
     if (interesse.toLowerCase().includes("rpa")) {
         interesse = "Interesse: RPA - Robotic Process Automation";
-    }
-
-    // Nova etapa de revisão do interesse
-    if (interesse.toLowerCase().includes("consultoria")) {
+    } else if (interesse.toLowerCase().includes("consultoria")) {
         interesse = "Interesse: Consultoria de TI";
     } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
         interesse = "Interesse: Desenvolvimento Mobile";
     }
 
+    return interesse;
+}
+
+// Função interna para identificar o porte da empresa
+function obterPorte(texto) {
+    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
+    const porteMatch = texto.match(porteRegex);
+
     if (porteMatch && porteMatch[1]) {
         let porteTexto = porteMatch[1].replace("Porte", "").trim();
-        porte = `Porte da Empresa: ${porteTexto}`; // Atribui o porte encontrado à variável
+        return `Porte da Empresa: ${porteTexto}`;
+    } else {
+        return "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
     }
+}
 
-    InteresseDoLead = interesse
-    origemGlobal = origem
+// Função principal que identifica as informações automaticamente
+function identificarInformacoesAutomaticamente() {
+    const texto = document.getElementById('inputText').value;
+    const textoMinusculo = texto.toLowerCase();
 
+    const origem = obterOrigem(textoMinusculo);
+    const interesse = obterInteresse(texto);
+    const porte = obterPorte(texto);
+
+    InteresseDoLead = interesse;
+    origemGlobal = origem;
 
     // Exibe as informações capturadas nos elementos HTML correspondentes
     document.getElementById('origemLead').textContent = origem;
     document.getElementById('interesseLead').textContent = interesse;
-    document.getElementById('porteLead').textContent = porte; // Exibe o porte da empresa
+    document.getElementById('porteLead').textContent = porte;
 }
 
 
+
 function formatarLead() {
-    let origem = "Origem: não identificada";
     const texto = document.getElementById('inputText').value;
-    const nomeRegex = /Nome: (.+)|Name: (.+)/i;
-    const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
+    const textoMinusculo = texto.toLowerCase();
+
+    const NomeDoContato = obterNomeDoContato(texto)
+    const NomeDaEmpresa = obterEmpresa(texto)
+
+    const origem = obterOrigem(textoMinusculo);
+    const interesse = obterInteresse(texto);
+
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
-    const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
-
-
-    const nomeMatch = texto.match(nomeRegex);
-    const empresaMatch = texto.match(empresaRegex);
     const telefoneMatch = texto.match(telefoneRegex);
-    const interesseMatch = texto.match(interesseRegex);
-    const linkedinMatch = texto.match(linkedinRegex);
-
-
-    const nome = nomeMatch ? nomeMatch[1] || nomeMatch[2] : "não informado";
-    const nomeFormatado = nome.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
-    NomeDoContato = nomeFormatado
-
-    const empresa = empresaMatch ? empresaMatch[1] || empresaMatch[2] : "não informado";
-    const empresaFormatada = empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
-    NomeDaEmpresa = empresaFormatada
-
     let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
-    const telefoneFormatado = formatarTelefoneInterno(telefone);
+    const telefoneFormatado = formatarTelefone(telefone);
     telefone = telefoneFormatado.formatado;
     const localidade = telefoneFormatado.localidade;
     const ddd = telefoneFormatado.ddd;
 
-    let interesse = interesseMatch ? interesseMatch[1] || interesseMatch[2] : "não informado";
+    let infoEconodata = obterEconodata(texto);
 
-    // Verifica se o interesse contém o termo "rpa" em letras minúsculas
-    if (interesse.toLowerCase().includes("rpa")) {
-        interesse = "RPA - Robotic Process Automation";
-    } else if (texto.includes("© 2024 Agence. Todos os direitos reservados.")) {
-        interesse = "Desenvolvimento Mobile"
-    }
-
-    // Nova etapa de revisão do interesse
-    if (interesse.toLowerCase().includes("consultoria")) {
-        interesse = "Consultoria de TI";
-    } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
-        interesse = "Desenvolvimento Mobile";
-    }
-
-    TelefoneDoContato = telefone
-
-    let informacoes = "";
-
-    // Definindo as expressões regulares para cada tipo de informação
-    const cnpjRegex = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
-    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
-    const numeroFuncionariosRegex = /Quantidade de Funcionários(.*?)icone like/s;
-    const faturamentoAnualRegex = /Faturamento Anual(.*?)icone like/s;
-
-    // Procurando pelas informações no texto
-    const cnpjMatch = texto.match(cnpjRegex);
-    const porteMatch = texto.match(porteRegex);
-    const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
-    const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
-
-    // Converte o texto para minúsculas
-    let textoMinusculo = texto.toLowerCase();
-
-    // Verifica a origem do texto usando a versão minúscula
-    if (textoMinusculo.includes("chatbot") || textoMinusculo.includes("inbound chatbot")) {
-        origem = "Origem: Inbound Whatsapp / Chatbot";
-    } else if (textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")) {
-        origem = "Origem: Formulário LP Mobile";
-    } else if (textoMinusculo.includes("falecom@agence.com.br")) {
-        origem = "Origem: Inbound E-mail";
-    } else if (textoMinusculo.includes("fale conosco - agence")) {
-        origem = "Origem: Formulário Fale Conosco";
-    }
-
-    // Verifica a origem do texto para outbound
-    if (textoMinusculo.includes("origem: outbound e-mail") || textoMinusculo.includes("origem: outbound email")) {
-        origem = "Origem: Outbound E-mail";
-    } else if (textoMinusculo.includes("origem: outbound linkedin")) {
-        origem = "Origem: Outbound Linkedin";
-    } else if (textoMinusculo.includes("origem: outbound bdr")) {
-        origem = "Origem: Outbound BDR";
+    // Verifica se infoEconodata não está vazia e adiciona espaços
+    if (infoEconodata) {
+        infoEconodata = `${infoEconodata}\n\n`;
     }
 
 
-    // Adicionando as informações encontradas na string de informacoes
-    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
-
-    if (porteMatch) {
-        const porteTexto = porteMatch[1].replace("Porte", "").trim();
-        informacoes += `Porte da Empresa: ${porteTexto}\n`;
-    }
-
-    if (numeroFuncionariosMatch) {
-        // Removendo a frase indesejada e espaços extras
-        let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        numeroFuncionariosTexto = numeroFuncionariosTexto.replace(" funcionários", "").trim();
-        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
-    }
-    if (faturamentoAnualMatch) {
-        // Removendo a frase indesejada e espaços extras
-        let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}\n\n`;
-    }
-
-    let perfilLinkedin = linkedinMatch ? linkedinMatch[0].split('?')[0] : "ainda não identificado";
+    let perfilLinkedin = obterLinkedin(texto)
 
     const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\nInteresse: ${interesse}\n${origem} \n\n${informacoes}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
+    const resultadoTexto = `Chegou lead na fila Brasil para o @\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem} \n\n${infoEconodata}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
-
 }
+
 
 function copiarTexto() {
     const textoParaCopiar = document.getElementById('resultado').textContent;
@@ -566,10 +457,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-
-function identificarInformacoesAdicionais() {
-    const texto = document.getElementById('inputText').value;
-    let informacoes = "";
+// Função principal para obter todas as informações e retornar a string infoEconodata
+function obterEconodata(texto) {
+    let infoEconodata = "";
 
     // Definindo as expressões regulares para cada tipo de informação
     const cnpjRegex = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
@@ -577,34 +467,43 @@ function identificarInformacoesAdicionais() {
     const numeroFuncionariosRegex = /Quantidade de Funcionários(.*?)icone like/s;
     const faturamentoAnualRegex = /Faturamento Anual(.*?)icone like/s;
 
-    // Procurando pelas informações no texto
+    // Procurando pelo CNPJ no texto
     const cnpjMatch = texto.match(cnpjRegex);
-    const porteMatch = texto.match(porteRegex);
-    const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
-    const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
 
-    // Adicionando as informações encontradas na string de informacoes
-    if (cnpjMatch) informacoes += `CNPJ: ${cnpjMatch[1]}\n`;
+    // Se o CNPJ for encontrado, adiciona as informações à string infoEconodata
+    if (cnpjMatch) {
+        infoEconodata += `CNPJ: ${cnpjMatch[1]}\n`;
 
-    if (porteMatch) {
-        const porteTexto = porteMatch[1].replace("Porte", "").trim();
-        informacoes += `Porte da Empresa: ${porteTexto}\n`;
+        const porteMatch = texto.match(porteRegex);
+        if (porteMatch) {
+            const porteTexto = porteMatch[1].replace("Porte", "").trim();
+            infoEconodata += `Porte da Empresa: ${porteTexto}\n`;
+        }
+
+        const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
+        if (numeroFuncionariosMatch) {
+            let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
+            numeroFuncionariosTexto = numeroFuncionariosTexto.replace("funcionários", "").trim();
+            infoEconodata += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
+        }
+
+        const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
+        if (faturamentoAnualMatch) {
+            let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
+            infoEconodata += `Faturamento Anual: ${faturamentoAnualTexto}`;
+        }
     }
 
-    if (numeroFuncionariosMatch) {
-        // Removendo a frase indesejada e espaços extras
-        let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-        numeroFuncionariosTexto = numeroFuncionariosTexto.replace("funcionários", "").trim();
-        informacoes += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
-    }
-    if (faturamentoAnualMatch) {
-        // Removendo a frase indesejada e espaços extras
-        let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-        informacoes += `Faturamento Anual: ${faturamentoAnualTexto}`;
-    }
+    return infoEconodata.trim();
+}
+
+// Função principal que identifica informações adicionais e exibe no HTML
+function identificarInformacoesAdicionais() {
+    const texto = document.getElementById('inputText').value;
+    const infoEconodata = obterEconodata(texto);
 
     // Exibindo as informações
-    document.getElementById('informacoesAdicionais').textContent = informacoes;
+    document.getElementById('informacoesAdicionais').textContent = infoEconodata;
 }
 
 function copiarInformacoesAdicionais() {
@@ -654,47 +553,18 @@ function SiteDaEmpresa() {
 
 function formatarTextoEspecial() {
     const texto = document.getElementById('inputText').value;
-    // Suponha que você queira incluir informações similares, mas com um formato diferente
-    const emailRegex = /E-mail: (.+)|Email: (.+)/i;
-    const emailMatch = texto.match(emailRegex);
 
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const telefoneMatch = texto.match(telefoneRegex);
 
-    /* const interesseRegex = /Necessidade: (.+)|Estou interessado em: (.+)/i;
-     const interesseMatch = texto.match(interesseRegex); */
+    let NomeDoContato = obterNomeDoContato(texto)
+    let NomeDaEmpresa = obterEmpresa(texto)
+    let EmailFormatado = obterEmail(texto)
 
-    let EmailFormatado = "";
-    if (emailMatch) {
-        // Captura o e-mail do match encontrado e converte para minúsculas
-        EmailFormatado = (emailMatch[1] || emailMatch[2]).toLowerCase();
-    } else {
-        console.log("não informado.");
-        EmailFormatado = "não informado";
-    }
-
-    // Identificação e formatação do assunto
-    let assuntoFormatado = "";
-
-    try {
-        const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
-        const assuntoMatch = texto.match(assuntoRegex);
-        if (assuntoMatch) {
-            let assunto = assuntoMatch[1].trim();
-            assunto = assunto.toLowerCase();
-            assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
-            assuntoFormatado = assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
-            assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
-        } else {
-            console.log("Assunto não encontrado.");
-            assuntoFormatado = "não encontrado";
-        }
-    } catch (error) {
-        console.error("Erro ao formatar o assunto:", error);
-    }
+    let assuntoFormatado = obterAssunto(texto)
 
     let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
-    const telefoneFormatado = formatarTelefoneInterno(telefone);
+    const telefoneFormatado = formatarTelefone(telefone);
     telefone = telefoneFormatado.formatado;
     const localidade = telefoneFormatado.localidade;
     const ddd = telefoneFormatado.ddd;
