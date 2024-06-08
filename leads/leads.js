@@ -359,11 +359,15 @@ function obterInteresse(texto) {
 
     // Verifica se o interesse contém termos específicos
     if (interesse.toLowerCase().includes("rpa")) {
-        interesse = "Interesse: RPA - Robotic Process Automation";
+        interesse = "Interesse: Robotic Process Automation (RPA)";
     } else if (interesse.toLowerCase().includes("consultoria")) {
-        interesse = "Interesse: Consultoria de TI";
+        interesse = "Interesse: Consultoria de Ti";
     } else if (interesse.toLowerCase().includes("aplicativo") || interesse.toLowerCase().includes("mobile")) {
         interesse = "Interesse: Desenvolvimento Mobile";
+    } else if (interesse.toLowerCase().includes("headhunting")) {
+        interesse = "Interesse: Headhunting de Ti";
+    } else if (interesse.toLowerCase().includes("outsourcing")) {
+        interesse = "Interesse: Outsourcing de Ti";
     }
 
     return interesse;
