@@ -17,6 +17,7 @@
         <div id="column1" class="column">🔍 Buscando CN da vez...</div>
         <div id="column2" class="column"></div>
         <div id="column3" class="column"></div>
+        <div id="column4" class="column"></div> <!-- Nova coluna adicionada -->
     </div>
 
 
@@ -95,7 +96,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg'; // Substitua pelo seu API Key
             const spreadsheetId = '1FwDn3RSuCZDpMl4QdjcL9gFr5cek1mlYWqCcqrjBDFY';
-            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3']; // Ajuste os ranges para as células específicas
+            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4']; // Ajuste os ranges para as células específicas
 
             // Função para inicializar a API do Google Sheets
             function initClient() {
@@ -122,23 +123,27 @@
                 });
 
                 Promise.all(promises).then(function (responses) {
-                    const ProximoFilaA = responses[0].result.values ? responses[0].result.values[0][0] : 'Nenhum dado encontrado';
-                    const ProximoFilaB = responses[1].result.values ? responses[1].result.values[0][0] : 'Nenhum dado encontrado';
-                    const ProximoFilaLicitacao = responses[2].result.values ? responses[2].result.values[0][0] : 'Nenhum dado encontrado';
+                    const ProximoFilaA = responses[0].result.values ? responses[0].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaB = responses[1].result.values ? responses[1].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaLicitacao = responses[2].result.values ? responses[2].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaD = responses[3].result.values ? responses[3].result.values[0][0] : 'Não encontrado'; // Nova cédula
 
                     console.log('Dados atualizados:');
                     console.log('Próximo na Fila A:', ProximoFilaA);
                     console.log('Próximo na Fila B:', ProximoFilaB);
                     console.log('Próximo na Fila de Licitação:', ProximoFilaLicitacao);
+                    console.log('Próximo na Fila D:', ProximoFilaD); // Nova cédula
 
                     document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
-                    document.getElementById('column2').innerHTML = `<p>Fila B: ${ProximoFilaB}</p>`;
-                    document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}</p>`;
+                    document.getElementById('column2').innerHTML = `<p>🚩 Fila B: ${ProximoFilaB}  </p>`;
+                    document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}  </p>`;
+                    document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}  </p>`; // Nova cédula
                 }).catch(function (error) {
                     console.error('Erro ao buscar dados da planilha:', error);
                     document.getElementById('column1').textContent = 'Erro ao carregar dados.';
                     document.getElementById('column2').textContent = 'Erro ao carregar dados.';
                     document.getElementById('column3').textContent = 'Erro ao carregar dados.';
+                    document.getElementById('column4').textContent = 'Erro ao carregar dados.'; // Nova cédula
                 });
             }
 

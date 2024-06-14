@@ -313,23 +313,20 @@ button:hover {
 
 .consultores {
     display: flex;
-    max-width: 2500px;
-    flex-direction: line;
+    max-width: 1900px;
+    flex-direction: row;
+    /* Corrigido de 'line' para 'row' */
     justify-content: space-around;
-    gap: 10%;
+    gap: 0%;
     margin-top: 20px;
-    align-items: first baseline;
-    /* Centraliza o conteúdo verticalmente */
+    align-items: baseline;
+    /* Corrigido de 'first baseline' para 'baseline' */
     flex: 1;
     margin-left: auto;
     margin-right: auto;
     font-size: 30px;
-    /* Adicionado para aumentar o tamanho da fonte */
-
 }
 
-
-/* Adicione isso ao seu arquivo leads.css ou dentro de uma tag <style> no <head> */
 .column {
     flex: 1;
     padding: 0px;
