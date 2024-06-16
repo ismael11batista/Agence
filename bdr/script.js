@@ -233,7 +233,7 @@ function configurarBotoes() {
             LeanButtons.classList.remove("hide");
         } else if (selection === "Fábrica") {
             FabricaButtons.classList.remove("hide");
-        } else if (selection === "Outros") {
+        } else if (selection === "Respostas Padrão") {
             OtherButtons.classList.remove("hide");
         }
 
