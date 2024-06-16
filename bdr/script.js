@@ -143,6 +143,8 @@ function copiarParaClipboard(texto) {
     });
 }
 
+
+
 function copiarNome() {
     const nome = document.getElementById('nomeContato').textContent.split(": ")[1];
     copiarParaClipboard(nome);

@@ -38,28 +38,18 @@ body {
 }
 
 textarea {
-
-    background: transparent;
+    background-color: transparent;
     font-size: xx-large;
     color: rgba(255, 255, 255, 0.605);
-    width: 90%;
-    padding: 10px;
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.605);
-    border-radius: 30px;
+    width: 95%;
+    padding: 0px;
+    border: 3px solid rgba(255, 255, 255, 0.605);
+    border-radius: 10px;
     resize: none;
-    height: 300px;
-    display: block;
-    /* Garante que o textarea se comporte como um bloco */
-    margin-left: auto;
-    /* Margem automática à esquerda */
-    margin-right: auto;
-    /* Margem automática à direita */
-    /* Outras propriedades existentes */
-
+    height: 280px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 40px;
 }
 
 
@@ -67,22 +57,24 @@ textarea {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 20px;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
 }
 
 .btn-adicionar {
     padding: 10px;
-    background: linear-gradient(45deg, #000113, #000835);
+    background-color: #00021d;
     color: rgba(255, 255, 255, 0.605);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: 'Roboto', sans-serif;
     border: 1px solid rgba(255, 255, 255, 0.605);
     font-weight: bold;
-    min-width: 150px;
+    /* Define a largura mínima para 50px */
+    min-width: 250px;
 
 }
 
@@ -181,7 +173,8 @@ button:hover {
 
 #resultados p {
     margin: 10px 0;
-    /* Adiciona um espaçamento acima e abaixo de cada parágrafo */
+    cursor: pointer;
+    /* Adiciona cursor de ponteiro para indicar que o texto é clicável */
 }
 
 
@@ -243,13 +236,14 @@ button:hover {
 .selector {
     width: 350px;
     position: relative;
+    margin-top: 40px;
 }
 
 
 #selectField {
     width: 100%;
     padding: 15px 20px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
     box-sizing: border-box;
     border-radius: 6px;
     display: flex;
@@ -305,11 +299,12 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px 50px;
     background-color: rgba(255, 255, 255, 0.605);
     color: rgba(255, 255, 255, 0.605);
     border: 1px solid #84b5ff;
