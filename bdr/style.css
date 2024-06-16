@@ -46,7 +46,7 @@ textarea {
     border: 5px solid rgba(255, 255, 255, 0.605);
     border-radius: 10px;
     resize: none;
-    height: 450px;
+    height: 470px;
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 40px;
@@ -234,7 +234,7 @@ button:hover {
 .selector {
     width: 350px;
     position: relative;
-    margin-top: 20px;
+    margin-top: 0px;
 }
 
 
