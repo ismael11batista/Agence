@@ -242,6 +242,7 @@ button:hover {
 
 .selector {
     width: 350px;
+    position: relative;
 }
 
 
@@ -263,7 +264,7 @@ button:hover {
 
 #selectField img {
     width: 12px;
-    transition: transform 0.5s;
+    transition: transform 0.1s;
 }
 
 #list {
@@ -273,6 +274,10 @@ button:hover {
     background: linear-gradient(45deg, #000113, #000835);
     border-radius: 6px;
     overflow: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
 }
 
 
@@ -282,7 +287,6 @@ button:hover {
     list-style: none;
     cursor: pointer;
     box-sizing: border-box;
-    position: relative;
 }
 
 .options:hover {
