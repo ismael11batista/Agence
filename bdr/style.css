@@ -43,10 +43,10 @@ textarea {
     color: rgba(255, 255, 255, 0.605);
     width: 95%;
     padding: 0px;
-    border: 3px solid rgba(255, 255, 255, 0.605);
+    border: 5px solid rgba(255, 255, 255, 0.605);
     border-radius: 10px;
     resize: none;
-    height: 280px;
+    height: 450px;
     margin-top: 20px;
     margin-bottom: 15px;
     margin-left: 40px;
@@ -59,7 +59,7 @@ textarea {
     flex-wrap: wrap;
     gap: 20px;
     width: 100%;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .btn-adicionar {
@@ -234,7 +234,7 @@ button:hover {
 .selector {
     width: 350px;
     position: relative;
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 
@@ -297,15 +297,15 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 30px;
-    margin-bottom: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 button {
     padding: 10px 50px;
     background-color: rgba(255, 255, 255, 0.605);
     color: rgba(255, 255, 255, 0.605);
-    border: 1px solid #84b5ff;
+    border: 1px solid rgba(255, 255, 255, 0.605);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
