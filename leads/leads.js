@@ -3,9 +3,7 @@ let NomeDaEmpresa = "";
 let EmailDoContato = "";
 let TextoEspecial = ""; // Variável global para armazenar o texto especial
 let EmailFormatado = '';
-let InteresseDoLead = '';
 var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
-let origemGlobal = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
@@ -395,9 +393,6 @@ function identificarInformacoesAutomaticamente() {
     const interesse = obterInteresse(texto);
     const porte = obterPorte(texto);
 
-    InteresseDoLead = interesse;
-    origemGlobal = origem;
-
     // Exibe as informações capturadas nos elementos HTML correspondentes
     document.getElementById('origemLead').textContent = origem;
     document.getElementById('interesseLead').textContent = interesse;
@@ -566,6 +561,7 @@ function formatarTextoEspecial() {
     const textoMinusculo = texto.toLowerCase();
 
     const origem = obterOrigem(textoMinusculo);
+    const interesse = obterInteresse(texto);
 
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const telefoneMatch = texto.match(telefoneRegex);
@@ -584,7 +580,7 @@ function formatarTextoEspecial() {
 
     const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${InteresseDoLead}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoEspecial;
