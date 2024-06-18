@@ -431,12 +431,17 @@ function formatarLead() {
         infoEconodata = `${infoEconodata}\n\n`;
     }
 
-
     let perfilLinkedin = obterLinkedin(texto)
 
     const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    const resultadoTexto = `Chegou lead na fila Brasil para o @\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem} \n\n${infoEconodata}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
+    // Verifica se a origem contém a palavra "outbound"
+    let nomeDaFila = "Fila A"; // Valor padrão
+    if (origem.toLowerCase().includes("outbound")) {
+        nomeDaFila = "Fila Outbound";
+    }
+
+    const resultadoTexto = `Chegou lead na ${nomeDaFila} para o @\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem} \n\n${infoEconodata}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
 
@@ -558,6 +563,9 @@ function SiteDaEmpresa() {
 
 function formatarTextoEspecial() {
     const texto = document.getElementById('inputText').value;
+    const textoMinusculo = texto.toLowerCase();
+
+    const origem = obterOrigem(textoMinusculo);
 
     const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
     const telefoneMatch = texto.match(telefoneRegex);
@@ -576,7 +584,7 @@ function formatarTextoEspecial() {
 
     const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${InteresseDoLead}\n${origemGlobal}\n\nAssunto: ${assuntoFormatado}`;
+    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${InteresseDoLead}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoEspecial;
