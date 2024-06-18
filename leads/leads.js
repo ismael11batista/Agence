@@ -139,7 +139,8 @@ function copiarLinkedin() {
 
 // Função para formatar o assunto internamente
 function obterAssunto(texto) {
-    const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
+    // Expressão regular para capturar tudo entre "Comentários" e a última ocorrência de "Agence"
+    const assuntoRegex = /Comentários:\s*([\s\S]*)(?=\s*Agence\s*$)/;
     const assuntoMatch = texto.match(assuntoRegex);
     if (assuntoMatch) {
         let assunto = assuntoMatch[1].trim();
