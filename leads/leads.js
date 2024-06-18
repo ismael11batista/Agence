@@ -30,17 +30,33 @@ function obterNomeDoContato(texto) {
     }
 }
 
+
 // Função interna para extrair e formatar a empresa
 function obterEmpresa(texto) {
     const empresaRegex = /Empresa: (.+)|Enterprise: (.+)/i;
     const empresaMatch = texto.match(empresaRegex);
     if (empresaMatch) {
         const empresa = empresaMatch[1] || empresaMatch[2];
-        return empresa.split(' ').map(palavra => palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase()).join(' ');
+
+        // Regex para encontrar partes entre aspas simples
+        const upperCaseParts = empresa.match(/'([^']+)'/g) || [];
+
+        // Remover aspas simples e manter maiúsculas
+        const upperCaseWords = upperCaseParts.map(part => part.replace(/'/g, ''));
+
+        return empresa.split(' ').map(palavra => {
+            // Verifica se a palavra está na lista de palavras que devem ficar em maiúsculas
+            if (upperCaseWords.includes(palavra.replace(/'/g, ''))) {
+                return palavra.replace(/'/g, '').toUpperCase();
+            } else {
+                return palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase();
+            }
+        }).join(' ');
     } else {
         return 'não informado';
     }
 }
+
 
 // Função interna para extrair e formatar a localidade a partir do telefone
 function obterLocalidade(texto) {
