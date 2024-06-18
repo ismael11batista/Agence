@@ -136,21 +136,30 @@ function copiarLinkedin() {
     }
 }
 
-
 // Função para formatar o assunto internamente
 function obterAssunto(texto) {
-    const assuntoRegex = /Comentários:\s*([\s\S]*?)\s*Agence/;
-    const assuntoMatch = texto.match(assuntoRegex);
-    if (assuntoMatch) {
-        let assunto = assuntoMatch[1].trim();
-        assunto = assunto.toLowerCase();
-        let assuntoFormatado = assunto.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
-        assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
-        return assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
-    } else {
+    // Encontrar a última ocorrência de "Agence"
+    const ultimaOcorrenciaAgence = texto.lastIndexOf("Agence");
+    if (ultimaOcorrenciaAgence === -1) {
         return 'não encontrado';
     }
+
+    // Encontrar a ocorrência de "Comentários:" antes da última ocorrência de "Agence"
+    const comentariosIndex = texto.lastIndexOf("Comentários:", ultimaOcorrenciaAgence);
+    if (comentariosIndex === -1) {
+        return 'não encontrado';
+    }
+
+    // Capturar o texto entre "Comentários:" e a última ocorrência de "Agence"
+    const assunto = texto.substring(comentariosIndex + "Comentários:".length, ultimaOcorrenciaAgence).trim();
+
+    // Formatar o texto capturado
+    let assuntoFormatado = assunto.toLowerCase();
+    assuntoFormatado = assuntoFormatado.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
+    assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
+    return assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
 }
+
 
 // Função principal que usa a função interna para formatar o assunto
 function copiarAssunto() {
