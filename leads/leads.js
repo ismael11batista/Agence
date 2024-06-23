@@ -1,15 +1,15 @@
 let NomeDoContato = "";
 let NomeDaEmpresa = "";
 let EmailDoContato = "";
-let TextoEspecial = ""; // Variável global para armazenar o texto especial
+let TextoLeadConsultor = ""; // Variável global para armazenar o texto especial
 let EmailFormatado = '';
 var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
         identificarInformacoesAutomaticamente(); // Função existente
-        identificarInformacoesAdicionais();
-        formatarTextoEspecial(); // Chamada da função para formatar e exibir detalhes do lead
+        obterInformacoesEconodata();
+        formatarTextoLeadConsultor(); // Chamada da função para formatar e exibir detalhes do lead
     });
 
     document.getElementById('copiarTextoEspecial').addEventListener('click', copiarTextoEspecial);
@@ -426,7 +426,7 @@ function identificarInformacoesAutomaticamente() {
 
 
 
-function formatarLead() {
+function formatarTextoLeadFilaA() {
     const texto = document.getElementById('inputText').value;
     const textoMinusculo = texto.toLowerCase();
 
@@ -466,7 +466,7 @@ function formatarLead() {
 }
 
 
-function copiarTexto() {
+function copiarTextoLeadFilaA() {
     const textoParaCopiar = document.getElementById('resultado').textContent;
     navigator.clipboard.writeText(textoParaCopiar).then(() => {
         mostrarPopUp('Texto copiado com sucesso!');
@@ -476,12 +476,12 @@ function copiarTexto() {
     });
 }
 
-document.getElementById('inputText').addEventListener('input', formatarLead);
+document.getElementById('inputText').addEventListener('input', formatarTextoLeadFilaA);
 
 // Garante que a formatação seja feita automaticamente ao carregar a página, se houver texto preenchido.
 document.addEventListener('DOMContentLoaded', function () {
     if (document.getElementById('inputText').value) {
-        formatarLead();
+        formatarTextoLeadFilaA();
     }
 });
 
@@ -527,7 +527,7 @@ function obterEconodata(texto) {
 }
 
 // Função principal que identifica informações adicionais e exibe no HTML
-function identificarInformacoesAdicionais() {
+function obterInformacoesEconodata() {
     const texto = document.getElementById('inputText').value;
     const infoEconodata = obterEconodata(texto);
 
@@ -535,10 +535,10 @@ function identificarInformacoesAdicionais() {
     document.getElementById('informacoesAdicionais').textContent = infoEconodata;
 }
 
-function copiarInformacoesAdicionais() {
+function copiarInformacoesEconodata() {
     const textoParaCopiar = document.getElementById('informacoesAdicionais').textContent;
     navigator.clipboard.writeText(textoParaCopiar).then(() => {
-        mostrarPopUp('Informações adicionais copiadas com sucesso!');
+        mostrarPopUp('Econodata copiado');
     }).catch(err => {
         console.error('Erro ao copiar informações adicionais: ', err);
         mostrarPopUp('Falha ao copiar informações adicionais.');
@@ -581,7 +581,7 @@ function SiteDaEmpresa() {
 }
 
 
-function formatarTextoEspecial() {
+function formatarTextoLeadConsultor() {
     const texto = document.getElementById('inputText').value;
     const textoMinusculo = texto.toLowerCase();
 
@@ -605,17 +605,17 @@ function formatarTextoEspecial() {
 
     const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
 
-    TextoEspecial = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
+    TextoLeadConsultor = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
-    document.getElementById('detalhesLead').textContent = TextoEspecial;
+    document.getElementById('detalhesLead').textContent = TextoLeadConsultor;
 }
 
 
-function copiarTextoEspecial() {
-    formatarTextoEspecial(); // Garante que o texto especial esteja atualizado
-    navigator.clipboard.writeText(TextoEspecial).then(() => {
-        mostrarPopUp('Texto especial copiado com sucesso!');
+function copiarTextoLeadConsultor() {
+    formatarTextoLeadConsultor(); // Garante que o texto especial esteja atualizado
+    navigator.clipboard.writeText(TextoLeadConsultor).then(() => {
+        mostrarPopUp('Texto copiado!');
     }).catch(err => {
         console.error('Erro ao copiar o texto especial: ', err);
         mostrarPopUp('Falha ao copiar o texto especial.');
