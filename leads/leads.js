@@ -4,12 +4,14 @@ let EmailDoContato = "";
 let TextoLeadConsultor = ""; // Variável global para armazenar o texto especial
 let EmailFormatado = '';
 var textoFormatadoGlobal = ""; // Variável global para armazenar o texto formatado
+let PromptGPTFormatado = '';
 
 document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('inputText').addEventListener('input', function () {
         identificarInformacoesAutomaticamente(); // Função existente
         obterInformacoesEconodata();
         formatarTextoLeadConsultor(); // Chamada da função para formatar e exibir detalhes do lead
+        formatarPromptGPT();
     });
 
     document.getElementById('copiarTextoEspecial').addEventListener('click', copiarTextoEspecial);
@@ -621,6 +623,45 @@ function copiarTextoLeadConsultor() {
         mostrarPopUp('Falha ao copiar o texto especial.');
     });
 }
+
+
+function formatarPromptGPT() {
+    const texto = document.getElementById('inputText').value;
+    const textoMinusculo = texto.toLowerCase();
+
+    const origem = obterOrigem(textoMinusculo);
+    let interesse = obterInteresse(texto);
+    interesse = interesse.replace("Interesse: ", "")
+
+    let NomeDaEmpresa = obterEmpresa(texto)
+    let EmailFormatado = obterEmail(texto)
+
+    let siteDaEmpresa = EmailFormatado.split("@")[1];
+    siteDaEmpresa = "https://www." + siteDaEmpresa;
+
+    let assuntoFormatado = obterAssunto(texto)
+
+    PromptGPTFormatado = `Acesse o site ${siteDaEmpresa} e me traga um resumo do que essa empresa faz, seus principais serviços e principais clientes.
+
+Além disso, e segundo meu contexto como potencial fornecedor de ${interesse}, e sabendo que é esse o serviço desejado por essa empresa, quais seriam as 5 melhores perguntas que posso fazer a eles nessa primeira reunião que terei com eles. Considere também que esse lead da empresa ${NomeDaEmpresa} chegou com o seguinte texto no formulário do fale conosco: "${assuntoFormatado}"
+
+Quais são os principais clientes e concorrentes diretos da ${NomeDaEmpresa}? E o que estão fazendo de inovação nesse ramo que sou potencial fornecedor.
+
+Por favor me dê isso tudo em português do Brasil, o texto deve ser formatado de forma limpa e direta, sem o uso de cabeçalhos ou marcadores especiais, sem qualquer tipo de aspas ou caracteres que possam dar problema em códigos de sistemas.`;
+
+}
+
+
+function copiarPromptGPT() {
+    formatarPromptGPT(); // Garante que o texto especial esteja atualizado
+    navigator.clipboard.writeText(PromptGPTFormatado).then(() => {
+        mostrarPopUp('Texto copiado!');
+    }).catch(err => {
+        console.error('Erro ao copiar o texto especial: ', err);
+        mostrarPopUp('Falha ao copiar o texto especial.');
+    });
+}
+
 
 
 function removerLinhasPorInicio(texto, iniciosParaRemover) {
