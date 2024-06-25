@@ -568,10 +568,10 @@ function SiteDaEmpresa() {
 
     if (EmailDoContato) {
         const dominio = EmailDoContato.split('@')[1];
-        const dominiosPessoais = ['gmail.com', 'hotmail.com', 'yahoo.com', 'outlook.com'];
+        const dominiosPessoais = ['gmail.com', 'hotmail.com', 'icloud.com', 'yahoo.com', 'outlook.com', 'aol.com', 'mail.com', 'protonmail.com', 'zoho.com', 'gmx.com', 'yandex.com', 'fastmail', 'tutanota.com', 'terra.com.br', 'uol.com.br'];
 
         if (!dominiosPessoais.includes(dominio.toLowerCase())) {
-            const url = `http://${dominio}`;
+            const url = `http://www.${dominio}`;
             window.open(url, '_blank');
             copiarParaClipboard("cnpj da " + dominio)
         } else {
@@ -630,6 +630,7 @@ function formatarPromptGPT() {
     const textoMinusculo = texto.toLowerCase();
 
     const origem = obterOrigem(textoMinusculo);
+
     let interesse = obterInteresse(texto);
     interesse = interesse.replace("Interesse: ", "")
 
