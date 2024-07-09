@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Formatador de Leads</title>
+    <link rel="icon" type="image/png" href="../images/client.png">
+    <link rel="stylesheet" href="leads.css">
+</head>
+
+<body>
+
+    <div class="tira-esquerda"></div>
+    <div class="tira-direita"></div>
+
+
+    <!-- Botão para Voltar à Homepage, colocado no início para fácil posicionamento -->
+    <a href="../index.html" class="btn-voltar">Voltar à Homepage</a>
+
+    <a href="#" onclick="copiarPromptGPT()"> <img src="../images/chatgpt.png" alt="Prompt ChatGPT" class="ChatGPT-btn">
+    </a>
+
+    <a href="#" onclick="copiarLinkedin()"> <img src="../images/linkedin.png" alt="Perfil Linkedin"
+            class="linkedin-btn">
+    </a>
+    
+    <!-- Adicione este bloco dentro do <body> da sua página complexa -->
+    <div class="consultores">
+        <div id="column1" class="column">🔍 Buscando CN da vez...</div>
+        <div id="column2" class="column"></div>
+        <div id="column3" class="column"></div>
+        <div id="column4" class="column"></div> <!-- Nova coluna adicionada -->
+    </div>
+
+
+
+    <div class="container">
+        <textarea id="inputText" class="textarea"></textarea>
+
+        <div class="buttons-row">
+            <button class="btn-adicionar2" onclick="PesquisarLinkedin()">Pesquisar Linkedin <img
+                    src="../images/linkedin-profile.png" id="thumbs-up"></button>
+            <button class="btn-adicionar2" onclick="SiteDaEmpresa()">Site da Empresa<img src="../images/web.png"
+                    id="thumbs-up"></button>
+            <button class="btn-adicionar" onclick="copiarEmpresa()">Nome da Empresa</button>
+            <button class="btn-adicionar" onclick="copiarNome()">Nome do Contato</button>
+            <button class="btn-adicionar" onclick="copiarTelefone()">Telefone</button>
+            <button class="btn-adicionar" onclick="copiarEmail()">E-mail</button>
+            <button class="btn-adicionar" onclick="copiarAssunto()">Assunto</button>
+            <button class="btn-adicionar" onclick="copiarLocalidade()">Localidade</button>
+            <button id="copiarLeadFaleCom" class="btn-adicionar">Lead FaleCom</button>
+            <button class="btn-adicionar" onclick="copiarLinkedin()">Linkedin</button>
+        </div>
+
+
+
+        <div class="buttons-row">
+
+            <button onclick="copiarTextoLeadConsultor()" class="btn-adicionar3">Aviso Lead Consultor <!-- <img
+                    src="../images/thumbs-down.png" id="thumbs-down"> --> </button>
+
+            <button onclick="copiarInformacoesEconodata()" class="btn-adicionar3"> <img src="../images/econodata.png"
+                    id="econodata"></button>
+
+
+            <button onclick="copiarTextoLeadFilaA()" class="btn-adicionar3">Aviso Lead Fila A<!--<img
+                    src="../images/thumbs-up.png" id="thumbs-up"> --></button>
+
+        </div>
+
+
+        <!-- Container Principal para Informações Automáticas e Adicionais Lado a Lado -->
+        <div class="info-principal">
+            <!-- Nova Seção de Detalhes do Lead à Esquerda -->
+            <div class="detalhes-lead">
+                <div id="detalhesLead" class="containerLeadAutomatico">Chegou lead para você.<br><br>Contato: não informado<br>Empresa: não informado<br>E-mail: não informado<br>Telefone: não informado<br>Interesse: não informado<br>Origem: não identificada<br><br>Assunto: não encontrado
+                    <!-- Conteúdo dos Detalhes do Lead será inserido aqui -->
+                </div>
+            </div>
+
+            <!-- Seção para Informações Adicionais no Meio -->
+            <div class="info-adicional">
+                <div id="informacoesAdicionais" class="containerLeadAutomatico">
+                    <!-- Conteúdo das Informações Adicionais será inserido aqui -->
+                </div>
+            </div>
+
+            <!-- Container Principal para Resultado Automático à Direita -->
+            <div class="containerLeadAutomatico">
+                <div id="resultado" class="resultado">Chegou lead na Fila A para o @<br><br>Contato: não informado<br>Empresa: não informado<br>Telefone: não informado<br>Interesse: não informado<br>Origem: não identificada<br><br>Perfil linkedin:<br>ainda não identificado<br>--------------------------------------------------------<br>próximo da fila é o @</div>
+            </div>
+        </div>
+
+
+        <!-- Container para Interesse e Origem do Lead -->
+        <div class="info-container-duplo">
+            <div id="interesseLead" class="info-div2">Interesse: não informado</div>
+            <div id="origemLead" class="info-div2">Origem: não identificada</div>
+            <div id="porteLead" class="info-div2">Porte da Empresa: Pequeno</div>
+
+        </div>
+    </div>
+
+    <script src="leads.js"></script>
+
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg'; // Substitua pelo seu API Key
+            const spreadsheetId = '1FwDn3RSuCZDpMl4QdjcL9gFr5cek1mlYWqCcqrjBDFY';
+            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4']; // Ajuste os ranges para as células específicas
+
+            // Função para inicializar a API do Google Sheets
+            function initClient() {
+                gapi.client.init({
+                    apiKey: apiKey,
+                    discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+                }).then(function () {
+                    getSheetData();
+                    setInterval(getSheetData, 10000); // Atualiza a cada 10 segundos
+                }, function (error) {
+                    console.error('Erro ao inicializar a API do Google Sheets:', error);
+                    const dataDiv = document.getElementById('data');
+                    dataDiv.textContent = 'Erro ao carregar dados.';
+                });
+            }
+
+            // Função para buscar dados da planilha
+            function getSheetData() {
+                let promises = ranges.map(range => {
+                    return gapi.client.sheets.spreadsheets.values.get({
+                        spreadsheetId: spreadsheetId,
+                        range: range,
+                    });
+                });
+
+                Promise.all(promises).then(function (responses) {
+                    const ProximoFilaA = responses[0].result.values ? responses[0].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaB = responses[1].result.values ? responses[1].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaLicitacao = responses[2].result.values ? responses[2].result.values[0][0] : 'Não encontrado';
+                    const ProximoFilaD = responses[3].result.values ? responses[3].result.values[0][0] : 'Não encontrado'; // Nova cédula
+
+                    console.log('Dados atualizados:');
+                    console.log('Próximo na Fila A:', ProximoFilaA);
+                    console.log('Próximo na Fila B:', ProximoFilaB);
+                    console.log('Próximo na Fila de Licitação:', ProximoFilaLicitacao);
+                    console.log('Próximo na Fila D:', ProximoFilaD); // Nova cédula
+
+                    document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
+                    document.getElementById('column2').innerHTML = `<p>☑️ Fila B: ${ProximoFilaB}  </p>`;
+                    document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}  </p>`;
+                    document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}  </p>`; // Nova cédula
+                }).catch(function (error) {
+                    console.error('Erro ao buscar dados da planilha:', error);
+                    document.getElementById('column1').textContent = 'Erro ao carregar dados.';
+                    document.getElementById('column2').textContent = 'Erro ao carregar dados.';
+                    document.getElementById('column3').textContent = 'Erro ao carregar dados.';
+                    document.getElementById('column4').textContent = 'Erro ao carregar dados.'; // Nova cédula
+                });
+            }
+
+            // Carrega a biblioteca cliente da API do Google
+            gapi.load('client', initClient);
+        });
+    </script>
+
+
+</body>
+
+</html>
