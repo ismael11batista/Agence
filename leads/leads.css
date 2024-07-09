@@ -105,14 +105,12 @@ textarea {
     border: 0px solid rgba(255, 255, 255, 0.605);
     font-weight: bold;
     /* Define a largura mínima para 50px */
-
-    
 }
 
-.btn-adicionar,
-.btn-adicionar2,
+.btn-adicionar:hover,
+.btn-adicionar2:hover,
 .btn-adicionar3:hover {
-    background-color: #0D0D0D;
+    background-color: #1b1b1b;
 }
 
 
@@ -166,7 +164,7 @@ textarea {
 }
 
 .btn-voltar:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #1b1b1b;
 }
 
 .pop-up {
@@ -204,7 +202,7 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #121212;
 }
 
 
