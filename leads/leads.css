@@ -206,8 +206,6 @@ button:hover {
 }
 
 
-
-
 #thumbs-down {
     width: 20px;
     vertical-align: middle;
@@ -218,8 +216,6 @@ button:hover {
     /* Mantém a transição suave */
 }
 
-
-
 #thumbs-up {
     width: 20px;
     vertical-align: middle;
@@ -229,7 +225,6 @@ button:hover {
     transition: transform 0.5s;
     /* Mantém a transição suave */
 }
-
 
 #econodata {
     width: 100px;
@@ -254,8 +249,6 @@ button:hover {
 
 }
 
-
-
 .resultado,
 .info-adicional,
 .containerLeadAutomatico,
@@ -272,9 +265,7 @@ button:hover {
     width: calc(100%);
     /* Largura total */
     align-items: first baseline;
-
 }
-
 
 /* Estilos para caixas de texto */
 .info-div,
@@ -290,7 +281,6 @@ button:hover {
     background: #0D0D0D;
     border: 0px solid rgba(255, 255, 255, 0.605);
 }
-
 
 
 /* Ajuste para caixas de detalhes do lead, informações adicionais e info-principal */
@@ -333,14 +323,11 @@ button:hover {
 
 }
 
-
 .info-principal {
 
     padding-right: 10%;
 
 }
-
-
 
 .consultores {
     display: flex;
@@ -386,7 +373,7 @@ button:hover {
 .ChatGPT-btn {
     position: fixed;
     display: flex;
-    right: 1.5%;
+    right: 2.5%;
     top: 90%;
     width: auto;
     height: 50px;
@@ -404,7 +391,7 @@ button:hover {
 .linkedin-btn {
     position: fixed;
     display: flex;
-    right: 1.5%;
+    right: 2.5%;
     top: 70%;
     width: auto;
     height: 55px;
