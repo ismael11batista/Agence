@@ -34,12 +34,19 @@ body {
     bottom: 0;
     width: 30px;
     /* Ajuste a largura conforme necessário */
-    background-color: #252525;
     /* Cor cinza */
     z-index: 1000;
     /* Garante que as tiras fiquem acima de outros elementos */
     left: 0;
     
+    background-image: 
+        radial-gradient(
+            circle,
+            #252525 1.2px,
+            transparent 1px
+        );
+    background-size: 10px 10px;
+
 }
 
 
@@ -49,14 +56,20 @@ body {
     bottom: 0;
     width: 30px;
     /* Ajuste a largura conforme necessário */
-    background-color: #252525;
+
     /* Cor cinza */
     z-index: 1000;
     /* Garante que as tiras fiquem acima de outros elementos */
     right: 0;
 
+    background-image: 
+    radial-gradient(
+        circle,
+        #252525 1.2px,
+        transparent 1px
+    );
+    background-size: 10px 10px;
 }
-
 
 
 .container {
