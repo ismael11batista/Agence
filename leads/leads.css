@@ -165,12 +165,11 @@ textarea {
     padding: 10px;
     background: #0D0D0D;
     color: rgba(255, 255, 255, 0.605);
-    border: 1px solid rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
-    font-weight: bold;
     /* Adiciona negrito ao texto */
     display: inline-block;
     /* Alterado de 'center' para 'inline-block', já que 'center' não é um valor válido para 'display' */
