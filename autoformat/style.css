@@ -16,7 +16,7 @@ html {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(45deg, #000113, #000835);
+    background: linear-gradient(0deg,#000000, #080808 );
     color: rgba(255, 255, 255, 0.605);
     padding: 10px;
     display: flex;
@@ -31,7 +31,7 @@ textarea,
 #adjustedText {
     font-family: 'Roboto', sans-serif;
 
-    background-color: transparent;
+    background-color: #0D0D0D;
     font-size: large;
     color: rgba(255, 255, 255, 0.605);
     width: 98%;
@@ -59,17 +59,24 @@ button {
     left: 50%;
     bottom: 60%;
     transform: translateX(-50%);
-    padding: 10px;
-    background-color: rgba(255, 255, 255, 0.605);
-    color: #010c20;
+    padding: 10px ;
+    background-color: #0D0D0D;
+    color: rgba(255, 255, 255, 0.605);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    border: 0px solid rgba(255, 255, 255, 0.605);
+    font-weight: bold;
+    /* Define a largura mínima para 50px */
+    min-width: 250px;
+
+
 }
 
 button:hover {
-    background-color: #84b5ff;
+    background-color: #18356e;
 }
 
 
