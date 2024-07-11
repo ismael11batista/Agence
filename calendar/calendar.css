@@ -23,7 +23,7 @@ html {
 
     body {
         font-family: 'Roboto', sans-serif;
-        background: linear-gradient(45deg, #000113, #000835);
+        background: linear-gradient(0deg,#000000, #080808 );
         color: rgba(255, 255, 255, 0.605);
         padding: 10px;
         /*transform: scale(1);
@@ -54,7 +54,7 @@ html {
     .dia {
         background-color: #000113;
         background: transparent;
-
+        color: rgba(255, 255, 255, 0.605);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         padding: 20px;
@@ -78,7 +78,7 @@ html {
     }
 
     li {
-        background-color: #304163;
+        background-color: #1A1A1A;
         padding: 10px 15px;
         margin-bottom: 10px;
         border-radius: 6px;
@@ -90,7 +90,7 @@ html {
     }
 
     li:hover {
-        background-color: #35486d;
+        background-color: #1A1A1A;
     }
 
     li.dragging {
@@ -99,7 +99,7 @@ html {
 
     /* Estilos do campo de entrada e botão de adicionar */
     textarea {
-        background-color: #304163;
+        background-color: #1A1A1A;
         color: rgba(255, 255, 255, 0.605);
         width: 100%;
         padding: 10px;
@@ -115,7 +115,7 @@ html {
     .btn-adicionar {
         width: 100%;
         padding: 10px;
-        background-color: #2b406b;
+        background-color: #070707;
         color: rgba(255, 255, 255, 0.605);
         border: none;
         border-radius: 6px;
@@ -133,7 +133,8 @@ html {
     .btn-navegacao {
         padding: 10px 20px;
         background-color: rgba(255, 255, 255, 0.605);
-        color: #000000;
+        background-color: #070707;
+        color: rgba(255, 255, 255, 0.605);
         border: none;
         border-radius: 6px;
         cursor: pointer;
@@ -144,7 +145,7 @@ html {
     }
 
     .btn-navegacao:hover {
-        background-color: #84b5ff;
+        background-color: #18356e;
     }
 
     /* Posicionamento fixo dos botões de navegação */
@@ -156,11 +157,11 @@ html {
     }
 
     #btn-anterior {
-        left: 10px;
+        left: 50px;
     }
 
     #btn-proximo {
-        right: 10px;
+        right: 50px;
     }
 
     /* Estilos do botão de exclusão */
@@ -214,7 +215,7 @@ html {
 
     /* Nova classe para destacar o dia atual */
     .hoje {
-        border: 2px solid #84b5ff;
+        border: 3px solid rgba(255, 255, 255, 0.605);
     }
 
     /* Adicionado ao final do arquivo CSS existente */
@@ -225,32 +226,6 @@ html {
         align-items: flex-start;
     }
 
-    .bloco {
-        background-color: #02112e;
-        box-shadow: 0 4px 8px #02112e;
-        border-radius: 8px;
-        padding: 0px;
-        width: calc(50% - 20px);
-        margin: 10px;
-    }
-
-    .bloco h2 {
-        color: rgba(255, 255, 255, 0.605);
-        text-align: center;
-        font-size: 1.5rem;
-        margin-bottom: 20px;
-        /* Texto "Anotações dos Projetos" */
-    }
-
-    @media (max-width: 768px) {
-        #conteudo-principal {
-            flex-direction: column;
-        }
-
-        .bloco {
-            width: 100%;
-        }
-    }
 
     /* Estilo para o botão de Voltar à Homepage */
     .btn-voltar {
@@ -264,7 +239,7 @@ html {
         padding: 10px;
         background: linear-gradient(45deg, #00021d, #000a42);
         color: rgba(255, 255, 255, 0.605);
-        border: 1px solid rgba(255, 255, 255, 0.605);
+        border: 0px solid rgba(255, 255, 255, 0.605);
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
@@ -279,38 +254,6 @@ html {
         background: linear-gradient(45deg, #00043a, #001170);
     }
 
-    .btn-calendario-container {
-        position: fixed;
-        bottom: 10px;
-        z-index: 1000;
-        left: 20px;
-    }
-
-    .btn-calendario {
-        padding: 10px;
-        background-color: #414e68;
-        border: 2px solid #84b5ff;
-        border-radius: 5px;
-        color: rgba(255, 255, 255, 0.605);
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-        text-decoration: none;
-        white-space: nowrap;
-        display: inline-block;
-        display: center;
-        /* Garante que o botão se comporte como um bloco, mas permitindo o white-space: nowrap; */
-        font-weight: bold;
-        /* Adiciona negrito ao texto */
-
-
-    }
-
-    .btn-calendario:hover {
-        background-color: rgba(0, 87, 179, 0.908);
-    }
-
-    /* Considerações finais */
-    /* Certifique-se de ajustar o HTML conforme necessário, movendo o botão "Voltar à Homepage" para fora do .container, se ainda não o fez. */
 
     /* Estilos para o ícone de copiar */
     .icone-copiar {
@@ -404,4 +347,48 @@ html {
         opacity: 1;
         transition: opacity 0.5s ease-in-out;
     }
+}
+
+
+.tira-esquerda {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    /* Ajuste a largura conforme necessário */
+    /* Cor cinza */
+    z-index: 1000;
+    /* Garante que as tiras fiquem acima de outros elementos */
+    left: 0;
+    
+    background-image: 
+        radial-gradient(
+            circle,
+            #252525 1.2px,
+            transparent 1px
+        );
+    background-size: 10px 10px;
+
+}
+
+
+.tira-direita {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    /* Ajuste a largura conforme necessário */
+
+    /* Cor cinza */
+    z-index: 1000;
+    /* Garante que as tiras fiquem acima de outros elementos */
+    right: 0;
+
+    background-image: 
+    radial-gradient(
+        circle,
+        #252525 1.2px,
+        transparent 1px
+    );
+    background-size: 10px 10px;
 }
