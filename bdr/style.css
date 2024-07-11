@@ -20,7 +20,7 @@ html {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(45deg, #000113, #000835);
+    background: linear-gradient(0deg,#000000, #080808 );
 
     color: rgba(255, 255, 255, 0.605);
     padding: 10px;
@@ -38,7 +38,7 @@ body {
 }
 
 textarea {
-    background-color: transparent;
+    background-color: #0D0D0D;
     font-size: xx-large;
     color: rgba(255, 255, 255, 0.605);
     width: 95%;
@@ -64,14 +64,14 @@ textarea {
 
 .btn-adicionar {
     padding: 10px;
-    background-color: #00021d;
+    background-color: #0D0D0D;
     color: rgba(255, 255, 255, 0.605);
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-family: 'Roboto', sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
     font-weight: bold;
     /* Define a largura mínima para 50px */
     min-width: 250px;
@@ -79,7 +79,7 @@ textarea {
 }
 
 .btn-adicionar:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #18356e;
 }
 
 .info-div {
@@ -138,7 +138,7 @@ textarea {
 
 button {
     padding: 10px 180px;
-    background: linear-gradient(45deg, #000113, #000835);
+    background-color: #0D0D0D;
     color: #02112e;
     border: 1px solid #84b5ff;
     border-radius: 15px;
@@ -196,21 +196,20 @@ button:hover {
     transform: translateX(-50%);
     /* Desloca o botão para a esquerda pela metade de sua largura */
     padding: 10px;
-    background: linear-gradient(45deg, #00021d, #000a42);
+    background: #0D0D0D;
     color: rgba(255, 255, 255, 0.605);
-    border: 1px solid rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
-    font-weight: bold;
     /* Adiciona negrito ao texto */
     display: inline-block;
     /* Alterado de 'center' para 'inline-block', já que 'center' não é um valor válido para 'display' */
 }
 
 .btn-voltar:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #18356e;
 }
 
 
@@ -249,7 +248,7 @@ button:hover {
     justify-content: space-between;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.605);
-    background: linear-gradient(45deg, #000113, #000835);
+    background: #070707;
     font-weight: bold;
 
 }
@@ -263,7 +262,7 @@ button:hover {
     width: 100%;
     color: rgba(255, 255, 255, 0.605);
     border: 1px solid rgba(255, 255, 255, 0.605);
-    background: linear-gradient(45deg, #000113, #000835);
+    background: #070707;
     border-radius: 6px;
     overflow: hidden;
     position: absolute;
@@ -303,15 +302,61 @@ button:hover {
 
 button {
     padding: 10px 50px;
-    background-color: rgba(255, 255, 255, 0.605);
+    background-color: #0D0D0D;
     color: rgba(255, 255, 255, 0.605);
-    border: 1px solid rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-weight: bold;
+
 }
 
 button:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #18356e;
     color: rgba(255, 255, 255, 0.605);
+}
+
+
+.tira-esquerda {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    /* Ajuste a largura conforme necessário */
+    /* Cor cinza */
+    z-index: 1000;
+    /* Garante que as tiras fiquem acima de outros elementos */
+    left: 0;
+    
+    background-image: 
+        radial-gradient(
+            circle,
+            #252525 1.2px,
+            transparent 1px
+        );
+    background-size: 10px 10px;
+
+}
+
+
+.tira-direita {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    /* Ajuste a largura conforme necessário */
+
+    /* Cor cinza */
+    z-index: 1000;
+    /* Garante que as tiras fiquem acima de outros elementos */
+    right: 0;
+
+    background-image: 
+    radial-gradient(
+        circle,
+        #252525 1.2px,
+        transparent 1px
+    );
+    background-size: 10px 10px;
 }
