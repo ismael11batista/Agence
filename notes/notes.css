@@ -22,7 +22,7 @@ html {
 
     body {
         font-family: 'Roboto', sans-serif;
-        background: linear-gradient(45deg, #000113, #000835);
+        background: linear-gradient(0deg,#000000, #080808 );
         color: rgba(255, 255, 255, 0.605);
         padding: 10px;
     }
