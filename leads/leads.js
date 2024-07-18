@@ -841,3 +841,30 @@ function copiarLeadFaleComParaClipboard() {
         mostrarPopUp('Nenhum texto disponível para copiar.');
     }
 }
+
+
+function copiarLinkWhatsapp() {
+    const texto = document.getElementById('inputText').value;
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
+
+    if (telefoneMatch) {
+        let numeros = telefoneMatch[1].replace(/\D/g, '');
+        const resultado = formatarTelefone(numeros);
+
+        // Remover todos os caracteres não numéricos do número formatado
+        let numeroLimpo = resultado.formatado.replace(/\D/g, '');
+
+        // Criar o link do WhatsApp
+        let linkWhatsApp = "https://whatsa.me/+" + numeroLimpo;
+
+        // Copiar o link para a área de transferência
+        navigator.clipboard.writeText(linkWhatsApp).then(function() {
+            mostrarPopUp(`Link copiado: ${linkWhatsApp}`);
+        }, function() {
+            mostrarPopUp('Falha ao copiar o link.');
+        });
+    } else {
+        mostrarPopUp("Telefone não encontrado");
+    }
+}

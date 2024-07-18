@@ -16,10 +16,11 @@
     <a href="#" onclick="copiarPromptGPT()"> <img src="../images/chatgpt.png" alt="Prompt ChatGPT" class="ChatGPT-btn">
     </a>
 
-    <a href="#" onclick="copiarLinkedin()"> <img src="../images/linkedin.png" alt="Perfil Linkedin"
-            class="linkedin-btn">
+    <a href="#" onclick="copiarLinkWhatsapp()"> <img src="../images/whatsapp.png" alt="Link Whatsapp"
+            class="whatsapp-btn">
     </a>
     
+
     <!-- Adicione este bloco dentro do <body> da sua página complexa -->
     <div class="consultores">
         <div id="column1" class="column">🔍 Buscando CN da vez...</div>
@@ -34,10 +35,20 @@
         <textarea id="inputText" class="textarea"></textarea>
 
         <div class="buttons-row">
-            <button class="btn-adicionar2" onclick="PesquisarLinkedin()">Pesquisar Linkedin <img
-                    src="../images/linkedin-profile.png" id="thumbs-up"></button>
-            <button class="btn-adicionar2" onclick="SiteDaEmpresa()">Site da Empresa<img src="../images/web.png"
-                    id="thumbs-up"></button>
+            <button class="btn-adicionar2" onclick="PesquisarLinkedin()">
+                <span class="button-content">
+                    <img src="../images/linkedin-profile.png" alt="LinkedIn" class="button-icon">
+                    <span class="button-text">Pesquisar Linkedin</span>
+                </span>
+            </button>
+            
+            <button class="btn-adicionar2" onclick="SiteDaEmpresa()">
+                <span class="button-content">
+                    <img src="../images/web.png" alt="Web" class="button-icon">
+                    <span class="button-text">Site da Empresa</span>
+                </span>
+            </button>
+
             <button class="btn-adicionar" onclick="copiarEmpresa()">Nome da Empresa</button>
             <button class="btn-adicionar" onclick="copiarNome()">Nome do Contato</button>
             <button class="btn-adicionar" onclick="copiarTelefone()">Telefone</button>
@@ -45,7 +56,14 @@
             <button class="btn-adicionar" onclick="copiarAssunto()">Assunto</button>
             <button class="btn-adicionar" onclick="copiarLocalidade()">Localidade</button>
             <button id="copiarLeadFaleCom" class="btn-adicionar">Lead FaleCom</button>
-            <button class="btn-adicionar" onclick="copiarLinkedin()">Linkedin</button>
+
+            <button class="btn-adicionar" onclick="copiarLinkedin()">
+                <span class="button-content">
+                    <img src="../images/linkedin.png" alt="LinkedIn" class="button-icon">
+                    <span class="button-text">Linkedin</span>
+                </span>
+            </button>
+
         </div>
 
 
@@ -93,12 +111,10 @@
             <div id="interesseLead" class="info-div2">Interesse: não informado</div>
             <div id="origemLead" class="info-div2">Origem: não identificada</div>
             <div id="porteLead" class="info-div2">Porte da Empresa: Pequeno</div>
-
         </div>
 
         <div class="tira-esquerda"></div>
         <div class="tira-direita"></div>
-        
     </div>
 
     <script src="leads.js"></script>

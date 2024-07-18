@@ -109,7 +109,7 @@ textarea {
 .btn-adicionar3 {
     padding: 10px;
     background-color:#0D0D0D;
-    color: rgba(255, 255, 255, 0.605);
+    color: #ffffff9a;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -135,7 +135,17 @@ textarea {
 .btn-adicionar2 {
     min-width: 180px;
     margin-top: 0px;
+}
 
+.button-content {
+    display: flex;
+    align-items: center;
+}
+
+.button-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px; /* Aumenta o espaço entre o ícone e o texto */
 }
 
 .btn-adicionar3 {
@@ -385,34 +395,34 @@ button:hover {
 .ChatGPT-btn {
     position: fixed;
     display: flex;
-    right: 2.5%;
+    left: 2.5%;
     top: 90%;
     width: auto;
-    height: 50px;
+    height: 65px;
     z-index: 1;
     transition: transform 0.3s ease;
     /* Adiciona uma transição suave */
 }
 
 .ChatGPT-btn:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     /* Move o botão para cima ao passar o mouse */
 }
 
 
-.linkedin-btn {
+.whatsapp-btn {
     position: fixed;
     display: flex;
     right: 2.5%;
-    top: 70%;
+    top: 90%;
     width: auto;
-    height: 55px;
+    height: 60px;
     z-index: 1;
     transition: transform 0.3s ease;
     /* Adiciona uma transição suave */
 }
 
-.linkedin-btn:hover {
-    transform: translateY(-10px);
+.whatsapp-btn:hover {
+    transform: translateY(-5px);
     /* Move o botão para cima ao passar o mouse */
 }
