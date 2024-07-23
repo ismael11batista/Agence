@@ -452,6 +452,8 @@ button:hover {
 /* Posicionamento específico para cada botão de cópia */
 #copiarS2 .copy-btn {
     top: 75%; /* Ajuste este valor conforme necessário */
+    height: 32px;
+
 }
 
 #copiarS4 .copy-btn {
