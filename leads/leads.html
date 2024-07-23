@@ -20,6 +20,9 @@
             class="whatsapp-btn">
     </a>
     
+    <!-- Novos botões para copiar conteúdo das células S2 e S4 -->
+    <a href="#" id="copiarS2"> <img src="../images/Logo_agence.ico" alt="Copiar S2" class="copy-btn"> </a>
+    <a href="#" id="copiarS4"> <img src="../images/cn.png" alt="Copiar S4" class="copy-btn"> </a>
 
     <!-- Adicione este bloco dentro do <body> da sua página complexa -->
     <div class="consultores">
@@ -28,7 +31,6 @@
         <div id="column3" class="column"></div>
         <div id="column4" class="column"></div> <!-- Nova coluna adicionada -->
     </div>
-
 
 
     <div class="container">
@@ -66,22 +68,16 @@
 
         </div>
 
-
-
         <div class="buttons-row">
 
-            <button onclick="copiarTextoLeadConsultor()" class="btn-adicionar3">Aviso Lead Consultor <!-- <img
-                    src="../images/thumbs-down.png" id="thumbs-down"> --> </button>
+            <button onclick="copiarTextoLeadConsultor()" class="btn-adicionar3">Aviso Lead Consultor</button>
 
             <button onclick="copiarInformacoesEconodata()" class="btn-adicionar3"> <img src="../images/econodata.png"
                     id="econodata"></button>
 
-
-            <button onclick="copiarTextoLeadFilaA()" class="btn-adicionar3">Aviso Lead Fila A<!--<img
-                    src="../images/thumbs-up.png" id="thumbs-up"> --></button>
+            <button onclick="copiarTextoLeadFilaA()" class="btn-adicionar3">Aviso Lead Fila A</button>
 
         </div>
-
 
         <!-- Container Principal para Informações Automáticas e Adicionais Lado a Lado -->
         <div class="info-principal">
@@ -105,7 +101,6 @@
             </div>
         </div>
 
-
         <!-- Container para Interesse e Origem do Lead -->
         <div class="info-container-duplo">
             <div id="interesseLead" class="info-div2">Interesse: não informado</div>
@@ -122,18 +117,18 @@
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg'; // Substitua pelo seu API Key
+            const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg';
             const spreadsheetId = '1FwDn3RSuCZDpMl4QdjcL9gFr5cek1mlYWqCcqrjBDFY';
-            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4']; // Ajuste os ranges para as células específicas
+            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4', 'Leads!S2', 'Leads!S4'];
 
-            // Função para inicializar a API do Google Sheets
             function initClient() {
                 gapi.client.init({
                     apiKey: apiKey,
                     discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
                 }).then(function () {
                     getSheetData();
-                    setInterval(getSheetData, 10000); // Atualiza a cada 10 segundos
+                    setInterval(getSheetData, 10000);
+                    setupCopyButtons();
                 }, function (error) {
                     console.error('Erro ao inicializar a API do Google Sheets:', error);
                     const dataDiv = document.getElementById('data');
@@ -141,7 +136,6 @@
                 });
             }
 
-            // Função para buscar dados da planilha
             function getSheetData() {
                 let promises = ranges.map(range => {
                     return gapi.client.sheets.spreadsheets.values.get({
@@ -154,32 +148,48 @@
                     const ProximoFilaA = responses[0].result.values ? responses[0].result.values[0][0] : 'Não encontrado';
                     const ProximoFilaB = responses[1].result.values ? responses[1].result.values[0][0] : 'Não encontrado';
                     const ProximoFilaLicitacao = responses[2].result.values ? responses[2].result.values[0][0] : 'Não encontrado';
-                    const ProximoFilaD = responses[3].result.values ? responses[3].result.values[0][0] : 'Não encontrado'; // Nova cédula
-
-                    console.log('Dados atualizados:');
-                    console.log('Próximo na Fila A:', ProximoFilaA);
-                    console.log('Próximo na Fila B:', ProximoFilaB);
-                    console.log('Próximo na Fila de Licitação:', ProximoFilaLicitacao);
-                    console.log('Próximo na Fila D:', ProximoFilaD); // Nova cédula
+                    const ProximoFilaD = responses[3].result.values ? responses[3].result.values[0][0] : 'Não encontrado';
 
                     document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
                     document.getElementById('column2').innerHTML = `<p>☑️ Fila B: ${ProximoFilaB}  </p>`;
                     document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}  </p>`;
-                    document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}  </p>`; // Nova cédula
+                    document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}  </p>`;
+
+                    // Armazenar os valores de S2 e S4
+                    window.s2Value = responses[4].result.values ? responses[4].result.values[0][0] : '';
+                    window.s4Value = responses[5].result.values ? responses[5].result.values[0][0] : '';
                 }).catch(function (error) {
                     console.error('Erro ao buscar dados da planilha:', error);
                     document.getElementById('column1').textContent = 'Erro ao carregar dados.';
                     document.getElementById('column2').textContent = 'Erro ao carregar dados.';
                     document.getElementById('column3').textContent = 'Erro ao carregar dados.';
-                    document.getElementById('column4').textContent = 'Erro ao carregar dados.'; // Nova cédula
+                    document.getElementById('column4').textContent = 'Erro ao carregar dados.';
                 });
             }
 
-            // Carrega a biblioteca cliente da API do Google
+            function setupCopyButtons() {
+                document.getElementById('copiarS2').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    copyToClipboard(window.s2Value);
+                });
+
+                document.getElementById('copiarS4').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    copyToClipboard(window.s4Value);
+                });
+            }
+
+            function copyToClipboard(text) {
+                navigator.clipboard.writeText(text).then(function() {
+                    console.log('Texto copiado com sucesso');
+                }, function(err) {
+                    console.error('Erro ao copiar texto: ', err);
+                });
+            }
+
             gapi.load('client', initClient);
         });
     </script>
-
 
 </body>
 

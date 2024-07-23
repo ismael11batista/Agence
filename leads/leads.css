@@ -432,3 +432,28 @@ button:hover {
     transform: translateY(-5px);
     /* Move o botão para cima ao passar o mouse */
 }
+
+
+
+.copy-btn {
+    position: fixed;
+    display: flex;
+    right: 2.5%;
+    width: auto;
+    height: 60px;
+    z-index: 1;
+    transition: transform 0.3s ease;
+}
+
+.copy-btn:hover {
+    transform: translateY(-5px);
+}
+
+/* Posicionamento específico para cada botão de cópia */
+#copiarS2 .copy-btn {
+    top: 75%; /* Ajuste este valor conforme necessário */
+}
+
+#copiarS4 .copy-btn {
+    top: 82.5%; /* Ajuste este valor conforme necessário */
+}
