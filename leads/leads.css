@@ -402,7 +402,7 @@ button:hover {
     position: fixed;
     display: flex;
     left: 2.5%;
-    top: 90%;
+    top: 80%;
     width: auto;
     height: 65px;
     z-index: 1;
@@ -419,7 +419,7 @@ button:hover {
 .whatsapp-btn {
     position: fixed;
     display: flex;
-    right: 2.5%;
+    left: 2.7%;
     top: 90%;
     width: auto;
     height: 60px;
@@ -451,11 +451,11 @@ button:hover {
 
 /* Posicionamento específico para cada botão de cópia */
 #copiarS2 .copy-btn {
-    top: 75%; /* Ajuste este valor conforme necessário */
+    top: 92%; /* Ajuste este valor conforme necessário */
     height: 32px;
 
 }
 
 #copiarS4 .copy-btn {
-    top: 82.5%; /* Ajuste este valor conforme necessário */
+    top: 82%; /* Ajuste este valor conforme necessário */
 }
