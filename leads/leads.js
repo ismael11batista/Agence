@@ -59,23 +59,6 @@ function obterEmpresa(texto) {
     }
 }
 
-
-// Função interna para extrair e formatar a localidade a partir do telefone
-function obterLocalidade(texto) {
-    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const telefoneMatch = texto.match(telefoneRegex);
-
-    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : null;
-    if (telefone) {
-        const telefoneFormatado = formatarTelefone(telefone);
-        const localidade = telefoneFormatado.localidade;
-        const ddd = telefoneFormatado.ddd;
-        return ddd ? `${localidade}` : `${localidade}`;
-    } else {
-        return null;
-    }
-}
-
 // Função interna para extrair o perfil do LinkedIn
 function obterLinkedin(texto) {
     const linkedinRegex = /https:\/\/www\.linkedin\.com\/in\/[^/?\s]+/i;
@@ -110,19 +93,6 @@ function copiarEmpresa() {
     } else {
         copiarParaClipboard('Sem informação');
         mostrarPopUp("Empresa não identificada.");
-    }
-}
-
-// Função principal que formata a localidade
-function copiarLocalidade() {
-    const texto = document.getElementById('inputText').value;
-    const localidadeTexto = obterLocalidade(texto);
-    if (localidadeTexto) {
-        copiarParaClipboard(localidadeTexto);
-        mostrarPopUp("Localidade copiada com sucesso!");
-    } else {
-        copiarParaClipboard('Localidade não identificada.');
-        mostrarPopUp("Localidade não identificada");
     }
 }
 
@@ -228,7 +198,6 @@ function copiarEmail() {
 }
 
 
-
 function formatarTelefone(numeros) {
     const dddsBrasil = {
         "11": "São Paulo - SP",
@@ -300,27 +269,89 @@ function formatarTelefone(numeros) {
         "99": "Imperatriz - MA"
     };
 
-    // Remover zeros à esquerda
-    numeros = numeros.replace(/^0+/, '');
+    const ddiList = {
+        "1": "Estados Unidos/Canadá", "7": "Rússia/Cazaquistão", "20": "Egito", "27": "África do Sul",
+        "30": "Grécia", "31": "Países Baixos", "32": "Bélgica", "33": "França", "34": "Espanha",
+        "36": "Hungria", "39": "Itália", "40": "Romênia", "41": "Suíça", "43": "Áustria",
+        "44": "Reino Unido", "45": "Dinamarca", "46": "Suécia", "47": "Noruega", "48": "Polônia",
+        "49": "Alemanha", "51": "Peru", "52": "México", "53": "Cuba", "54": "Argentina",
+        "55": "Brasil", "56": "Chile", "57": "Colômbia", "58": "Venezuela", "60": "Malásia",
+        "61": "Austrália", "62": "Indonésia", "63": "Filipinas", "64": "Nova Zelândia", "65": "Cingapura",
+        "66": "Tailândia", "81": "Japão", "82": "Coreia do Sul", "84": "Vietnã", "86": "China",
+        "90": "Turquia", "91": "Índia", "92": "Paquistão", "93": "Afeganistão", "94": "Sri Lanka",
+        "95": "Mianmar", "98": "Irã", "212": "Marrocos", "213": "Argélia", "216": "Tunísia",
+        "218": "Líbia", "220": "Gâmbia", "221": "Senegal", "222": "Mauritânia", "223": "Mali",
+        "224": "Guiné", "225": "Costa do Marfim", "226": "Burkina Faso", "227": "Níger",
+        "228": "Togo", "229": "Benim", "230": "Maurício", "231": "Libéria", "232": "Serra Leoa",
+        "233": "Gana", "234": "Nigéria", "235": "Chade", "236": "República Centro-Africana",
+        "237": "Camarões", "238": "Cabo Verde", "239": "São Tomé e Príncipe", "240": "Guiné Equatorial",
+        "241": "Gabão", "242": "Congo", "243": "República Democrática do Congo", "244": "Angola",
+        "245": "Guiné-Bissau", "246": "Diego Garcia", "247": "Ascensão", "248": "Seychelles",
+        "249": "Sudão", "250": "Ruanda", "251": "Etiópia", "252": "Somália", "253": "Djibouti",
+        "254": "Quênia", "255": "Tanzânia", "256": "Uganda", "257": "Burundi", "258": "Moçambique",
+        "260": "Zâmbia", "261": "Madagascar", "262": "Reunião", "263": "Zimbábue", "264": "Namíbia",
+        "265": "Malawi", "266": "Lesoto", "267": "Botsuana", "268": "Suazilândia", "269": "Comores",
+        "290": "Santa Helena", "291": "Eritreia", "297": "Aruba", "298": "Ilhas Faroé",
+        "299": "Groenlândia", "350": "Gibraltar", "351": "Portugal", "352": "Luxemburgo",
+        "353": "Irlanda", "354": "Islândia", "355": "Albânia", "356": "Malta", "357": "Chipre",
+        "358": "Finlândia", "359": "Bulgária", "370": "Lituânia", "371": "Letônia", "372": "Estônia",
+        "373": "Moldávia", "374": "Armênia", "375": "Bielorrússia", "376": "Andorra",
+        "377": "Mônaco", "378": "San Marino", "379": "Cidade do Vaticano", "380": "Ucrânia",
+        "381": "Sérvia", "382": "Montenegro", "383": "Kosovo", "385": "Croácia", "386": "Eslovênia",
+        "387": "Bósnia e Herzegovina", "389": "Macedônia do Norte", "420": "República Tcheca",
+        "421": "Eslováquia", "423": "Liechtenstein", "500": "Ilhas Malvinas", "501": "Belize",
+        "502": "Guatemala", "503": "El Salvador", "504": "Honduras", "505": "Nicarágua",
+        "506": "Costa Rica", "507": "Panamá", "508": "São Pedro e Miquelon", "509": "Haiti",
+        "590": "Guadalupe", "591": "Bolívia", "592": "Guiana", "593": "Equador", "594": "Guiana Francesa",
+        "595": "Paraguai", "596": "Martinica", "597": "Suriname", "598": "Uruguai", "599": "Antilhas Holandesas",
+        "670": "Timor-Leste", "672": "Antártida", "673": "Brunei", "674": "Nauru", "675": "Papua-Nova Guiné",
+        "676": "Tonga", "677": "Ilhas Salomão", "678": "Vanuatu", "679": "Fiji", "680": "Palau",
+        "681": "Wallis e Futuna", "682": "Ilhas Cook", "683": "Niue", "685": "Samoa",
+        "686": "Kiribati", "687": "Nova Caledônia", "688": "Tuvalu", "689": "Polinésia Francesa",
+        "690": "Tokelau", "691": "Micronésia", "692": "Ilhas Marshall", "850": "Coreia do Norte",
+        "852": "Hong Kong", "853": "Macau", "855": "Camboja", "856": "Laos", "880": "Bangladesh",
+        "886": "Taiwan", "960": "Maldivas", "961": "Líbano", "962": "Jordânia", "963": "Síria",
+        "964": "Iraque", "965": "Kuwait", "966": "Arábia Saudita", "967": "Iêmen", "968": "Omã",
+        "970": "Palestina", "971": "Emirados Árabes Unidos", "972": "Israel", "973": "Bahrein",
+        "974": "Catar", "975": "Butão", "976": "Mongólia", "977": "Nepal", "992": "Tajiquistão",
+        "993": "Turcomenistão", "994": "Azerbaijão", "995": "Geórgia", "996": "Quirguistão",
+        "998": "Uzbequistão"
+    };
 
-    // Remover o prefixo "55" se presente
+    // Remover caracteres não numéricos
+    numeros = numeros.replace(/\D/g, '');
+
+    // Verificar se é um número brasileiro
     if (numeros.startsWith('55')) {
-        numeros = numeros.substring(2);
+        const ddd = numeros.substring(2, 4);
+        if (dddsBrasil.hasOwnProperty(ddd)) {
+            const localidade = dddsBrasil[ddd];
+            const formatado = '+55 ' + ddd + ' ' + numeros.substring(4);
+            return { formatado, localidade, ddd, pais: "Brasil" };
+        } else {
+            return { formatado: numeros, localidade: "DDD não reconhecido", ddd: null, pais: "Brasil" };
+        }
     }
 
-    // Verificar se os dois primeiros dígitos são um DDD válido
-    const ddd = numeros.substring(0, 2);
-    if (dddsBrasil.hasOwnProperty(ddd)) {
-        const localidade = dddsBrasil[ddd];
-        if (numeros.length === 10 || numeros.length === 11) {
-            numeros = '55' + numeros;
-            const formatado = '+' + numeros.substring(0, 2) + ' ' + numeros.substring(2, 4) + ' ' + numeros.substring(4);
-            return { formatado, localidade, ddd };
-        } else {
-            return { formatado: numeros, localidade: "Número inválido", ddd: null };
+    // Se não for brasileiro, verificar outros DDIs
+    let ddi = '';
+    let pais = '';
+    for (let i = 3; i > 0; i--) {
+        let possibleDDI = numeros.substring(0, i);
+        if (ddiList.hasOwnProperty(possibleDDI)) {
+            ddi = possibleDDI;
+            pais = ddiList[ddi];
+            break;
         }
+    }
+
+    if (ddi !== '') {
+        // Número internacional
+        const formatado = '+' + ddi + ' ' + numeros.substring(ddi.length);
+        return { formatado, localidade: pais, ddd: null, pais: pais };
     } else {
-        return { formatado: numeros, localidade: "DDD não reconhecido", ddd: null };
+        // Número não reconhecido
+        return { formatado: numeros, localidade: "Número não reconhecido", ddd: null, pais: "Desconhecido" };
     }
 }
 
@@ -335,10 +366,70 @@ function copiarTelefone() {
         const resultado = formatarTelefone(numeros);
 
         copiarParaClipboard(resultado.formatado);
-        mostrarPopUp(`Telefone formatado e copiado com sucesso! Localidade: ${resultado.localidade}`);
+        
+        let mensagem = `Telefone formatado e copiado com sucesso!`;
+        if (resultado.pais === "Brasil") {
+            mensagem += ` País: Brasil, Localidade: ${resultado.localidade}`;
+        } else {
+            mensagem += ` País: ${resultado.pais}`;
+        }
+        
+        mostrarPopUp(mensagem);
     } else {
         copiarParaClipboard('0000000000000');
         mostrarPopUp("Telefone não encontrado");
+    }
+}
+
+
+function obterTelefoneFormatado(texto) {
+    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
+    const telefoneMatch = texto.match(telefoneRegex);
+
+    if (telefoneMatch && telefoneMatch[1].trim() !== '') {
+        let numeros = telefoneMatch[1].replace(/\D/g, '');
+        const resultado = formatarTelefone(numeros);
+        return {
+            telefone: resultado.formatado,
+            localidade: resultado.localidade,
+            ddd: resultado.ddd,
+            pais: resultado.pais
+        };
+    } else {
+        return {
+            telefone: "não informado",
+            localidade: "",
+            ddd: null,
+            pais: ""
+        };
+    }
+}
+
+// Função interna para extrair e formatar a localidade a partir do telefone
+function obterLocalidade(texto) {
+    const telefoneInfo = obterTelefoneFormatado(texto);
+
+    if (telefoneInfo.telefone !== "não informado") {
+        if (telefoneInfo.pais === "Brasil") {
+            return telefoneInfo.localidade; // Retorna apenas a localidade, sem o DDD
+        } else {
+            return telefoneInfo.pais;
+        }
+    } else {
+        return null;
+    }
+}
+
+// Função principal que formata a localidade
+function copiarLocalidade() {
+    const texto = document.getElementById('inputText').value;
+    const localidadeTexto = obterLocalidade(texto);
+    if (localidadeTexto) {
+        copiarParaClipboard(localidadeTexto);
+        mostrarPopUp("Localidade copiada com sucesso!");
+    } else {
+        copiarParaClipboard('Localidade não identificada.');
+        mostrarPopUp("Localidade não identificada");
     }
 }
 
@@ -432,19 +523,17 @@ function formatarTextoLeadFilaA() {
     const texto = document.getElementById('inputText').value;
     const textoMinusculo = texto.toLowerCase();
 
-    const NomeDoContato = obterNomeDoContato(texto)
-    const NomeDaEmpresa = obterEmpresa(texto)
+    const NomeDoContato = obterNomeDoContato(texto);
+    const NomeDaEmpresa = obterEmpresa(texto);
 
     const origem = obterOrigem(textoMinusculo);
     const interesse = obterInteresse(texto);
 
-    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const telefoneMatch = texto.match(telefoneRegex);
-    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
-    const telefoneFormatado = formatarTelefone(telefone);
-    telefone = telefoneFormatado.formatado;
-    const localidade = telefoneFormatado.localidade;
-    const ddd = telefoneFormatado.ddd;
+    // Usando a nova função obterTelefoneFormatado
+    const telefoneInfo = obterTelefoneFormatado(texto);
+    const telefone = telefoneInfo.telefone;
+    const localidade = telefoneInfo.localidade;
+    const ddd = telefoneInfo.ddd;
 
     let infoEconodata = obterEconodata(texto);
 
@@ -453,9 +542,9 @@ function formatarTextoLeadFilaA() {
         infoEconodata = `${infoEconodata}\n\n`;
     }
 
-    let perfilLinkedin = obterLinkedin(texto)
+    let perfilLinkedin = obterLinkedin(texto);
 
-    const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
+    const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : '';
 
     // Verifica se a origem contém a palavra "outbound"
     let nomeDaFila = "Fila A"; // Valor padrão
@@ -590,28 +679,21 @@ function formatarTextoLeadConsultor() {
     const origem = obterOrigem(textoMinusculo);
     const interesse = obterInteresse(texto);
 
-    const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
-    const telefoneMatch = texto.match(telefoneRegex);
+    let NomeDoContato = obterNomeDoContato(texto);
+    let NomeDaEmpresa = obterEmpresa(texto);
+    let EmailFormatado = obterEmail(texto);
 
-    let NomeDoContato = obterNomeDoContato(texto)
-    let NomeDaEmpresa = obterEmpresa(texto)
-    let EmailFormatado = obterEmail(texto)
+    let assuntoFormatado = obterAssunto(texto);
 
-    let assuntoFormatado = obterAssunto(texto)
+    const telefoneInfo = obterTelefoneFormatado(texto);
+    const localidadeTexto = telefoneInfo.ddd ? `\nDDD ${telefoneInfo.ddd}: ${telefoneInfo.localidade}` : '';
 
-    let telefone = telefoneMatch ? telefoneMatch[1].replace(/\D/g, '') : "não informado";
-    const telefoneFormatado = formatarTelefone(telefone);
-    telefone = telefoneFormatado.formatado;
-    const localidade = telefoneFormatado.localidade;
-    const ddd = telefoneFormatado.ddd;
-
-    const localidadeTexto = ddd ? `\nDDD ${ddd}: ${localidade}` : ``;
-
-    TextoLeadConsultor = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
+    TextoLeadConsultor = `Chegou lead para você.\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nE-mail: ${EmailFormatado}\nTelefone: ${telefoneInfo.telefone}${localidadeTexto}\n${interesse}\n${origem}\n\nAssunto: ${assuntoFormatado}`;
 
     // Atualizando o elemento HTML com o texto especial
     document.getElementById('detalhesLead').textContent = TextoLeadConsultor;
 }
+
 
 
 function copiarTextoLeadConsultor() {
