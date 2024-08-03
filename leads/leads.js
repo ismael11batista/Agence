@@ -123,13 +123,21 @@ function obterAssunto(texto) {
     }
 
     // Capturar o texto entre "Comentários:" e a última ocorrência de "Agence"
-    const assunto = texto.substring(comentariosIndex + "Comentários:".length, ultimaOcorrenciaAgence).trim();
+    let assunto = texto.substring(comentariosIndex + "Comentários:".length, ultimaOcorrenciaAgence).trim();
+
+    // Substituir múltiplas quebras de linha por uma única quebra de linha
+    assunto = substituirQuebrasLinha(assunto);
 
     // Formatar o texto capturado
     let assuntoFormatado = assunto.toLowerCase();
     assuntoFormatado = assuntoFormatado.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
     assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
     return assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
+}
+
+function substituirQuebrasLinha(texto) {
+    // Substitui múltiplas quebras de linha por duas quebras de linhas
+    return texto.replace(/\n+/g, '\n\n');
 }
 
 
