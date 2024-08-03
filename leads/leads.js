@@ -108,6 +108,7 @@ function copiarLinkedin() {
     }
 }
 
+
 // Função para formatar o assunto internamente
 function obterAssunto(texto) {
     // Encontrar a última ocorrência de "Agence"
@@ -125,15 +126,27 @@ function obterAssunto(texto) {
     // Capturar o texto entre "Comentários:" e a última ocorrência de "Agence"
     let assunto = texto.substring(comentariosIndex + "Comentários:".length, ultimaOcorrenciaAgence).trim();
 
-    // Substituir múltiplas quebras de linha por uma única quebra de linha
-    assunto = substituirQuebrasLinha(assunto);
+    // Aplicar trim em todas as linhas e substituir múltiplas quebras de linha por duas quebras de linha
+    assunto = trimLinhasESubstituirQuebras(assunto);
 
     // Formatar o texto capturado
     let assuntoFormatado = assunto.toLowerCase();
     assuntoFormatado = assuntoFormatado.replace(/([.!?]\s*)([a-z])/g, (match, p1, p2) => p1 + p2.toUpperCase());
+    assuntoFormatado = assuntoFormatado.replace(/\n\n([a-z])/g, (match, p1) => '\n\n' + p1.toUpperCase()); // Capitaliza o início de cada parágrafo
     assuntoFormatado = assuntoFormatado.replace("© 2024", "").trim();
     return assuntoFormatado.charAt(0).toUpperCase() + assuntoFormatado.slice(1);
 }
+
+function trimLinhasESubstituirQuebras(texto) {
+    // Aplica trim em todas as linhas e substitui múltiplas quebras de linha por duas quebras de linha
+    return texto
+        .split('\n')
+        .map(linha => linha.trim())
+        .join('\n\n')
+        .replace(/\n{3,}/g, '\n\n'); // Garante que não haja mais de duas quebras de linha consecutivas
+}
+
+
 
 function substituirQuebrasLinha(texto) {
     // Substitui múltiplas quebras de linha por duas quebras de linhas
