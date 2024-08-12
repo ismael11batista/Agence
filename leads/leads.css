@@ -9,7 +9,7 @@
 
 html {
     font-size: 16px;
-    zoom: 0.9;
+    zoom: 0.1;
     font-family: 'Roboto', sans-serif;
     height: 100%;
     /* Garante que o html e o body ocupem pelo menos a altura total da tela */
