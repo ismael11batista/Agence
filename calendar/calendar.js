@@ -199,10 +199,7 @@ document.addEventListener('keydown', function (event) {
             adicionarTarefa(dia);
         }
         event.preventDefault();
-    } else if (event.ctrlKey && event.key === 'ArrowRight') {
-        navegar('proximo');
-    } else if (event.ctrlKey && event.key === 'ArrowLeft') {
-        navegar('anterior');
+
     } else if (event.key === 'ArrowDown') {
         event.preventDefault();
         focusNextElement(false);
