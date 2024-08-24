@@ -1,28 +1,25 @@
 function ajustarValor(valor) {
     valor = valor.replace("R$ ", "").replace(".", "").replace(",", ".");
-    return parseFloat(valor) || 0; // Retorna 0 se o valor não for um número
+    return parseFloat(valor) || 0;
 }
 
 function calcularTotais() {
-    const BRSoftware = ajustarValor(document.getElementById('BRSoftware').value);
-    const BRComplementares = ajustarValor(document.getElementById('BRComplementares').value);
-    const BRPMax = ajustarValor(document.getElementById('BRPMax').value);
-    const BRTelefone = ajustarValor(document.getElementById('BRTelefone').value);
-    const BRRS = ajustarValor(document.getElementById('BRRS').value);
-    const BRHuntingOutsourcing = ajustarValor(document.getElementById('BRHuntingOutsourcing').value);
-    const BRAlcance = ajustarValor(document.getElementById('BRAlcance').value);
-    const Ajuste = ajustarValor(document.getElementById('Ajuste').value); // Campo de ajuste
+    const RPASaoPaulo = ajustarValor(document.getElementById('RPASaoPaulo').value);
+    const MobileSiteAgence = ajustarValor(document.getElementById('MobileSiteAgence').value);
+    const HuntingOutsourcing = ajustarValor(document.getElementById('HuntingOutsourcing').value);
+    const PMaxSaoPaulo = ajustarValor(document.getElementById('PMaxSaoPaulo').value);
+    const SistemasWeb = ajustarValor(document.getElementById('SistemasWeb').value);
+    const YoutubeAgence = ajustarValor(document.getElementById('YoutubeAgence').value);
+    const Ajustes = ajustarValor(document.getElementById('Ajustes').value);
 
-    // Calcula os totais, agora incluindo o "Ajuste" no total de "Total [BR] Fábrica"
-    const BRDisplay = BRAlcance;
-    const BR_Fábrica = BRSoftware + BRComplementares + BRPMax + BRTelefone + Ajuste; // Ajuste adicionado aqui
-    const BR_RS = BRHuntingOutsourcing + BRRS;
+    const totalFabrica = RPASaoPaulo + MobileSiteAgence + SistemasWeb + Ajustes;
+    const totalHuntingOutsourcing = HuntingOutsourcing + PMaxSaoPaulo;
+    const totalDisplay = YoutubeAgence;
 
-    // Exibindo os resultados com vírgula como separador decimal
     document.getElementById('resultados').innerHTML = `
-        <p id="totalBRFabrica" class="clicavel">Total [BR] Fábrica: R$ <span>${BR_Fábrica.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalBRHuntingOutsourcing" class="clicavel">Total [BR] Hunting e Outsourcing: R$ <span>${BR_RS.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalBRDisplay" class="clicavel">Total [BR] Display: R$ <span>${BRDisplay.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalFabrica" class="clicavel">Total [BR] Fábrica: R$ <span>${totalFabrica.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalHuntingOutsourcing" class="clicavel">Total [BR] Hunting e Outsourcing: R$ <span>${totalHuntingOutsourcing.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalDisplay" class="clicavel">Total [BR] Display: R$ <span>${totalDisplay.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
     `;
 
     adicionarOuvintesDeCliqueParaTotais();
@@ -56,14 +53,11 @@ function mostrarPopUp(mensagem) {
     popUp.textContent = mensagem;
     popUp.classList.add('active');
 
-    // Desativa e remove o pop-up após 2 segundos
     setTimeout(() => {
         popUp.classList.remove('active');
     }, 2000);
 }
 
-// Certifique-se de chamar calcularTotais() em algum ponto para inicializar os valores e os ouvintes
-// Por exemplo, você pode chamar calcularTotais() quando a página é carregada
 document.addEventListener('DOMContentLoaded', () => {
     calcularTotais();
 });

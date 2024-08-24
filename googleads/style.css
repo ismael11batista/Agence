@@ -20,7 +20,7 @@ html {
 
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(45deg, #000113, #000835);
+    background: linear-gradient(0deg,#000000, #080808 );
     color: rgba(255, 255, 255, 0.605);
     padding: 10px;
 
@@ -79,19 +79,19 @@ input[type="text"] {
 }
 
 button {
+    margin-top: 20px;
     padding: 10px 180px;
-    background-color: rgba(255, 255, 255, 0.605);
-    color: #02112e;
+    background-color:#0D0D0D;
+    color: #ffffff9a;
     border: none;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     font-weight: bold;
-
 }
 
 button:hover {
-    background-color: #84b5ff;
+    background-color: #1b1b1b;
 }
 
 
@@ -102,7 +102,7 @@ button:hover {
     border-radius: 10px;
     white-space: pre-wrap;
     color: rgba(255, 255, 255, 0.605);
-    margin-top: 20px;
+    margin-top: 50px;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -140,21 +140,20 @@ button:hover {
     transform: translateX(-50%);
     /* Desloca o botão para a esquerda pela metade de sua largura */
     padding: 10px;
-    background: linear-gradient(45deg, #00021d, #000a42);
+    background: #0D0D0D;
     color: rgba(255, 255, 255, 0.605);
-    border: 1px solid rgba(255, 255, 255, 0.605);
+    border: 0px solid rgba(255, 255, 255, 0.605);
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-decoration: none;
-    font-weight: bold;
     /* Adiciona negrito ao texto */
     display: inline-block;
     /* Alterado de 'center' para 'inline-block', já que 'center' não é um valor válido para 'display' */
 }
 
 .btn-voltar:hover {
-    background: linear-gradient(45deg, #00043a, #001170);
+    background: #1b1b1b;
 }
 
 
@@ -165,7 +164,7 @@ button:hover {
 
 .clicavel:hover,
 .clicavel:focus {
-    background-color: rgba(0, 87, 179, 0.908);
+    background-color: #1b1b1b;
     /* Um leve cinza como exemplo */
 }
 
