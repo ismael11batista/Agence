@@ -741,7 +741,7 @@ function formatarPromptGPT() {
     let EmailFormatado = obterEmail(texto)
 
     let siteDaEmpresa = EmailFormatado.split("@")[1];
-    siteDaEmpresa = "https://www." + siteDaEmpresa;
+    siteDaEmpresa = "www." + siteDaEmpresa;
 
     let assuntoFormatado = obterAssunto(texto)
 
@@ -750,6 +750,8 @@ function formatarPromptGPT() {
 Além disso, e segundo meu contexto como potencial fornecedor de ${interesse}, e sabendo que é esse o serviço desejado por essa empresa, quais seriam as 5 melhores perguntas que posso fazer a eles nessa primeira reunião que terei com eles. Considere também que esse lead da empresa ${NomeDaEmpresa} chegou com o seguinte texto no formulário do fale conosco: "${assuntoFormatado}"
 
 Quais são os principais clientes e concorrentes diretos da ${NomeDaEmpresa}? E o que estão fazendo de inovação nesse ramo que sou potencial fornecedor.
+
+Considerando esse contexto e o cenário que temos aqui, que tipos de perguntas poderíamos fazer a eles? Além disso, quais perguntas eles poderiam nos fazer, e quais seriam boas respostas que poderíamos oferecer?
 
 Por favor me dê isso tudo em português do Brasil, o texto deve ser formatado de forma limpa e direta, sem o uso de cabeçalhos ou marcadores especiais, sem qualquer tipo de aspas ou caracteres que possam dar problema em códigos de sistemas.`;
 
