@@ -510,17 +510,62 @@ function obterInteresse(texto) {
     return interesse;
 }
 
-// Função interna para identificar o porte da empresa
 function obterPorte(texto) {
-    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
-    const porteMatch = texto.match(porteRegex);
+    // Procura especificamente pelo padrão "Porte" seguido imediatamente por uma nova linha e então o porte
+    const porteRegex = /Porte\s*\n\s*(\w+)\s*\n/;
+    const match = texto.match(porteRegex);
 
-    if (porteMatch && porteMatch[1]) {
-        let porteTexto = porteMatch[1].replace("Porte", "").trim();
-        return `Porte da Empresa: ${porteTexto}`;
-    } else {
-        return "Porte da Empresa: Pequeno"; // Valor padrão caso o porte não seja encontrado
+    if (match && match[1]) {
+        const porte = match[1].trim();
+        const portesValidos = ['Micro', 'Pequeno', 'Médio', 'Grande', 'Individual', 'Desconhecido'];
+        
+        if (portesValidos.includes(porte)) {
+            return `Porte da Empresa: ${porte}`;
+        }
     }
+
+    return "Porte da Empresa: Pequeno";
+}
+
+// Função para obter a quantidade de funcionários
+function obterQuantidadeFuncionarios(texto) {
+    const funcionariosRegexes = [
+        /Quantidade de Funcionários\s*([^<\n]+)/i,
+        /(\d+\s*a\s*\d+)\s*funcionários/i,
+        /Quantidade de Funcionários:(.*?)icone/s
+    ];
+
+    for (let regex of funcionariosRegexes) {
+        const match = texto.match(regex);
+        if (match && match[1]) {
+            // Remove a palavra "funcionários" e espaços extras do final
+            let quantidade = match[1].replace(/\s*funcionários\s*$/, '').trim();
+            return `Número de Funcionários: ${quantidade}`;
+        }
+    }
+
+    return "Número de Funcionários: não informado";
+}
+
+function obterFaturamentoAnual(texto) {
+    const faturamentoRegexes = [
+        /Faturamento Anual\s*([^<\n]+)/i,
+        /Faturamento Anual:(.*?)(?:icone|$)/s,
+        /Faturamento Anual\s*:\s*([^<\n]+)/i
+    ];
+
+    for (let regex of faturamentoRegexes) {
+        const match = texto.match(regex);
+        if (match && match[1]) {
+            let faturamento = match[1].trim();
+            if (faturamento.toLowerCase() === 'desconhecido') {
+                return "Faturamento Anual: Desconhecido";
+            }
+            return `Faturamento Anual: ${faturamento}`;
+        }
+    }
+
+    return "Faturamento Anual: não informado";
 }
 
 // Função principal que identifica as informações automaticamente
@@ -601,42 +646,22 @@ document.addEventListener('DOMContentLoaded', function () {
 // Função principal para obter todas as informações e retornar a string infoEconodata
 function obterEconodata(texto) {
     let infoEconodata = "";
-
     // Definindo as expressões regulares para cada tipo de informação
     const cnpjRegex = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
-    const porteRegex = /icone Porte(.*?)icone Quantidade de Funcionários/s;
-    const numeroFuncionariosRegex = /Quantidade de Funcionários(.*?)icone like/s;
-    const faturamentoAnualRegex = /Faturamento Anual(.*?)icone like/s;
-
     // Procurando pelo CNPJ no texto
     const cnpjMatch = texto.match(cnpjRegex);
 
     // Se o CNPJ for encontrado, adiciona as informações à string infoEconodata
     if (cnpjMatch) {
         infoEconodata += `CNPJ: ${cnpjMatch[1]}\n`;
-
-        const porteMatch = texto.match(porteRegex);
-        if (porteMatch) {
-            const porteTexto = porteMatch[1].replace("Porte", "").trim();
-            infoEconodata += `Porte da Empresa: ${porteTexto}\n`;
-        }
-
-        const numeroFuncionariosMatch = texto.match(numeroFuncionariosRegex);
-        if (numeroFuncionariosMatch) {
-            let numeroFuncionariosTexto = numeroFuncionariosMatch[1].replace("Quantidade de Funcionários", "").trim();
-            numeroFuncionariosTexto = numeroFuncionariosTexto.replace("funcionários", "").trim();
-            infoEconodata += `Número de Funcionários: ${numeroFuncionariosTexto}\n`;
-        }
-
-        const faturamentoAnualMatch = texto.match(faturamentoAnualRegex);
-        if (faturamentoAnualMatch) {
-            let faturamentoAnualTexto = faturamentoAnualMatch[1].replace("Faturamento Anual", "").trim();
-            infoEconodata += `Faturamento Anual: ${faturamentoAnualTexto}`;
-        }
+        infoEconodata += obterPorte(texto) + "\n";
+        infoEconodata += obterQuantidadeFuncionarios(texto) + "\n";
+        infoEconodata += obterFaturamentoAnual(texto);
     }
 
     return infoEconodata.trim();
 }
+
 
 // Função principal que identifica informações adicionais e exibe no HTML
 function obterInformacoesEconodata() {
