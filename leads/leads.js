@@ -524,7 +524,7 @@ function obterPorte(texto) {
         }
     }
 
-    return "Porte da Empresa: Pequeno";
+    return "Porte da Empresa: não informado";
 }
 
 // Função para obter a quantidade de funcionários
