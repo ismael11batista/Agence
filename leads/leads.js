@@ -510,17 +510,17 @@ function obterInteresse(texto) {
     return interesse;
 }
 
-function obterPorte(texto) {
-    // Procura especificamente pelo padrão "Porte" seguido imediatamente por uma nova linha e então o porte
-    const porteRegex = /Porte\s*\n\s*(\w+)\s*\n/;
-    const match = texto.match(porteRegex);
 
-    if (match && match[1]) {
-        const porte = match[1].trim();
-        const portesValidos = ['Micro', 'Pequeno', 'Médio', 'Grande', 'Individual', 'Desconhecido'];
-        
-        if (portesValidos.includes(porte)) {
-            return `Porte da Empresa: ${porte}`;
+function obterPorte(texto) {
+    const linhas = texto.split('\n');
+    const portesValidos = ['Micro', 'Pequeno', 'Médio', 'Grande', 'Individual', 'Desconhecido'];
+
+    for (let i = 0; i < linhas.length - 1; i++) {
+        if (linhas[i].trim() === 'Porte') {
+            const portePotencial = linhas[i + 1].trim();
+            if (portesValidos.includes(portePotencial)) {
+                return `Porte da Empresa: ${portePotencial}`;
+            }
         }
     }
 
