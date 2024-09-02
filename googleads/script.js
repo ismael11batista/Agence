@@ -27,7 +27,8 @@ function calcularTotais() {
                             ajustarValor(document.getElementById('backgroundCheck2').value);
 
     // Display
-    const display = ajustarValor(document.getElementById('display').value);
+    const display = ajustarValor(document.getElementById('display1').value) +
+                    ajustarValor(document.getElementById('display2').value);
 
     const totalFabrica = consultoriaRequisitos + desenvolvimentoMobile + desenvolvimentoWeb + 
                          eCommerce + eadMoodle + rpa;
