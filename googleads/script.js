@@ -4,22 +4,53 @@ function ajustarValor(valor) {
 }
 
 function calcularTotais() {
-    const RPASaoPaulo = ajustarValor(document.getElementById('RPASaoPaulo').value);
-    const MobileSiteAgence = ajustarValor(document.getElementById('MobileSiteAgence').value);
-    const HuntingOutsourcing = ajustarValor(document.getElementById('HuntingOutsourcing').value);
-    const PMaxSaoPaulo = ajustarValor(document.getElementById('PMaxSaoPaulo').value);
-    const SistemasWeb = ajustarValor(document.getElementById('SistemasWeb').value);
-    const YoutubeAgence = ajustarValor(document.getElementById('YoutubeAgence').value);
-    const Ajustes = ajustarValor(document.getElementById('Ajustes').value);
+    // Fábrica
+    const consultoriaRequisitos = ajustarValor(document.getElementById('consultoriaRequisitos1').value) + 
+                                  ajustarValor(document.getElementById('consultoriaRequisitos2').value);
+    const desenvolvimentoMobile = ajustarValor(document.getElementById('desenvolvimentoMobile1').value) + 
+                                  ajustarValor(document.getElementById('desenvolvimentoMobile2').value);
+    const desenvolvimentoWeb = ajustarValor(document.getElementById('desenvolvimentoWeb1').value) + 
+                               ajustarValor(document.getElementById('desenvolvimentoWeb2').value);
+    const eCommerce = ajustarValor(document.getElementById('eCommerce1').value) + 
+                      ajustarValor(document.getElementById('eCommerce2').value);
+    const eadMoodle = ajustarValor(document.getElementById('eadMoodle1').value) + 
+                      ajustarValor(document.getElementById('eadMoodle2').value);
+    const rpa = ajustarValor(document.getElementById('rpa1').value) + 
+                ajustarValor(document.getElementById('rpa2').value);
 
-    const totalFabrica = RPASaoPaulo + MobileSiteAgence + SistemasWeb + Ajustes;
-    const totalHuntingOutsourcing = HuntingOutsourcing + PMaxSaoPaulo;
-    const totalDisplay = YoutubeAgence;
+    // Staff Augmentation
+    const headhunting = ajustarValor(document.getElementById('headhunting1').value) + 
+                        ajustarValor(document.getElementById('headhunting2').value);
+    const outsourcing = ajustarValor(document.getElementById('outsourcing1').value) + 
+                        ajustarValor(document.getElementById('outsourcing2').value);
+    const backgroundCheck = ajustarValor(document.getElementById('backgroundCheck1').value) + 
+                            ajustarValor(document.getElementById('backgroundCheck2').value);
+
+    // Display
+    const display = ajustarValor(document.getElementById('display').value);
+
+    const totalFabrica = consultoriaRequisitos + desenvolvimentoMobile + desenvolvimentoWeb + 
+                         eCommerce + eadMoodle + rpa;
+    const totalStaffAugmentation = headhunting + outsourcing + backgroundCheck;
+    const totalGeral = totalFabrica + totalStaffAugmentation + display;
 
     document.getElementById('resultados').innerHTML = `
+        <h3>Resultados por Serviço:</h3>
+        <p class="clicavel">Consultoria de Requisitos - Prototipagem: R$ <span>${consultoriaRequisitos.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Desenvolvimento de Aplicativos Mobile: R$ <span>${desenvolvimentoMobile.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Desenvolvimento Web: R$ <span>${desenvolvimentoWeb.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">e-Commerce: R$ <span>${eCommerce.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">EAD - e-Learning Moodle: R$ <span>${eadMoodle.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">RPA - Robotic Process Automation: R$ <span>${rpa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Profissionais de TI - Headhunting: R$ <span>${headhunting.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Profissionais de TI - Outsourcing: R$ <span>${outsourcing.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Background Check: R$ <span>${backgroundCheck.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        
+        <h3>Resultados por Categoria:</h3>
         <p id="totalFabrica" class="clicavel">Total [BR] Fábrica: R$ <span>${totalFabrica.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalHuntingOutsourcing" class="clicavel">Total [BR] Hunting e Outsourcing: R$ <span>${totalHuntingOutsourcing.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalDisplay" class="clicavel">Total [BR] Display: R$ <span>${totalDisplay.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalStaffAugmentation" class="clicavel">Total [BR] Staff Augmentation: R$ <span>${totalStaffAugmentation.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalDisplay" class="clicavel">Total [BR] Display: R$ <span>${display.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalGeral" class="clicavel">Total Geral: R$ <span>${totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
     `;
 
     adicionarOuvintesDeCliqueParaTotais();
