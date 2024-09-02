@@ -116,7 +116,7 @@ input[type="text"]:focus {
 }
 
 .results-section {
-    flex: 2;
+    flex: 0.9;
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     padding: 20px;
