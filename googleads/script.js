@@ -37,20 +37,20 @@ function calcularTotais() {
 
     document.getElementById('resultados').innerHTML = `
         <h3>Resultados por Serviço:</h3>
-        <p class="clicavel">Consultoria de Requisitos - Prototipagem: R$ <span>${consultoriaRequisitos.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p class="clicavel">Desenvolvimento de Aplicativos Mobile: R$ <span>${desenvolvimentoMobile.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Consultoria de TI: R$ <span>${consultoriaRequisitos.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Desenvolvimento Mobile: R$ <span>${desenvolvimentoMobile.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         <p class="clicavel">Desenvolvimento Web: R$ <span>${desenvolvimentoWeb.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         <p class="clicavel">e-Commerce: R$ <span>${eCommerce.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p class="clicavel">EAD - e-Learning Moodle: R$ <span>${eadMoodle.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">e-Learning Moodle: R$ <span>${eadMoodle.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         <p class="clicavel">RPA - Robotic Process Automation: R$ <span>${rpa.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p class="clicavel">Profissionais de TI - Headhunting: R$ <span>${headhunting.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p class="clicavel">Profissionais de TI - Outsourcing: R$ <span>${outsourcing.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Headhunting de TI: R$ <span>${headhunting.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p class="clicavel">Outsourcing de TI: R$ <span>${outsourcing.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         <p class="clicavel">Background Check: R$ <span>${backgroundCheck.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         
         <h3>Resultados por Categoria:</h3>
-        <p id="totalFabrica" class="clicavel">Total [BR] Fábrica: R$ <span>${totalFabrica.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalStaffAugmentation" class="clicavel">Total [BR] Staff Augmentation: R$ <span>${totalStaffAugmentation.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
-        <p id="totalDisplay" class="clicavel">Total [BR] Display: R$ <span>${display.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalFabrica" class="clicavel">Total Fábrica: R$ <span>${totalFabrica.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalStaffAugmentation" class="clicavel">Total Staff Augmentation: R$ <span>${totalStaffAugmentation.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
+        <p id="totalDisplay" class="clicavel">Total Display: R$ <span>${display.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
         <p id="totalGeral" class="clicavel">Total Geral: R$ <span>${totalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span></p>
     `;
 
