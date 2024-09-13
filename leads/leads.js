@@ -529,17 +529,25 @@ function obterPorte(texto) {
 
 // Função para obter a quantidade de funcionários
 function obterQuantidadeFuncionarios(texto) {
-    const funcionariosRegexes = [
-        /Quantidade de Funcionários\s*([^<\n]+)/i,
-        /(\d+\s*a\s*\d+)\s*funcionários/i,
-        /Quantidade de Funcionários:(.*?)icone/s
+    const funcionariosRegex = /icone Quantidade de Funcionários\s*Quantidade de Funcionários\s*([\s\S]*?)(?:icone like|icone dislike|$)/i;
+    
+    const match = texto.match(funcionariosRegex);
+    if (match && match[1]) {
+        // Remove espaços extras e a palavra "funcionários" do final
+        let quantidade = match[1].replace(/^[\s\n]+|[\s\n]+$/g, '').replace(/\s*funcionários\s*$/i, '').trim();
+        return `Número de Funcionários: ${quantidade}`;
+    }
+
+    // Fallback para outros padrões possíveis
+    const fallbackRegexes = [
+        /Quantidade de Funcionários\s*:\s*([^<\n]+)/i,
+        /(\d+\s*a\s*\d+)\s*funcionários/i
     ];
 
-    for (let regex of funcionariosRegexes) {
-        const match = texto.match(regex);
-        if (match && match[1]) {
-            // Remove a palavra "funcionários" e espaços extras do final
-            let quantidade = match[1].replace(/\s*funcionários\s*$/, '').trim();
+    for (let regex of fallbackRegexes) {
+        const fallbackMatch = texto.match(regex);
+        if (fallbackMatch && fallbackMatch[1]) {
+            let quantidade = fallbackMatch[1].trim();
             return `Número de Funcionários: ${quantidade}`;
         }
     }
@@ -548,19 +556,27 @@ function obterQuantidadeFuncionarios(texto) {
 }
 
 function obterFaturamentoAnual(texto) {
-    const faturamentoRegexes = [
-        /Faturamento Anual\s*([^<\n]+)/i,
-        /Faturamento Anual:(.*?)(?:icone|$)/s,
-        /Faturamento Anual\s*:\s*([^<\n]+)/i
+    const faturamentoRegex = /icone Faturamento Anual\s*Faturamento Anual\s*([\s\S]*?)(?:icone like|icone dislike|$)/i;
+    
+    const match = texto.match(faturamentoRegex);
+    if (match && match[1]) {
+        let faturamento = match[1].replace(/^[\s\n]+|[\s\n]+$/g, '').trim();
+        if (faturamento.toLowerCase() === 'desconhecido') {
+            return "Faturamento Anual: Desconhecido";
+        }
+        return `Faturamento Anual: ${faturamento}`;
+    }
+
+    // Fallback para outros padrões possíveis
+    const fallbackRegexes = [
+        /Faturamento Anual\s*:\s*([^<\n]+)/i,
+        /Faturamento Anual\s*(R?\$?\s*[\d,.]+ (?:mil|milh(?:ão|ões))(?: a R?\$?\s*[\d,.]+ (?:mil|milh(?:ão|ões)))?)/i
     ];
 
-    for (let regex of faturamentoRegexes) {
-        const match = texto.match(regex);
-        if (match && match[1]) {
-            let faturamento = match[1].trim();
-            if (faturamento.toLowerCase() === 'desconhecido') {
-                return "Faturamento Anual: Desconhecido";
-            }
+    for (let regex of fallbackRegexes) {
+        const fallbackMatch = texto.match(regex);
+        if (fallbackMatch && fallbackMatch[1]) {
+            let faturamento = fallbackMatch[1].trim();
             return `Faturamento Anual: ${faturamento}`;
         }
     }
