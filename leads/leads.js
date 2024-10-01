@@ -608,6 +608,10 @@ function formatarTextoLeadFilaA() {
     const NomeDoContato = obterNomeDoContato(texto);
     const NomeDaEmpresa = obterEmpresa(texto);
 
+    let EmailFormatado = obterEmail(texto)
+    let siteDaEmpresa = EmailFormatado.split("@")[1];
+    siteDaEmpresa = "www." + siteDaEmpresa;
+
     const origem = obterOrigem(textoMinusculo);
     const interesse = obterInteresse(texto);
 
@@ -634,7 +638,7 @@ function formatarTextoLeadFilaA() {
         nomeDaFila = "Fila Outbound";
     }
 
-    const resultadoTexto = `Chegou lead na ${nomeDaFila} para o @\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem} \n\n${infoEconodata}Perfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
+    const resultadoTexto = `Chegou lead na ${nomeDaFila} para o @\n\nContato: ${NomeDoContato}\nEmpresa: ${NomeDaEmpresa}\nTelefone: ${telefone}${localidadeTexto}\n${interesse}\n${origem} \n\n${infoEconodata}Site da Empresa: ${siteDaEmpresa}\n\nPerfil linkedin: \n${perfilLinkedin}\n--------------------------------------------------------\npróximo da fila é o @`;
     document.getElementById('resultado').textContent = resultadoTexto;
 }
 
