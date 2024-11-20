@@ -649,10 +649,17 @@ function copiarLocalidade() {
 // Função interna para identificar a origem
 function obterOrigem(textoMinusculo) {
   if (
-    textoMinusculo.includes("chatbot") ||
-    textoMinusculo.includes("inbound chatbot")
+    textoMinusculo.includes("agencechatbot76@gmail.com") ||
+    textoMinusculo.includes("origem: chatbot")
   ) {
-    return "Origem: Inbound Whatsapp / Chatbot";
+    return "Origem: Inbound Chatbot";
+  } else if (
+    textoMinusculo.includes("origem: telefone") ||
+    textoMinusculo.includes("origem: ligação")
+  ) {
+    return "Origem: Ligação ao Escritório";
+  } else if (textoMinusculo.includes("origem: whats")) {
+    return "Origem: Inbound Whatsapp";
   } else if (
     textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")
   ) {
