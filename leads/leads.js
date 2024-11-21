@@ -1252,25 +1252,41 @@ function copiarLinkWhatsapp() {
   const telefoneRegex = /Telefone:.*?(\d[\d\s().-]*)/i;
   const telefoneMatch = texto.match(telefoneRegex);
 
+  // Extrair e formatar o nome do contato
+  const nomeFormatado = obterNomeDoContato(texto);
+  const firstName = nomeFormatado.split(" ")[0];
+
   if (telefoneMatch) {
-    let numeros = telefoneMatch[1].replace(/\D/g, "");
+    const numeros = telefoneMatch[1].replace(/\D/g, "");
     const resultado = formatarTelefone(numeros);
 
-    // Remover todos os caracteres não numéricos do número formatado
-    let numeroLimpo = resultado.formatado.replace(/\D/g, "");
+    // Certifique-se de que 'formatarTelefone' retorna um objeto com a propriedade 'formatado'
+    if (resultado && resultado.formatado) {
+      const numeroLimpo = resultado.formatado.replace(/\D/g, "");
 
-    // Criar o link do WhatsApp
-    let linkWhatsApp = "https://whatsa.me/+" + numeroLimpo;
+      // Criar a mensagem personalizada
+      const mensagem =
+        encodeURIComponent(`Olá ${firstName}, tudo bom? Meu nome é Bruna Dória, da Agence Consultoria.
 
-    // Copiar o link para a área de transferência
-    navigator.clipboard.writeText(linkWhatsApp).then(
-      function () {
-        mostrarPopUp(`Link copiado: ${linkWhatsApp}`);
-      },
-      function () {
-        mostrarPopUp("Falha ao copiar o link.");
-      }
-    );
+Recebi seu contato pois preencheu o nosso chatbot do site. Você possui alguma demanda de tecnologia?
+
+Desenvolvimento de software, robotização de processos, profissionais de TI? Algo nesse sentido? 😁`);
+
+      // Corrigir o link do WhatsApp
+      const linkWhatsApp = `https://api.whatsapp.com/send?phone=${numeroLimpo}&text=${mensagem}`;
+
+      // Copiar a mensagem para a área de transferência
+      navigator.clipboard.writeText(linkWhatsApp).then(
+        function () {
+          mostrarPopUp(`Mensagem copiada: ${linkWhatsApp}`);
+        },
+        function () {
+          mostrarPopUp("Falha ao copiar a mensagem.");
+        }
+      );
+    } else {
+      mostrarPopUp("Erro ao formatar o número de telefone.");
+    }
   } else {
     mostrarPopUp("Telefone não encontrado");
   }
