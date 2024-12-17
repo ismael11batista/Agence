@@ -114,82 +114,79 @@
 
     <script src="leads.js"></script>
 
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg';
-            const spreadsheetId = '1FwDn3RSuCZDpMl4QdjcL9gFr5cek1mlYWqCcqrjBDFY';
-            const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4', 'Leads!S2', 'Leads!S4'];
 
-            function initClient() {
-                gapi.client.init({
-                    apiKey: apiKey,
-                    discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
-                }).then(function () {
-                    getSheetData();
-                    setInterval(getSheetData, 10000);
-                    setupCopyButtons();
-                }, function (error) {
-                    console.error('Erro ao inicializar a API do Google Sheets:', error);
-                    const dataDiv = document.getElementById('data');
-                    dataDiv.textContent = 'Erro ao carregar dados.';
-                });
-            }
+	<script src="https://apis.google.com/js/api.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const apiKey = 'AIzaSyCCaW-e21Rn5F8ziL1HSsozZgJrtmOI6Hg';
+			const spreadsheetId = '1FwDn3RSuCZDpMl4QdjcL9gFr5cek1mlYWqCcqrjBDFY';
+			const ranges = ['Leads!R1', 'Leads!R2', 'Leads!R3', 'Leads!R4', 'Leads!S2', 'Leads!S4'];
 
-            function getSheetData() {
-                let promises = ranges.map(range => {
-                    return gapi.client.sheets.spreadsheets.values.get({
-                        spreadsheetId: spreadsheetId,
-                        range: range,
-                    });
-                });
+			function initClient() {
+				gapi.client.init({
+					apiKey: apiKey,
+					discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+				}).then(function () {
+					getSheetData();
+					setInterval(getSheetData, 10000);
+					setupCopyButtons();
+				}, function (error) {
+					console.error('Erro ao inicializar a API do Google Sheets:', error);
+					const dataDiv = document.getElementById('data');
+					dataDiv.textContent = 'Erro ao carregar dados.';
+				});
+			}
 
-                Promise.all(promises).then(function (responses) {
-                    const ProximoFilaA = responses[0].result.values ? responses[0].result.values[0][0] : 'Não encontrado';
-                    const ProximoFilaB = responses[1].result.values ? responses[1].result.values[0][0] : 'Não encontrado';
-                    const ProximoFilaLicitacao = responses[2].result.values ? responses[2].result.values[0][0] : 'Não encontrado';
-                    const ProximoFilaD = responses[3].result.values ? responses[3].result.values[0][0] : 'Não encontrado';
+			function getSheetData() {
+				gapi.client.sheets.spreadsheets.values.batchGet({
+					spreadsheetId: spreadsheetId,
+					ranges: ranges,
+				}).then(function (response) {
+					const responses = response.result.valueRanges;
+					const ProximoFilaA = responses[0].values ? responses[0].values[0][0] : 'Não encontrado';
+					const ProximoFilaB = responses[1].values ? responses[1].values[0][0] : 'Não encontrado';
+					const ProximoFilaLicitacao = responses[2].values ? responses[2].values[0][0] : 'Não encontrado';
+					const ProximoFilaD = responses[3].values ? responses[3].values[0][0] : 'Não encontrado';
+					window.s2Value = responses[4].values ? responses[4].values[0][0] : '';
+					window.s4Value = responses[5].values ? responses[5].values[0][0] : '';
 
-                    document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
-                    document.getElementById('column2').innerHTML = `<p>☑️ Fila B: ${ProximoFilaB}  </p>`;
-                    document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}  </p>`;
-                    document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}  </p>`;
+					document.getElementById('column1').innerHTML = `<p>✅ Fila A: ${ProximoFilaA}</p>`;
+					document.getElementById('column2').innerHTML = `<p>☑️ Fila B: ${ProximoFilaB}</p>`;
+					document.getElementById('column3').innerHTML = `<p>📑 Licitação: ${ProximoFilaLicitacao}</p>`;
+					document.getElementById('column4').innerHTML = `<p>✅ Outbound: ${ProximoFilaD}</p>`;
+				}).catch(function (error) {
+					console.error('Erro ao buscar dados da planilha:', error);
+					document.getElementById('column1').textContent = 'Erro ao carregar dados.';
+					document.getElementById('column2').textContent = 'Erro ao carregar dados.';
+					document.getElementById('column3').textContent = 'Erro ao carregar dados.';
+					document.getElementById('column4').textContent = 'Erro ao carregar dados.';
+				});
+			}
 
-                    // Armazenar os valores de S2 e S4
-                    window.s2Value = responses[4].result.values ? responses[4].result.values[0][0] : '';
-                    window.s4Value = responses[5].result.values ? responses[5].result.values[0][0] : '';
-                }).catch(function (error) {
-                    console.error('Erro ao buscar dados da planilha:', error);
-                    document.getElementById('column1').textContent = 'Erro ao carregar dados.';
-                    document.getElementById('column2').textContent = 'Erro ao carregar dados.';
-                    document.getElementById('column3').textContent = 'Erro ao carregar dados.';
-                    document.getElementById('column4').textContent = 'Erro ao carregar dados.';
-                });
-            }
+			function setupCopyButtons() {
+				document.getElementById('copiarS2').addEventListener('click', function(e) {
+					e.preventDefault();
+					copyToClipboard(window.s2Value);
+				});
+				document.getElementById('copiarS4').addEventListener('click', function(e) {
+					e.preventDefault();
+					copyToClipboard(window.s4Value);
+				});
+			}
 
-            function setupCopyButtons() {
-                document.getElementById('copiarS2').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    copyToClipboard(window.s2Value);
-                });
+			function copyToClipboard(text) {
+				navigator.clipboard.writeText(text).then(function() {
+					console.log('Texto copiado com sucesso');
+				}, function(err) {
+					console.error('Erro ao copiar texto: ', err);
+				});
+			}
 
-                document.getElementById('copiarS4').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    copyToClipboard(window.s4Value);
-                });
-            }
+			gapi.load('client', initClient);
+		});
+		
+	</script>
 
-            function copyToClipboard(text) {
-                navigator.clipboard.writeText(text).then(function() {
-                    console.log('Texto copiado com sucesso');
-                }, function(err) {
-                    console.error('Erro ao copiar texto: ', err);
-                });
-            }
-
-            gapi.load('client', initClient);
-        });
-    </script>
 
 </body>
 
