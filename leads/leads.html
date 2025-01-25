@@ -128,7 +128,7 @@
 					discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
 				}).then(function () {
 					getSheetData();
-					setInterval(getSheetData, 10000);
+					setInterval(getSheetData, 30000);
 					setupCopyButtons();
 				}, function (error) {
 					console.error('Erro ao inicializar a API do Google Sheets:', error);
