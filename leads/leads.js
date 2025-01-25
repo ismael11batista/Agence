@@ -661,7 +661,7 @@ function obterOrigem(textoMinusculo) {
   } else if (textoMinusculo.includes("origem: whats")) {
     return "Origem: Inbound Whatsapp";
   } else if (
-    textoMinusculo.includes("© 2024 agence. todos os direitos reservados.")
+    textoMinusculo.includes("origem: inbound lp mobile")
   ) {
     return "Origem: Formulário LP Mobile";
   } else if (textoMinusculo.includes("falecom@agence.com.br")) {
