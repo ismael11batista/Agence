@@ -660,9 +660,7 @@ function obterOrigem(textoMinusculo) {
     return "Origem: Ligação ao Escritório";
   } else if (textoMinusculo.includes("origem: whats")) {
     return "Origem: Inbound Whatsapp";
-  } else if (
-    textoMinusculo.includes("origem: inbound lp mobile")
-  ) {
+  } else if (textoMinusculo.includes("origem: inbound lp mobile")) {
     return "Origem: Formulário LP Mobile";
   } else if (textoMinusculo.includes("falecom@agence.com.br")) {
     return "Origem: Inbound E-mail";
@@ -1038,7 +1036,7 @@ function formatarPromptGPT() {
 
   PromptGPTFormatado = `Acesse o site ${siteDaEmpresa} e me traga um resumo do que essa empresa faz, seus principais serviços e principais clientes.
 
-Além disso, e segundo meu contexto como potencial fornecedor de ${interesse}, e sabendo que é esse o serviço desejado por essa empresa, quais seriam as 5 melhores perguntas que posso fazer a eles nessa primeira reunião que terei com eles. Considere também que esse lead da empresa ${NomeDaEmpresa} chegou com o seguinte texto no formulário do fale conosco: "${assuntoFormatado}"
+Além disso, e segundo meu contexto como potencial fornecedor de ${interesse}, e sabendo que é esse o serviço desejado por essa empresa, quais seriam as perguntas que eu devo fazer utilizando a metodologia GPCTBA & CI nessa primeira reunião que terei com eles. Considere também que esse lead da empresa ${NomeDaEmpresa} chegou com o seguinte texto no formulário do fale conosco: "${assuntoFormatado}"
 
 Quais são os principais clientes e concorrentes diretos da ${NomeDaEmpresa}? E o que estão fazendo de inovação nesse ramo que sou potencial fornecedor.
 
