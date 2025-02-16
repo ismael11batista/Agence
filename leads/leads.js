@@ -1697,6 +1697,8 @@ function copiarPerguntasDefault() {
   const texto = document.getElementById("inputText").value;
   const interesse = obterInteresse(texto);
 
+  const interesse_ajustado = interesse.split(":")[1]?.trim() || interesse;
+
   if (interesse) {
     const perguntas = obterPerguntasDefault(interesse);
 
@@ -1704,16 +1706,20 @@ function copiarPerguntasDefault() {
       // Copiar as perguntas para a área de transferência
       navigator.clipboard.writeText(perguntas).then(
         function () {
-          mostrarPopUp("Perguntas copiadas com sucesso!");
+          mostrarPopUp(
+            `Perguntas de ${interesse_ajustado} copiadas com sucesso.`
+          );
         },
         function () {
-          mostrarPopUp("Falha ao copiar as perguntas.");
+          mostrarPopUp(
+            `Falha ao copiar as perguntas de ${interesse_ajustado}.`
+          );
         }
       );
     } else {
-      mostrarPopUp("Interesse não informado.");
+      mostrarPopUp(`${interesse}`);
     }
   } else {
-    mostrarPopUp("Interesse não informado.");
+    mostrarPopUp(`${interesse}`);
   }
 }
