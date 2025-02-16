@@ -1711,9 +1711,9 @@ function copiarPerguntasDefault() {
         }
       );
     } else {
-      mostrarPopUp("Interesse identificado, mas sem perguntas definidas.");
+      mostrarPopUp("Interesse não informado.");
     }
   } else {
-    mostrarPopUp("Interesse não identificado.");
+    mostrarPopUp("Interesse não informado.");
   }
 }
