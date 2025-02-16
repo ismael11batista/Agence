@@ -373,7 +373,7 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 80%;
+  top: 70%;
   width: auto;
   height: 65px;
   z-index: 1;
@@ -390,7 +390,7 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 90%;
+  top: 80%;
   width: auto;
   height: 60px;
   z-index: 1;
@@ -407,7 +407,7 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 70%;
+  top: 90%;
   width: auto;
   height: 60px;
   z-index: 1;
