@@ -373,16 +373,16 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 70%;
+  top: 65%;
   width: auto;
-  height: 65px;
+  height: 75px;
   z-index: 1;
   transition: transform 0.3s ease;
   /* Adiciona uma transição suave */
 }
 
 .ChatGPT-btn:hover {
-  transform: translateY(-5px);
+  transform: scale(1.1);
   /* Move o botão para cima ao passar o mouse */
 }
 
@@ -390,16 +390,16 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 80%;
+  top: 77%;
   width: auto;
-  height: 60px;
+  height: 68px;
   z-index: 1;
   transition: transform 0.3s ease;
   /* Adiciona uma transição suave */
 }
 
 .whatsapp-btn:hover {
-  transform: translateY(-5px);
+  transform: scale(1.1);
   /* Move o botão para cima ao passar o mouse */
 }
 
@@ -407,17 +407,17 @@ button:hover {
   position: fixed;
   display: flex;
   right: 3%;
-  top: 90%;
+  top: 89%;
   width: auto;
-  height: 60px;
+  height: 67px;
   z-index: 1;
   transition: transform 0.3s ease;
   /* Adiciona uma transição suave */
 }
 
 .question-btn:hover {
-  transform: translateY(-5px);
-  /* Move o botão para cima ao passar o mouse */
+  transform: scale(1.1);
+  /* Aplica um efeito de zoom de 10% ao passar o mouse */
 }
 
 .copy-btn {
@@ -425,21 +425,21 @@ button:hover {
   display: flex;
   left: 3%;
   width: auto;
-  height: 60px;
+  height: 85px;
   z-index: 1;
   transition: transform 0.3s ease;
 }
 
 .copy-btn:hover {
-  transform: translateY(-5px);
+  transform: scale(1.1);
 }
 
 /* Posicionamento específico para cada botão de cópia */
 #copiarS2 .copy-btn {
-  top: 92%; /* Ajuste este valor conforme necessário */
-  height: 32px;
+  top: 85%; /* Ajuste este valor conforme necessário */
+  height: 42px;
 }
 
 #copiarS4 .copy-btn {
-  top: 82%; /* Ajuste este valor conforme necessário */
+  top: 70%; /* Ajuste este valor conforme necessário */
 }
