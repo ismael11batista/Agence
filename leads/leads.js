@@ -667,6 +667,12 @@ function obterOrigem(textoMinusculo) {
   } else if (textoMinusculo.includes("fale conosco - agence")) {
     return "Origem: Formulário Fale Conosco";
   } else if (
+    textoMinusculo.includes(
+      "novo lead gerado pela lp de inteligência artificial"
+    )
+  ) {
+    return "Origem: Inbound LP Inteligência Artificial";
+  } else if (
     textoMinusculo.includes("origem: outbound e-mail") ||
     textoMinusculo.includes("origem: outbound email")
   ) {
