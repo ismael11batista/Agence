@@ -759,16 +759,18 @@ function obterQuantidadeFuncionarios(texto) {
   const match = texto.match(funcionariosRegex);
   if (match && match[1]) {
     // Remove espaços extras e a palavra "funcionários" do final
-    let quantidade = match[1]
-      .replace(/^[\s\n]+|[\s\n]+$/g, "")
-      .replace(/\s*funcionários\s*$/i, "")
-      .trim();
+    let quantidade = match[1].replace(/^[\s\n]+|[\s\n]+$/g, "").trim();
+
+    // Trunca na primeira quebra de linha
+    quantidade = quantidade.split(/\r?\n/)[0].trim();
+    quantidade = quantidade.replace("funcionários", "");
+
     return `Número de Funcionários: ${quantidade}`;
   }
 
   // Fallback para outros padrões possíveis
   const fallbackRegexes = [
-    /Quantidade de Funcionários\s*:\s*([^<\n]+)/i,
+    /Quantidade de Funcionários\s*:\s*([^<\n\r]+)/i,
     /(\d+\s*a\s*\d+)\s*funcionários/i,
   ];
 
@@ -776,6 +778,11 @@ function obterQuantidadeFuncionarios(texto) {
     const fallbackMatch = texto.match(regex);
     if (fallbackMatch && fallbackMatch[1]) {
       let quantidade = fallbackMatch[1].trim();
+
+      // Trunca na primeira quebra de linha
+      quantidade = quantidade.split(/\r?\n/)[0].trim();
+      quantidade = quantidade.replace("funcionários", "");
+
       return `Número de Funcionários: ${quantidade}`;
     }
   }
@@ -783,13 +790,20 @@ function obterQuantidadeFuncionarios(texto) {
   return "Número de Funcionários: não informado";
 }
 
+// Função para obter o faturamento anual
 function obterFaturamentoAnual(texto) {
   const faturamentoRegex =
     /icone Faturamento Anual\s*Faturamento Anual\s*([\s\S]*?)(?:icone like|icone dislike|$)/i;
 
   const match = texto.match(faturamentoRegex);
   if (match && match[1]) {
-    let faturamento = match[1].replace(/^[\s\n]+|[\s\n]+$/g, "").trim();
+    let faturamento = match[1]
+      .replace(/^[\s\n\r]+|[\s\n\r]+$/g, "") // Remove espaços e quebras de linha no início e fim
+      .trim();
+
+    // Trunca na primeira quebra de linha
+    faturamento = faturamento.split(/\r?\n/)[0].trim();
+
     if (faturamento.toLowerCase() === "desconhecido") {
       return "Faturamento Anual: Desconhecido";
     }
@@ -798,7 +812,7 @@ function obterFaturamentoAnual(texto) {
 
   // Fallback para outros padrões possíveis
   const fallbackRegexes = [
-    /Faturamento Anual\s*:\s*([^<\n]+)/i,
+    /Faturamento Anual\s*:\s*([^<\n\r]+)/i,
     /Faturamento Anual\s*(R?\$?\s*[\d,.]+ (?:mil|milh(?:ão|ões))(?: a R?\$?\s*[\d,.]+ (?:mil|milh(?:ão|ões)))?)/i,
   ];
 
@@ -806,6 +820,10 @@ function obterFaturamentoAnual(texto) {
     const fallbackMatch = texto.match(regex);
     if (fallbackMatch && fallbackMatch[1]) {
       let faturamento = fallbackMatch[1].trim();
+
+      // Trunca na primeira quebra de linha
+      faturamento = faturamento.split(/\r?\n/)[0].trim();
+
       return `Faturamento Anual: ${faturamento}`;
     }
   }
@@ -896,10 +914,33 @@ document.addEventListener("DOMContentLoaded", function () {
 // Função principal para obter todas as informações e retornar a string infoEconodata
 function obterEconodata(texto) {
   let infoEconodata = "";
+
   // Definindo as expressões regulares para cada tipo de informação
-  const cnpjRegex = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
-  // Procurando pelo CNPJ no texto
-  const cnpjMatch = texto.match(cnpjRegex);
+
+  // 1. Regex específico para CNPJ após ", opera com o CNPJ "
+  const cnpjRegexSpecific =
+    /, opera com o CNPJ (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
+
+  // 2. Outros regexes para CNPJ (mantidos conforme o código original)
+  const cnpjRegexOriginal = /CNPJ: (\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})/i;
+  // Adicione aqui outros regexes de CNPJ se existirem, por exemplo:
+  // const cnpjRegexAlternative = /outro padrão de regex para CNPJ/i;
+
+  // Array de regexes na ordem de prioridade
+  const cnpjRegexes = [
+    cnpjRegexSpecific,
+    cnpjRegexOriginal /*, cnpjRegexAlternative */,
+  ];
+
+  let cnpjMatch = null;
+
+  // Iterar sobre os regexes até encontrar um match
+  for (let regex of cnpjRegexes) {
+    cnpjMatch = texto.match(regex);
+    if (cnpjMatch) {
+      break; // Sai do loop ao encontrar o primeiro match
+    }
+  }
 
   // Se o CNPJ for encontrado, adiciona as informações à string infoEconodata
   if (cnpjMatch) {
