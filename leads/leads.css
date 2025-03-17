@@ -149,28 +149,30 @@ textarea {
 /* Estilo para o botão de Voltar à Homepage */
 .btn-voltar {
   position: fixed;
-  bottom: 10px;
-  z-index: 1000;
-  left: 50%;
-  /* Ajustado para 50% para iniciar o posicionamento do centro */
-  transform: translateX(-50%);
-  /* Desloca o botão para a esquerda pela metade de sua largura */
-  padding: 10px;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  padding: 20px 10px; /* Aumenta o espaçamento vertical */
   background: #0d0d0d;
-  color: rgba(255, 255, 255, 0.605);
-  border: 0px solid rgba(255, 255, 255, 0.605);
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   text-decoration: none;
-  /* Adiciona negrito ao texto */
   display: inline-block;
-  /* Alterado de 'center' para 'inline-block', já que 'center' não é um valor válido para 'display' */
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.605);
+  z-index: 9999;
+}
+
+.btn-voltar::before {
+  content: "\2190"; /* Ícone “voltar” */
 }
 
 .btn-voltar:hover {
   background: #1b1b1b;
 }
+
 
 .pop-up {
   position: fixed;
