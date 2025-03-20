@@ -75,7 +75,7 @@ html {
   }
 
   li {
-    background-color: #1a1a1a;
+    background-color: #13161a;
     padding: 10px 15px;
     margin-bottom: 10px;
     border-radius: 6px;
@@ -87,7 +87,7 @@ html {
   }
 
   li:hover {
-    background-color: #1a1a1a;
+    background-color: #13161a;
   }
 
   li.dragging {
