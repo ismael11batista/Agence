@@ -20,7 +20,9 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(0deg, #000000, #080808);
+  /* background: linear-gradient(0deg, #000000, #080808); */
+  /* background-color: #08090a; */
+  background: linear-gradient(0deg, #07090a, #08090a);
   padding: 10px;
   color: rgba(255, 255, 255, 0.605);
   overflow-x: hidden;
@@ -67,7 +69,7 @@ body {
 }
 
 textarea {
-  background-color: #0d0d0d;
+  background-color: #13161a;
   font-size: xx-large;
   color: rgba(255, 255, 255, 0.605);
   width: 95%;
@@ -93,7 +95,7 @@ textarea {
 .btn-adicionar2,
 .btn-adicionar3 {
   padding: 10px;
-  background-color: #0d0d0d;
+  background-color: #13161a;
   color: #ffffff9a;
   border: none;
   border-radius: 8px;
@@ -108,7 +110,7 @@ textarea {
 .btn-adicionar:hover,
 .btn-adicionar2:hover,
 .btn-adicionar3:hover {
-  background-color: #1b1b1b;
+  background-color: #0e141f;
 }
 
 .btn-adicionar {
@@ -153,7 +155,7 @@ textarea {
   left: 10px;
   transform: translateY(-50%);
   padding: 20px 10px; /* Aumenta o espaçamento vertical */
-  background: #0d0d0d;
+  background: #13161a;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -170,9 +172,8 @@ textarea {
 }
 
 .btn-voltar:hover {
-  background: #1b1b1b;
+  background: #0e141f;
 }
-
 
 .pop-up {
   position: fixed;
@@ -199,7 +200,7 @@ textarea {
 }
 
 button {
-  background: #0d0d0d;
+  background: #13161a;
   color: rgba(255, 255, 255, 0.605);
   border: none;
   border-radius: 15px;
@@ -285,7 +286,7 @@ button:hover {
   /* Centraliza o texto horizontalmente */
   width: calc(100%);
   /* Largura total */
-  background: #0d0d0d;
+  background: #13161a;
   border: 0px solid rgba(255, 255, 255, 0.605);
 }
 
