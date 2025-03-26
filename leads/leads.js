@@ -923,7 +923,7 @@ function obterPorte(texto) {
 
 // Função para obter a quantidade de funcionários
 function limparQuantidade(valor) {
-  // Remove espaços extras, quebra em linha e remove a palavra "funcionários" se estiver no final
+  // Remove espaços extras, quebra de linha e se existir a palavra "funcionários" no final
   let quantidade = valor.replace(/^[\s\n]+|[\s\n]+$/g, "").trim();
   quantidade = quantidade.split(/\r?\n/)[0].trim();
   quantidade = quantidade.replace(/funcionários\s*$/i, "").trim();
@@ -931,6 +931,18 @@ function limparQuantidade(valor) {
 }
 
 function obterQuantidadeFuncionarios(texto) {
+  // Defina os marcadores que delimitam os dados de funcionários
+  const marcadorInicio = "Busque por nome da empresa ou CNPJ"; // Altere conforme necessário
+  const marcadorFim = "Natureza Jurídica"; // Altere conforme necessário
+
+  // Se os marcadores existirem, extraímos somente o trecho entre eles
+  let textoAnalise = texto;
+  const inicio = texto.indexOf(marcadorInicio);
+  const fim = texto.indexOf(marcadorFim, inicio + marcadorInicio.length);
+  if (inicio !== -1 && fim !== -1) {
+    textoAnalise = texto.substring(inicio + marcadorInicio.length, fim).trim();
+  }
+
   // Lista de regexes para capturar a quantidade de funcionários
   const regexes = [
     /icone Quantidade de Funcionários\s*Quantidade de Funcionários\s*([\s\S]*?)(?=icone like|icone dislike|$)/i,
@@ -938,18 +950,16 @@ function obterQuantidadeFuncionarios(texto) {
     /(\d+\s*a\s*\d+)\s*funcionários/i,
     /(\d{1,3}(?:[.,]\d{3})*\s*a\s*\d{1,3}(?:[.,]\d{3})*)\s*funcionários/i,
     /icone\s+Funcionários\s+Funcionários\s+(Acima\s+de\s+[\d.,]+\s*funcionários)\s+Ícone\s+de\s+dados\s+da\s+receita\s+federal/i,
-
-    // Aqui você pode adicionar outros regexes se necessário
+    // Outros regexes se necessário
   ];
 
   for (const regex of regexes) {
-    const correspondencia = texto.match(regex);
+    const correspondencia = textoAnalise.match(regex);
     if (correspondencia && correspondencia[1]) {
       const quantidadeLimpa = limparQuantidade(correspondencia[1]);
       return `Número de Funcionários: ${quantidadeLimpa}`;
     }
   }
-
   return "Número de Funcionários: não informado";
 }
 
