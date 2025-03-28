@@ -380,7 +380,7 @@ button:hover {
   right: 3%;
   top: 65%;
   width: auto;
-  height: 75px;
+  height: 67px;
   z-index: 1;
   transition: transform 0.3s ease;
   /* Adiciona uma transição suave */
@@ -397,7 +397,7 @@ button:hover {
   right: 3%;
   top: 77%;
   width: auto;
-  height: 68px;
+  height: 67px;
   z-index: 1;
   transition: transform 0.3s ease;
   /* Adiciona uma transição suave */
