@@ -21,9 +21,12 @@ html {
 
   body {
     font-family: "Roboto", sans-serif;
-    background: linear-gradient(0deg, #07090a, #08090a);
+    /* background: linear-gradient(0deg, #07090a, #08090a); */
     color: rgba(255, 255, 255, 0.605);
     padding: 10px;
+    background-color: #00050a;
+    background-image: url("../images/texture.png");
+
     /*transform: scale(1);
     /*transform-origin: top left;
     /*width: 150%;
