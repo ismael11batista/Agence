@@ -20,13 +20,15 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
-  /* background: linear-gradient(0deg, #000000, #080808); */
-  /* background-color: #08090a; */
-  background: linear-gradient(0deg, #07090a, #08090a);
   padding: 10px;
   color: rgba(255, 255, 255, 0.605);
   overflow-x: hidden;
   /* Impede o overflow horizontal */
+
+  /* background-color: #08090a; */
+
+  background-color: #00050a;
+  background-image: url("../images/texture.png");
 }
 
 .tira-esquerda {
