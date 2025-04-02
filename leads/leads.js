@@ -1702,22 +1702,28 @@ class PopupEditor {
   }
 }
 
-/* Exemplo de função de formatação */
 function formatText(text) {
+  const texto = document.getElementById("inputText").value;
+  const interesse = obterInteresse(texto);
+  const perguntasDefault = obterPerguntasDefault(interesse);
+  
   const lines = text.split('\n');
   const nonEmptyLines = lines.filter(line => line.trim() !== '');
   const result = [];
+
   nonEmptyLines.forEach(line => {
     let formattedLine = line;
+
     // Se linha termina com "?", adiciona prefixo "- "
     if (line.trim().endsWith('?')) {
       formattedLine = '- ' + line;
     }
+
     // Regra 1: "TEXTO_EXTRAORDINÁRIO" com 2 quebras de linha antes e depois
     if (line.indexOf("TEXTO_EXTRAORDINÁRIO") !== -1) {
       result.push('');
       result.push('');
-      result.push(formattedLine);
+      result.push(formattedLine);  // Será substituído depois
       result.push('');
       result.push('');
     }
@@ -1751,8 +1757,15 @@ function formatText(text) {
       result.push(formattedLine);
     }
   });
-  return result.join('\n');
+
+  // Junta todas as linhas formatadas
+  let finalText = result.join('\n');
+  // Realiza a substituição global do termo "TEXTO_EXTRAORDINÁRIO"
+  finalText = finalText.split("TEXTO_EXTRAORDINÁRIO").join(perguntasDefault);
+  
+  return finalText;
 }
+
 
 /* Exemplo de utilização do PopupEditor */
 document.addEventListener('DOMContentLoaded', () => {
