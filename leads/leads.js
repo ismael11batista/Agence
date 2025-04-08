@@ -769,11 +769,11 @@ function obterOrigem(texto) {
       value: "Origem: Inbound E-mail",
     },
     {
-      triggers: ["fale conosco - agence"],
+      triggers: ["fale conosco - agence", "mensagem enviada através do site agence"],
       value: "Origem: Formulário Fale Conosco",
     },
     {
-      triggers: ["[leads] [pop-up", "Identificador: pop-up-", "popup"],
+      triggers: ["[leads] [pop-up", "identificador: pop-up-", "popup"],
       value: "Origem: Formulário Pop-up",
     },
     {
