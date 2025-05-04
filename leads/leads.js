@@ -38,17 +38,13 @@ const DEFAULT_INTERESTS = Object.fromEntries(
 
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("inputText").addEventListener("input", function () {
-    identificarInformacoesAutomaticamente(); // Função existente
-    formatarTextoLeadConsultor(); // Chamada da função para formatar e exibir detalhes do lead
+    identificarInformacoesAutomaticamente();
+    formatarTextoLeadConsultor();
     formatarPromptGPT();
   });
 
-  document
-    .getElementById("copiarTextoEspecial")
-    .addEventListener("click", copiarTextoEspecial);
-  document
-    .getElementById("copiarLeadFaleCom")
-    .addEventListener("click", copiarLeadFaleComParaClipboard);
+  document.getElementById("copiarTextoEspecial").addEventListener("click", copiarTextoEspecial);
+
 });
 
 // Função principal que identifica as informações automaticamente
