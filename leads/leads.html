@@ -74,39 +74,39 @@
 
         <div class="buttons-row">
 
-            <button onclick="copiarTextoLeadConsultor()" class="btn-adicionar3">Aviso Lead Consultor</button>
+            <button onclick="copiarTextoLeadConsultor()" class="btn-copiar-mensagens-formatadas">Aviso Lead Consultor</button>
 
-            <button onclick="copiarInformacoesEconodata()" class="btn-adicionar3"> <img src="../images/econodata.png"
+            <button onclick="copiarInformacoesEconodata()" class="btn-copiar-mensagens-formatadas"> <img src="../images/econodata.png"
                     id="econodata"></button>
 
-            <button onclick="copiarTextoLeadFilaA()" class="btn-adicionar3">Aviso Lead Fila A</button>
+            <button onclick="copiarTextoLeadFilaA()" class="btn-copiar-mensagens-formatadas">Aviso Lead Fila A</button>
 
         </div>
 
         <!-- Container Principal para Informações Automáticas e Adicionais Lado a Lado -->
-        <div class="info-principal">
+        <div class="exibir-textos-formatados">
             <!-- Nova Seção de Detalhes do Lead à Esquerda -->
-            <div class="detalhes-lead">
-                <div id="detalhesLead" class="containerLeadAutomatico">Chegou lead para você.<br><br>Empresa: não informado<br>Contato: não informado<br>Telefone: não informado<br>E-mail: não informado<br>Interesse: não informado<br>Origem: não identificada<br><br>Assunto: não encontrado
+            <div class="mensagem-consultor">
+                <div id="mensagem-consultor" class="containerExibirTextosFormatados">Chegou lead para você.<br><br>Empresa: não informado<br>Contato: não informado<br>Telefone: não informado<br>E-mail: não informado<br>Interesse: não informado<br>Origem: não identificada<br><br>Assunto: não encontrado
                     <!-- Conteúdo dos Detalhes do Lead será inserido aqui -->
                 </div>
             </div>
 
             <!-- Seção para Informações Adicionais no Meio -->
-            <div class="info-adicional">
-                <div id="informacoesAdicionais" class="containerLeadAutomatico">
+            <div class="info-econodata">
+                <div id="info-econodata" class="containerExibirTextosFormatados">
                     <!-- Conteúdo das Informações Adicionais será inserido aqui -->
                 </div>
             </div>
 
             <!-- Container Principal para Resultado Automático à Direita -->
-            <div class="containerLeadAutomatico">
+            <div class="containerExibirTextosFormatados">
                 <div id="resultado" class="resultado">Chegou lead na Fila A para o @<br><br>Empresa: não informado<br>Contato: não informado<br>Telefone: não informado<br>E-mail: não informado<br>Interesse: não informado<br>Origem: não identificada<br>Linkedin ainda não identificado<br><br>Site da empresa: COMPANY_URL<br>--------------------------------------------------------<br>próximo da fila é o @</div>
             </div>
         </div>
 
         <!-- Container para Interesse e Origem do Lead -->
-        <div class="info-container-duplo">
+        <div class="info-container-triplo">
             <div id="interesseLead" class="info-div2">Interesse: não informado</div>
             <div id="origemLead" class="info-div2">Origem: não identificada</div>
             <div id="porteLead" class="info-div2">Porte da Empresa: não informado</div>
