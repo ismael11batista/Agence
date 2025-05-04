@@ -10,7 +10,8 @@ let assunto_formatado = "";
 let info_econodata = "";
 let perfil_linkedin = "";
 let site_da_empresa = "";
-
+let telefone_formatado = "";
+let localidade_formatada = "";
 
 // Definição das constantes de interesse
 const DEFAULT_SERVICES = {
@@ -55,6 +56,32 @@ function identificarInformacoesAutomaticamente() {
   const texto = document.getElementById("inputText").value;
   const textoMinusculo = texto.toLowerCase();
   
+  localidade_formatada = "";
+  const telefoneInfo = obterTelefoneFormatado(texto);
+  telefone_formatado = telefoneInfo.telefone;
+  
+  const ddd = telefoneInfo.ddd; // Utilizado para telefones brasileiros
+  const pais = telefoneInfo.pais; // Nome do país ou "Brasil"
+  const ddi = telefoneInfo.ddi; // Código DDI, para telefones internacionais
+  const localidadeRaw = telefoneInfo.localidade; // Nome da localidade ou país
+
+  // Construir a linha de localidade somente se a informação estiver 100%
+  // Exibir "DDD xx: [localidade]" para números brasileiros
+  // ou "DDI xx: [nome do país]" para internacionais (ddi diferente de 55)
+
+  if (ddd && localidadeRaw && localidadeRaw !== "DDD não reconhecido") {
+    localidade_formatada = `\nDDD ${ddd}: ${localidadeRaw}`;
+  } else if (
+    !ddd &&
+    ddi &&
+    pais &&
+    pais !== "Brasil" &&
+    localidadeRaw &&
+    localidadeRaw !== "Número não reconhecido"
+  ) {
+    localidade_formatada = `\nDDI ${ddi}: ${localidadeRaw}`;
+  }
+
   info_econodata = obterEconodata(texto);
   
   origem_global = obterOrigem(textoMinusculo);
@@ -199,11 +226,9 @@ function obterLinkedin(texto) {
 
 // Função principal que formata o nome
 function copiarNome() {
-  const texto = document.getElementById("inputText").value;
-  const nomeFormatado = obterNomeDoContato(texto);
-  if (nomeFormatado) {
-    nome_do_contato = nomeFormatado;
-    copiarParaClipboard(nomeFormatado);
+  if (nome_do_contato) {
+    nome_do_contato = nome_do_contato;
+    copiarParaClipboard(nome_do_contato);
   } else {
     copiarParaClipboard("Nome nao identificado");
     mostrarPopUp("Nome nao identificado");
@@ -212,11 +237,9 @@ function copiarNome() {
 
 // Função principal que formata a empresa
 function copiarEmpresa() {
-  const texto = document.getElementById("inputText").value;
-  const empresaFormatada = obterEmpresa(texto);
-  if (empresaFormatada) {
-    nome_da_empresa = empresaFormatada;
-    copiarParaClipboard(empresaFormatada);
+  if (nome_da_empresa) {
+    nome_da_empresa = nome_da_empresa;
+    copiarParaClipboard(nome_da_empresa);
   } else {
     copiarParaClipboard("Sem informação");
     mostrarPopUp("Empresa não identificada.");
@@ -289,11 +312,9 @@ function substituirQuebrasLinha(texto) {
 
 // Função principal que usa a função interna para formatar o assunto
 function copiarAssunto() {
-  const texto = document.getElementById("inputText").value;
-  const assuntoFormatado = obterAssunto(texto);
-  if (assuntoFormatado) {
-    copiarParaClipboard(assuntoFormatado);
-    mostrarPopUp("Assunto formatado e copiado para a área de transferência");
+  if (assunto_formatado) {
+    copiarParaClipboard(assunto_formatado);
+    mostrarPopUp("Assunto copiado!");
   } else {
     copiarParaClipboard("Campo de assunto não encontrado.");
     mostrarPopUp("Campo de assunto não encontrado.");
@@ -1096,33 +1117,7 @@ function obterSiteEmpresa(texto) {
 }
 
 function formatarTextoLeadFilaA() {
-  const texto = document.getElementById("inputText").value;
 
-  const telefoneInfo = obterTelefoneFormatado(texto);
-  const telefone = telefoneInfo.telefone;
-  const ddd = telefoneInfo.ddd; // Utilizado para telefones brasileiros
-  const pais = telefoneInfo.pais; // Nome do país ou "Brasil"
-  const ddi = telefoneInfo.ddi; // Código DDI, para telefones internacionais
-  const localidadeRaw = telefoneInfo.localidade; // Nome da localidade ou país
-
-  // Construir a linha de localidade somente se a informação estiver 100%
-  // Exibir "DDD xx: [localidade]" para números brasileiros
-  // ou "DDI xx: [nome do país]" para internacionais (ddi diferente de 55)
-  let localidadeTexto = "";
-  if (ddd && localidadeRaw && localidadeRaw !== "DDD não reconhecido") {
-    localidadeTexto = `\nDDD ${ddd}: ${localidadeRaw}`;
-  } else if (
-    !ddd &&
-    ddi &&
-    pais &&
-    pais !== "Brasil" &&
-    localidadeRaw &&
-    localidadeRaw !== "Número não reconhecido"
-  ) {
-    localidadeTexto = `\nDDI ${ddi}: ${localidadeRaw}`;
-  }
-
-  // Verifica se info_econodata não está vazia e adiciona espaços
   if (info_econodata) {
     info_econodata_fila_a = `${info_econodata}\n\n`;
   } else info_econodata_fila_a = "";
@@ -1133,13 +1128,12 @@ function formatarTextoLeadFilaA() {
     dois_pontos = "";
   }
 
-  // Verifica se a origem contém a palavra "outbound"
   let nome_fila = "Fila A"; // Valor padrão
   if (origem_global.toLowerCase().includes("outbound")) {
     nome_fila = "Fila Outbound";
   }
 
-  const mensagem_fila_a = `Chegou lead na ${nome_fila} para o @\n\nEmpresa: ${nome_da_empresa}\nContato: ${nome_do_contato}\nTelefone: ${telefone}${localidadeTexto}\nE-mail: ${email_do_contato}\n${interesse_global}\n${origem_global}\nLinkedin${dois_pontos} ${perfil_linkedin}\n\n${info_econodata_fila_a}Site da empresa: ${site_da_empresa}\n--------------------------------------------------------\npróximo da fila é o @`;
+  const mensagem_fila_a = `Chegou lead na ${nome_fila} para o @\n\nEmpresa: ${nome_da_empresa}\nContato: ${nome_do_contato}\nTelefone: ${telefone_formatado}${localidade_formatada}\nE-mail: ${email_do_contato}\n${interesse_global}\n${origem_global}\nLinkedin${dois_pontos} ${perfil_linkedin}\n\n${info_econodata_fila_a}Site da empresa: ${site_da_empresa}\n--------------------------------------------------------\npróximo da fila é o @`;
 
   return mensagem_fila_a;
 }
@@ -1222,11 +1216,9 @@ function PesquisarLinkedin() {
 }
 
 function SiteDaEmpresa() {
-  const texto = document.getElementById("inputText").value;
-  emailFormatado = obterEmail(texto); // Isso garantirá que EmailDoContato esteja atualizado
 
-  if (emailFormatado) {
-    const dominio = emailFormatado.split("@")[1];
+  if (email_do_contato) {
+    const dominio = email_do_contato.split("@")[1];
     const dominiosPessoais = [
       "gmail.com",
       "hotmail.com",
@@ -1258,33 +1250,8 @@ function SiteDaEmpresa() {
 }
 
 function formatarTextoLeadConsultor() {
-  const texto = document.getElementById("inputText").value;
 
-  const telefoneInfo = obterTelefoneFormatado(texto);
-  const telefone = telefoneInfo.telefone;
-  const ddd = telefoneInfo.ddd; // Utilizado para telefones brasileiros
-  const pais = telefoneInfo.pais; // Nome do país ou "Brasil"
-  const ddi = telefoneInfo.ddi; // Código DDI, para telefones internacionais
-  const localidadeRaw = telefoneInfo.localidade; // Nome da localidade ou país
-
-  // Construir a linha de localidade somente se a informação estiver 100%
-  // Exibir "DDD xx: [localidade]" para números brasileiros
-  // ou "DDI xx: [nome do país]" para internacionais (ddi diferente de 55)
-  let localidadeTexto = "";
-  if (ddd && localidadeRaw && localidadeRaw !== "DDD não reconhecido") {
-    localidadeTexto = `\nDDD ${ddd}: ${localidadeRaw}`;
-  } else if (
-    !ddd &&
-    ddi &&
-    pais &&
-    pais !== "Brasil" &&
-    localidadeRaw &&
-    localidadeRaw !== "Número não reconhecido"
-  ) {
-    localidadeTexto = `\nDDI ${ddi}: ${localidadeRaw}`;
-  }
-
-  mensagem_consultor = `Chegou lead para você.\n\nEmpresa: ${nome_da_empresa}\nContato: ${nome_do_contato}\nTelefone: ${telefoneInfo.telefone}${localidadeTexto}\nE-mail: ${email_do_contato}\n${interesse_global}\n${origem_global}\n\nAssunto: ${assunto_formatado}`;
+  mensagem_consultor = `Chegou lead para você.\n\nEmpresa: ${nome_da_empresa}\nContato: ${nome_do_contato}\nTelefone: ${telefone_formatado}${localidade_formatada}\nE-mail: ${email_do_contato}\n${interesse_global}\n${origem_global}\n\nAssunto: ${assunto_formatado}`;
 
   // Atualizando o elemento HTML com o texto especial
   document.getElementById("mensagem-consultor").textContent = mensagem_consultor;
